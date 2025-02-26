@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TextstyleConst {
+
+
+ 
   static TextStyle texts10 = TextStyle(
     fontSize: 10.r,
     fontWeight: FontWeight.w500,
