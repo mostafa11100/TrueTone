@@ -25,11 +25,10 @@ class TrueTone extends StatelessWidget {
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
           darkTheme: Thems.darktheme(),
           theme: Thems.lighttheme(),
-          themeMode: ThemeMode.dark,
-          routerConfig: routers,
+          themeMode: ThemeMode.light,
+          routerConfig: AppRouts.routs,
           //3:16
           // localizationsDelegates: [
           //         S.delegate,

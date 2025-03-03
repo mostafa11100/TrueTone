@@ -4,14 +4,14 @@ import 'package:truetone/features/auth/signup/presintation/screens/signup_screen
 import 'package:truetone/feature/splash_onbording/onbording.dart';
 import 'package:truetone/feature/splash_onbording/splash.dart';
 
-// class AppRouts {
-//   static String splashscreen = "/";
+class AppRouts {
+  static String splashscreen = "/";
 
-//   static String onbording = "/onbording";
+  static String onbording = "/onbording";
 
-//   static String signin = "/signin";
+  static String signin = "/signin";
 
-//   static String signup = "/signup";
+  static String signup = "/signup";
 
   static GoRouter routs = GoRouter(
     redirect: (context, state) {},
@@ -25,20 +25,5 @@ import 'package:truetone/feature/splash_onbording/splash.dart';
     ],
   );
 
-//   static GoRouter routs = GoRouter(routes: []);
-// }
-
-final routers = GoRouter(
-  
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => splashscreen(),
-    ),
-     GoRoute(
-      path: '/Onbording',
-      builder: (context, state) => Onbording(),
-    ),
-  ],
-);
-
+  //   static GoRouter routs = GoRouter(routes: []);
+}
