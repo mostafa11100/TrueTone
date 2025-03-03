@@ -5,6 +5,7 @@ class Thems {
   static ThemeData lighttheme() {
     return ThemeData(
       fontFamily: "Roboto",
+      scaffoldBackgroundColor: Colors.white,
 
       colorScheme: ColorScheme(
         brightness: Brightness.light,

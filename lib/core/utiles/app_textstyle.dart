@@ -16,7 +16,7 @@ class TextstyleConst {
   );
   static TextStyle texts16 = TextStyle(
     fontSize: 16.r,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
   );
 
   static TextStyle texts18 = TextStyle(
