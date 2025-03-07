@@ -1,182 +1,271 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fancy_password_field/fancy_password_field.dart';
+import 'package:truetone/core/utiles/app_colors.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
 
-Widget customTextFeild(
-  context, {
-  required String hint,
-  required String label,
-  required IconData prefixicon,
-  IconData? sufixicon,
-  height,
-  validator,
-  secure,
-  required TextEditingController controler,
-}) {
-  ColorScheme color = Theme.of(context).colorScheme;
+class CutomTextFeild extends StatelessWidget {
+  CutomTextFeild({
+    super.key,
+    this.hasvalidationrul,
+    this.hasindecator,
+    this.sufficas,
+    this.validator,
+    required this.controler,
+    required this.hint,
+    required this.label,
 
-  return SizedBox(
-    height: height ?? 200.h,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 20.h,
-      children: [
-        Text(label, style: TextstyleConst.texts18),
-        TextFormField(
-          obscureText: secure ?? false,
+    required this.prefixicon,
+  });
 
-          controller: controler,
-          validator: validator,
-          decoration: decoration(
-            color,
-            hint,
-            prefixicon,
-            sufixicon,
-            height,
-            validator,
+  bool? hasvalidationrul;
+  bool? hasindecator;
+  bool? sufficas;
+
+  String hint;
+  String label;
+  IconData prefixicon;
+
+  String? Function(String?)? validator;
+
+  TextEditingController controler;
+
+  @override
+  Widget build(BuildContext context) {
+    ColorScheme color = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 10.h,
+        children: [
+          Text(
+            label,
+            style: TextstyleConst.texts18
+                .copyWith(fontWeight: FontWeight.w600),
           ),
-        ),
-      ],
-    ),
-  );
+          SizedBox(
+            child: FancyPasswordField(
+              obscureText: sufficas == false ? false : null,
+              validator: validator,
+              controller: controler,
+              hasShowHidePassword: sufficas ?? false,
+              style: TextstyleConst.texts16,
+              showPasswordIcon:
+                  sufficas == false ? null : customvisibleiocon(context, true),
+              hidePasswordIcon:
+                  sufficas == false ? null : customvisibleiocon(context, false),
+              decoration: decoration(
+                context,
+                color,
+                hint,
+                prefixicon,
+
+                validator,
+              ),
+              hasValidationRules: hasvalidationrul ?? false,
+              hasStrengthIndicator: hasindecator ?? false,
+              validationRules: {
+                DigitValidationRule(),
+                SpecialCharacterValidationRule(),
+                MinCharactersValidationRule(8),
+                MaxCharactersValidationRule(12),
+              },
+
+              strengthIndicatorBuilder: (strength) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 9.w,
+                    vertical: 10.h,
+                  ),
+                  child: LinearProgressIndicator(
+                    borderRadius: BorderRadius.circular(5.r),
+                    minHeight: 8.h,
+                    color: calccolor(strength),
+
+                    backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                    value: strength,
+                  ),
+                );
+              },
+              validationRuleBuilder: (rules, value) {
+                if (value.isEmpty) {
+                  return const SizedBox.shrink();
+                }
+                return ListView(
+                  shrinkWrap: true,
+                  children:
+                      rules
+                          .map(
+                            (rule) =>
+                                rule.validate(value)
+                                    ? Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: CircleAvatar(
+                                            backgroundColor: Colors.green,
+                                            radius: 10.r,
+                                            child: Icon(
+                                              Icons.done_outlined,
+                                              size: 15.r,
+                                            ),
+                                          ),
+                                        ),
+
+                                        SizedBox(width: 11.w),
+                                        Text(
+                                          rule.name,
+                                          style: TextstyleConst.texts16.copyWith(fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    )
+                                    : Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: CircleAvatar(
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                  255,
+                                                  197,
+                                                  196,
+                                                  196,
+                                                ),
+                                            radius: 10.r,
+                                          ),
+                                        ),
+
+                                        SizedBox(width: 12.w),
+                                        Text(
+                                          rule.name,
+                                          style: TextstyleConst.texts16.copyWith(fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                          )
+                          .toList(),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 InputDecoration decoration(
+  context,
   color,
   String hint,
 
   IconData prefixicon,
-  IconData? sufixicon,
-  dynamic height,
+
   dynamic validator,
 ) {
   return InputDecoration(
-    prefixIcon: Icon(prefixicon, size: 24.r, color: color.onSecondary),
+    contentPadding: EdgeInsets.symmetric(vertical: 17.h),
+    prefixIcon: Icon(
+      prefixicon,
+      size: 24.r,
+      color: Theme.of(context).colorScheme.onSecondary,
+    ),
+    errorStyle: TextstyleConst.texts16.copyWith(
+      color: Theme.of(context).colorScheme.error,
+    ),
     hintText: hint,
-    suffixIcon: Icon(sufixicon, size: 24.r, color: color.onSecondary),
     hintStyle: TextstyleConst.texts16.copyWith(color: color.onSecondary),
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r)),
+
+    border: OutlineInputBorder(
+      borderSide: BorderSide(width: 1.2),
+      borderRadius: BorderRadius.circular(15.r),
+    ),
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20.r),
+      borderRadius: BorderRadius.circular(15.r),
+
       borderSide: BorderSide(color: color.onSurface, width: 1),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20.r),
-      borderSide: BorderSide(color: color.onSurface, width: 2),
+      borderRadius: BorderRadius.circular(15.r),
+      borderSide: BorderSide(color: color.onSurface, width: 1.1),
     ),
     errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20.r),
-      borderSide: BorderSide(color: color.error, width: 2),
+      borderRadius: BorderRadius.circular(15.r),
+      borderSide: BorderSide(color: color.error, width: 1.1),
     ),
     focusedErrorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20.r),
+      borderRadius: BorderRadius.circular(15.r),
       borderSide: BorderSide(color: color.error, width: 2),
     ),
   );
 }
 
-Widget passwordtextfeildcustom(
-  context, {
-  required String hint,
-  required String label,
-  required IconData prefixicon,
-  IconData? sufixicon,
-  height,
-  validator,
-  secure,
-  required TextEditingController controler,
-}) {
-  ColorScheme color = Theme.of(context).colorScheme;
-
-  return SizedBox(
-    width: MediaQuery.of(context).size.width,
-    height: height ?? 200.h,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 20.h,
-      children: [
-        Text(label, style: TextstyleConst.texts18),
-        FancyPasswordField(
-          controller: controler,
-
-          decoration: decoration(
-            color,
-            hint,
-            prefixicon,
-            sufixicon,
-            height,
-            validator,
-          ),
-          validationRules: {
-            DigitValidationRule(),
-            SpecialCharacterValidationRule(),
-            MinCharactersValidationRule(8),
-            MaxCharactersValidationRule(12),
-          },
-          strengthIndicatorBuilder: (strength) {
-            return LinearProgressIndicator(
-              borderRadius: BorderRadius.circular(8.r),
-              minHeight: 10.h,
-              color: Theme.of(context).colorScheme.primary,
-
-              value: strength,
-            );
-          },
-          validationRuleBuilder: (rules, value) {
-            if (value.isEmpty) {
-              return const SizedBox.shrink();
-            }
-            return ListView(
-              shrinkWrap: true,
-              children:
-                  rules
-                      .map(
-                        (rule) =>
-                            rule.validate(value)
-                                ? Row(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: Colors.green,
-                                      radius: 10.r,
-                                      child: Icon(
-                                        Icons.done_outlined,
-                                        size: 6.r,
-                                      ),
-                                    ),
-
-                                    SizedBox(width: 12.w),
-                                    Text(
-                                      rule.name,
-                                      style: TextstyleConst.texts16,
-                                    ),
-                                  ],
-                                )
-                                : Row(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: const Color.fromARGB(
-                                        255,
-                                        197,
-                                        196,
-                                        196,
-                                      ),
-                                      radius: 10.r,
-                                    ),
-
-                                    SizedBox(width: 12.w),
-                                    Text(
-                                      rule.name,
-                                      style: TextstyleConst.texts16,
-                                    ),
-                                  ],
-                                ),
-                      )
-                      .toList(),
-            );
-          },
-        ),
-      ],
-    ),
+customvisibleiocon(context, visible) {
+  return Icon(
+    visible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+    size: 24.r,
+    color: Theme.of(context).colorScheme.onSecondary,
   );
 }
+
+List<Color> listofcolors = [
+  AppColors.errorcolor,
+  AppColors.warningcolor,
+  AppColors.primarycolor,
+];
+
+calccolor(val) {
+  if (val < .25) {
+    return listofcolors[0];
+  }
+  if (val <= .5) {
+    return listofcolors[1];
+  } else
+    return listofcolors[2];
+}
+
+// Widget customTextFeild(
+//
+//     context, {
+//   required String hint,
+//   required String label,
+//   required IconData prefixicon,
+//   Icon? sufixicon,
+//
+//   height,
+//   validator,
+//   secure,
+//   required TextEditingController controler,
+// }) {
+//   ColorScheme color = Theme.of(context).colorScheme;
+//
+//   return SizedBox(
+//     //height: height ?? 125.h,
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       spacing: 20.h,
+//       children: [
+//         Text(label, style: TextstyleConst.texts18),
+//         TextFormField(
+//           obscureText: secure ?? false,
+//
+//           controller: controler,
+//           validator: validator,
+//           decoration: decoration(
+//             context,
+//
+//             color,
+//             hint,
+//             prefixicon,
+//             sufixicon,
+//             height,
+//             validator,
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }

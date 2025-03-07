@@ -30,9 +30,12 @@ class DioNetwork {
   Future<Response?> request({url, data}) async {
     Response? response;
 
-    response = await _dio.request(url, data: data);
+      response = await _dio.request(url, data: data);
+      return response;
+
 
     return response;
+
   }
 
   Future uploadfile({Map<String, dynamic>? json, filepath, apikey}) async {}

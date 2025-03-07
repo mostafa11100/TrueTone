@@ -17,19 +17,18 @@ class TrueTone extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Size(
-        MediaQuery.of(context).size.width,
-        MediaQuery.of(context).size.height,
+        375,
+        812,
       ),
       minTextAdapt: true,
       splitScreenMode: true,
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
           darkTheme: Thems.darktheme(),
           theme: Thems.lighttheme(),
-          themeMode: ThemeMode.dark,
-          routerConfig: routers,
+          themeMode: ThemeMode.light,
+          routerConfig: AppRouts.routs,
           //3:16
           // localizationsDelegates: [
           //         S.delegate,

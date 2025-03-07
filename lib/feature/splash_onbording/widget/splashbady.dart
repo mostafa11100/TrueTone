@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:truetone/core/Approuts/routs.dart';
+import 'package:truetone/core/utiles/app_assets.dart';
 
 class Splashbady extends StatefulWidget {
   const Splashbady({super.key});
@@ -12,7 +15,7 @@ class _SplashbadyState extends State<Splashbady> {
 
   @override
   void initState() {
-   Future.delayed(Duration(seconds: 2),(){ GoRouter.of(context).push('/Onbording');});
+   Future.delayed(Duration(seconds: 2),(){ GoRouter.of(context).push(AppRouts.onbording);});
     super.initState();
   }
   @override
@@ -22,8 +25,8 @@ class _SplashbadyState extends State<Splashbady> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset("assets/images/splash.png"),
-          SizedBox(height: 40,)
+          Image.asset(splasset),
+          SizedBox(height: 40.h,)
         ],
       ),
     );
