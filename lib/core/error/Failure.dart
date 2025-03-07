@@ -1,8 +1,12 @@
 // ignore: file_names
+
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+
 class Failure {
   String? error;
 
-  Failure.fromJson(String er) {
+  Failure.firbaseeror(String er) {
     switch (er) {
       case 'weak-password':
         error = "The password is too weak, please choose a stronger one.";
@@ -28,48 +32,84 @@ class Failure {
     }
   }
 
-  Failure.handleHttpError(int? statusCode) {
-    switch (statusCode) {
-      case 400:
-        error = "Invalid request, please check the sent data.";
+  Failure.handleHttpError(DioException diotype) {
+
+    switch (diotype.type)
+    {
+      case DioExceptionType.sendTimeout:error="🚀 Request send timeout! Please check your network and retry";
         break;
-      case 401:
-        error = "You need to log in to continue.";
+      case DioExceptionType.connectionTimeout:
+        error="Connection timeout! Check your internet and try again";
         break;
-      case 402:
-        error = "Payment is required for this service.";
+      case DioExceptionType.receiveTimeout:
+        error="Response timeout! The server took too long to respond";
         break;
-      case 403:
-        error = "You do not have permission to access this content.";
+        case DioExceptionType.badCertificate:
+          error="Security issue! The server certificate is not trusted";
+          break;
+      case DioExceptionType.badResponse:
+        error=badresponse(diotype.response!.statusCode);
         break;
-      case 404:
-        error = "Content not found, please check the URL.";
+      case DioExceptionType.cancel:
+        error="Request was canceled!";
         break;
-      case 408:
-        error = "Request timeout, please try again.";
+      case DioExceptionType.connectionError:
+        error="No internet connection! Please check your network and try again.";
         break;
-      case 409:
-        error = "Request conflict, please check your data.";
-        break;
-      case 500:
-        error = "Internal server error, please try again later.";
-        break;
-      case 502:
-        error = "The server is currently unavailable, please try later.";
-        break;
-      case 503:
-        error = "Service is unavailable now, please try later.";
-        break;
-      case 504:
-        error = "Connection timeout with the server, please try again.";
-        break;
-      default:
-        error = "An unexpected error occurred, please try again.";
+      case DioExceptionType.unknown:
+        error="Please check your internet connection and try again";
         break;
     }
+
   }
 
   Failure.networkError() {
     error = "Please check your internet connection and try again.";
   }
+}
+
+
+String badresponse(statuscode)
+{
+
+  String error="";
+  switch (statuscode) {
+    case 400:
+      error = "Invalid request, please check the sent data.";
+      break;
+    case 401:
+      error = "You need to log in to continue.";
+      break;
+    case 402:
+      error = "Payment is required for this service.";
+      break;
+    case 403:
+      error = "You do not have permission to access this content.";
+      break;
+    case 404:
+      error = "Content not found, please check the URL.";
+      break;
+    case 408:
+      error = "Request timeout, please try again.";
+      break;
+    case 409:
+      error = "Request conflict, please check your data.";
+      break;
+    case 500:
+      error = "Internal server error, please try again later.";
+      break;
+    case 502:
+      error = "The server is currently unavailable, please try later.";
+      break;
+    case 503:
+      error = "Service is unavailable now, please try later.";
+      break;
+    case 504:
+      error = "Connection timeout with the server, please try again.";
+      break;
+    default:
+      error = "An unexpected error occurred, please try again.";
+      break;
+  }
+  return error;
 }

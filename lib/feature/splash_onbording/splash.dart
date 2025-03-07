@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:truetone/feature/splash_onbording/widget/splashbady.dart';
 
-class splashscreen extends StatelessWidget {
-  const splashscreen({super.key});
+class Splashscreen extends StatelessWidget {
+  const Splashscreen({super.key});
 
   @override
   Widget build(BuildContext context) {

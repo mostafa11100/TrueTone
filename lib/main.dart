@@ -17,8 +17,8 @@ class TrueTone extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Size(
-        MediaQuery.of(context).size.width,
-        MediaQuery.of(context).size.height,
+        375,
+        812,
       ),
       minTextAdapt: true,
       splitScreenMode: true,

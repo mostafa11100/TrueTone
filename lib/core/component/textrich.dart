@@ -13,20 +13,22 @@ Widget richText(
 }) {
   return RichText(
     text: TextSpan(
-      style: TextstyleConst.texts20.copyWith(
+      style: TextstyleConst.texts18.copyWith(
         fontStyle: fontstyle ?? FontStyle.italic,
         fontSize: font1size,
+        color:Theme.of(context).colorScheme.onSurface
+
       ),
       text: text1,
       children: [
         TextSpan(
-          text: text2,
-          style: TextstyleConst.texts20.copyWith(
+          text: " $text2",
+          style: TextstyleConst.texts18.copyWith(
             fontSize: font2size,
-            fontStyle: fontstyle ?? FontStyle.italic,
-            color: Theme.of(context).colorScheme.secondary,
+           fontStyle: FontStyle.normal,
+           color:    Theme.of(context).colorScheme.primary
           ),
-          recognizer: TapGestureRecognizer()..onTap = ontap(),
+          recognizer: TapGestureRecognizer()..onTap = ontap,
         ),
       ],
     ),
