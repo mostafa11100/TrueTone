@@ -113,6 +113,7 @@ class _OnbordingbadyState extends State<Onbordingbady> {
                             Apptrings.protctyourlf,
                             style: TextstyleConst.texts28.copyWith(
                               fontWeight: FontWeight.w700,
+                              color: Colors.black,
                               fontStyle: FontStyle.italic,
                             ),
                             textAlign: TextAlign.center,
@@ -139,6 +140,7 @@ class _OnbordingbadyState extends State<Onbordingbady> {
                           child: Text(
                             Apptrings.quicidnfcation,
                             style: TextstyleConst.texts28.copyWith(
+                              fontSize: 27,
                               fontWeight: FontWeight.w700,
                               fontStyle: FontStyle.italic,
                             ),
@@ -149,6 +151,7 @@ class _OnbordingbadyState extends State<Onbordingbady> {
                           child: Text(
                             Apptrings.soundsourceai,
                             style: TextstyleConst.texts28.copyWith(
+                             
                               fontWeight: FontWeight.w700,
                               fontStyle: FontStyle.italic,
                             ),
