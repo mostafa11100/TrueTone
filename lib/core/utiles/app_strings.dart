@@ -48,4 +48,8 @@ class Apptrings {
   static String confirmpasssword = "Confirm Password";
 
   static String cantbeepty = "Can't be empty";
+  static String hometitle="Tap to detect the Sound";
+   static String continue1 = "continue";
+    static String AIsound=  "It,s a\nAi\nsound";
+    static String Humansound="It,s a\nHuman\nsound";
 }

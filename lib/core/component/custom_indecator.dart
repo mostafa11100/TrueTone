@@ -10,14 +10,14 @@ class elementofindecator extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 150),
-      height: 5.h,
-      width:  30 .w,
+      height: actaive? 12.h:10.h,
+      width:  actaive? 23.h:10.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(2.r),
+        borderRadius: BorderRadius.circular(30.r),
         color:
             actaive
                 ? Color(0xff2D3ECF)
-                : const Color.fromARGB(235, 158, 158, 158),
+                : const Color.fromARGB(235, 190, 190, 190),
       ),
     );
   }

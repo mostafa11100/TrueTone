@@ -29,6 +29,7 @@ class TrueTone extends StatelessWidget {
           theme: Thems.lighttheme(),
           themeMode: ThemeMode.light,
           routerConfig: AppRouts.routs,
+          debugShowCheckedModeBanner: false,
           //3:16
           // localizationsDelegates: [
           //         S.delegate,
