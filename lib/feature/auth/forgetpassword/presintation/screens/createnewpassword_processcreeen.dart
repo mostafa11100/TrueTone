@@ -9,7 +9,6 @@ import 'package:truetone/feature/auth/forgetpassword/presintation/screens/verify
 
 import '../../../../../core/component/custom_indecator.dart';
 import '../../../../../core/component/custom_sniper.dart';
-import '../../../verify_email/presintaion/screens/verify_emal_screen.dart';
 
 class CreatenewpasswordProcesscreeen extends StatefulWidget {
   const CreatenewpasswordProcesscreeen({super.key});
