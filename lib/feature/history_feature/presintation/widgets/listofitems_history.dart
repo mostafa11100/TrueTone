@@ -15,7 +15,7 @@ Widget listOfItems(context) {
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: cUstomListTile(context, true, "audio1", 2.25, () {
             GoRouter.of(context).push(
-              AppRouts.voicePlayeScreen,
+              AppRouts.voiceplayscreen,
               extra: VoiceEntity(
                 name: "Audio1",
                 url: "",

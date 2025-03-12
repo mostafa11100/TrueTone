@@ -106,7 +106,7 @@ class CustomListTile extends StatelessWidget {
       child: InkWell( // Tappable area with event handlers
         onTap:  (){
           print("innnnn");
-          GoRouter.of(context).push(AppRouts.voicePlayeScreen,extra: human );
+          GoRouter.of(context).push(AppRouts.voiceplayscreen,extra: human );
           onTap;}, // Tap event handler
         onDoubleTap: () => onDoubleTap, // Double tap event handler
         onLongPress: () => onLongPress, // Long press event handler
