@@ -16,4 +16,7 @@ String humanbig="assets/images/human_big.png";
 String ropotbig="assets/images/ropot_big.png";
 
 
-
+String homeimage='assets/images/home1.png';
+ String loading1='assets/images/loading.png' ;     
+  String HumanSoundPage1=   'assets/images/man.png';
+    String aiSoundPage1=   'assets/images/fake.png';

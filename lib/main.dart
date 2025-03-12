@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:truetone/core/Approuts/routs.dart';
 import 'package:truetone/core/di/si.dart';
 import 'package:truetone/core/utiles/theams.dart';
-import 'package:truetone/feature/history_feature/presintation/controlers/voice_screen_bloc.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,23 +24,20 @@ class TrueTone extends StatelessWidget {
       splitScreenMode: true,
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
-        return BlocProvider(
-          create: (context) => VoiceScreenBloc(),
-          child: MaterialApp.router(
-            darkTheme: Thems.darktheme(),
-            theme: Thems.lighttheme(),
-
-            themeMode: ThemeMode.light,
-            routerConfig: AppRouts.routs,
-            //3:16
-            // localizationsDelegates: [
-            //         S.delegate,
-            //         GlobalMateialLocalizations.delegate,
-            //         GlobalWidgetsLocalizations.delegate,
-            //         GlobalCupertinoLocalizations.delegate,
-            //     ],
-            //      supportedLocales: S.delegate.supportedLocales,
-          ),
+        return MaterialApp.router(
+          darkTheme: Thems.darktheme(),
+          theme: Thems.lighttheme(),
+          themeMode: ThemeMode.light,
+          routerConfig: AppRouts.routs,
+            debugShowCheckedModeBanner: false
+          //3:16
+          // localizationsDelegates: [
+          //         S.delegate,
+          //         GlobalMateialLocalizations.delegate,
+          //         GlobalWidgetsLocalizations.delegate,
+          //         GlobalCupertinoLocalizations.delegate,
+          //     ],
+          //      supportedLocales: S.delegate.supportedLocales,
         );
       },
     );
