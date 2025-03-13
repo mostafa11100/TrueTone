@@ -88,7 +88,7 @@ class _CreatenewpasswordProcesscreeenState
               ),
             ),
 
-            Positioned(child: customindicator2(index), top: 120.h, left: 140.w),
+           Positioned(child: customindicator2(index), top: 120.h, left: 150.w),
           ],
         ),
       ),

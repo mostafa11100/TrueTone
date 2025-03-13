@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:truetone/core/Approuts/routs.dart';
 import 'package:truetone/core/utiles/app_assets.dart';
 
+import '../utiles/app_assets.dart';
+
 class Loadingscreen extends StatefulWidget {
   const Loadingscreen({super.key});
 
@@ -15,7 +17,7 @@ class _LoadingscreenState extends State<Loadingscreen> {
   @override
   void initState() {
 Future.delayed(Duration(seconds: 2),(){
-  GoRouter.of(context).push(AppRouts.aiSoundPage1);}
+  GoRouter.of(context).push(AppRouts.aisound);}
   );
     super.initState();
   }

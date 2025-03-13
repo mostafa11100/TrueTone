@@ -6,23 +6,27 @@ import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dar
 import '../../../../core/utiles/app_assets.dart';
 import 'custom_listtil.dart';
 
-Widget listOfItems(context) {
+Widget listOfItems(context,void Function() navigte_function) {
   return Expanded(
     child: ListView.builder
       (
       itemBuilder: (context, i) {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
-          child: cUstomListTile(context, true, "audio1", 2.25, () {
-            GoRouter.of(context).push(
-              AppRouts.voiceplayscreen,
-              extra: VoiceEntity(
-                name: "Audio1",
-                url: "",
-                type: "Real",
-                lngth: 25.5,
-              ),
-            );
+          child: cUstomListTile(context, true, "audio1", 2.25, ()
+          {
+            navigte_function();
+
+            // GoRouter.of(context).push
+            //   (
+            //     AppRouts.voicescreen,
+            //     extra: VoiceEntity(
+            //     name: "Audio1",
+            //     url: "",
+            //     type: "Real",
+            //     lngth: 25.5,
+            //   ),
+            // );
           }),
         );
       },

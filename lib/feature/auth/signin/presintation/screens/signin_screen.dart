@@ -105,7 +105,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       }
 
                       if (state is SigninSuccess) {
-                        GoRouter.of(context).push(AppRouts.app_home);
+                        GoRouter.of(context).push(AppRouts.mainscreen);
                       }
                     },
                     builder: (context, state) {

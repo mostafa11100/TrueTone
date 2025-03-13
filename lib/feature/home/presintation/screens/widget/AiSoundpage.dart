@@ -65,7 +65,7 @@ class AiSoundPage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: ElevatedButton(
                     onPressed: () {
-                      GoRouter.of(context).push(AppRouts.Mainscreen1);
+                      GoRouter.of(context).push(AppRouts.mainscreen);
                     },
                     style: ElevatedButton.styleFrom(
                       shape: const CircleBorder(),

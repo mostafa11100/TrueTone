@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:truetone/core/Approuts/routs.dart';
 
@@ -27,7 +28,7 @@ class _HomeviewBadyState extends State<HomeviewBady> {
     
     Future.delayed(Duration(milliseconds: 200), () {
     
-      GoRouter.of(context).push(AppRouts.Loading);
+      GoRouter.of(context).push(AppRouts.loading);
       
       
       setState(() {
@@ -55,7 +56,7 @@ class _HomeviewBadyState extends State<HomeviewBady> {
             ),
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 20.h),
         GestureDetector(
           onTap: () {
             // Handle any additional functionality if needed
@@ -73,7 +74,7 @@ class _HomeviewBadyState extends State<HomeviewBady> {
             ],
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 20.h),
       ],
     );
   }

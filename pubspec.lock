@@ -73,14 +73,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-  curved_navigation_bar:
-    dependency: "direct main"
-    description:
-      name: curved_navigation_bar
-      sha256: bb4ab128fcb6f4a9f0f1f72d227db531818b20218984789777f049fcbf919279
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.6"
   dartz:
     dependency: "direct main"
     description:
@@ -296,14 +288,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
-  local_hero_transform:
-    dependency: "direct main"
-    description:
-      name: local_hero_transform
-      sha256: "2e62a131c452dba9ddff3bf73da84995d03e5031f79b99ab066e231a0ad90091"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.6"
   logging:
     dependency: transitive
     description:

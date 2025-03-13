@@ -6,8 +6,9 @@ import '../widgets/custom_listtil.dart';
 import '../widgets/listofitems_history.dart';
 
 class HistoryScreen extends StatelessWidget {
-  const HistoryScreen({super.key});
-
+  const HistoryScreen({super.key,required this
+  .navigatefunction});
+final void Function() navigatefunction;
   @override
   Widget build(BuildContext context)
   {
@@ -17,7 +18,7 @@ class HistoryScreen extends StatelessWidget {
       body:SafeArea(
         child: Padding(
           padding:  EdgeInsets.all(13.0.w),
-          child: listOfItems(context),
+          child: listOfItems(context,navigatefunction),
         ),
       )
     );

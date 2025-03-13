@@ -24,11 +24,10 @@ class VoicePlayeScreen extends StatefulWidget {
 
 class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
   @override
-  void initState()
-  {
-    BlocProvider.of<VoiceScreenBloc>(
-      context,
-    ).add(InitPlayList(widget.voiceEntitylist));
+  void initState() {
+    // BlocProvider.of<VoiceScreenBloc>(
+    //   context,
+    // ).add(InitPlayList(widget.voiceEntitylist));
 
     super.initState();
   }
@@ -50,8 +49,7 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
             backgroundColor: Theme.of(context).colorScheme.onPrimary,
             child: Icon(
               Icons.arrow_back_outlined,
-              color: Theme.of
-                (
+              color: Theme.of(
                 context,
               ).colorScheme.onSurface.withAlpha((.9 * 255).toInt()),
             ),
@@ -89,12 +87,11 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
         builder: (context, state) {
           int indx = 0;
           Duration lngth = Duration.zero;
-Duration position= Duration.zero;
-          if (state is Voicesucce)
-          {
+          Duration position = Duration.zero;
+          if (state is Voicesucce) {
             indx = state.index;
             lngth = state.duration;
-            position= state.durationplayed;
+            position = state.durationplayed;
           }
           return SizedBox(
             width: MediaQuery.of(context).size.width,
@@ -116,12 +113,12 @@ Duration position= Duration.zero;
                   ),
                   height: 225.h,
                   width: 225.w,
-                  child: pHoto(humanbig, 225.w.toDouble()),
+                  child: Image.asset(humanbig),
                 ),
 
                 SizedBox(height: 10.h),
                 Text(
-                  widget.voiceEntitylist[indx].name!,
+                  widget.voiceEntitylist[indx].name ?? "notfound",
                   style: TextstyleConst.texts28.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
@@ -130,7 +127,7 @@ Duration position= Duration.zero;
                 Opacity(
                   opacity: .7,
                   child: Text(
-                    widget.voiceEntitylist[indx].type!,
+                    widget.voiceEntitylist[indx].type ?? "knowo",
                     style: TextstyleConst.texts18.copyWith(
                       fontWeight: FontWeight.w500,
                       color: Theme.of(context).colorScheme.onPrimary,
@@ -142,7 +139,7 @@ Duration position= Duration.zero;
                 SizedBox(height: 40.h),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: Customprogress(context,lngth,position),
+                  child: Customprogress(context, lngth, position),
                 ),
               ],
             ),
