@@ -1,7 +1,6 @@
 // ignore: file_names
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
 class Failure {
   String? error;

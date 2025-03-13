@@ -13,6 +13,7 @@ import 'package:truetone/feature/auth/signup/domain/usecases/signup_usecase.dart
 import '../../feature/auth/forgetpassword/data/remote_passwordprocess.dart';
 import '../../feature/auth/forgetpassword/data/repo_imp/password_procees_repo_imp.dart';
 import '../../feature/auth/signup/presintation/controler/cubit/sign_up_cubit.dart';
+import '../../feature/history_feature/presintation/controlers/voice_screen_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -33,5 +34,9 @@ setupLocator() {
     return CreateNewPasswordProccesBloc(
       PasswordProccesImp(RemotePasswordProcces()),
     );
+
   });
+  sl.registerFactory(() {
+    return VoiceScreenBloc(
+    );});
 }

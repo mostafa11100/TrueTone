@@ -13,6 +13,7 @@ class Thems {
 
       colorScheme: ColorScheme(
         primaryFixed: AppColors.green,
+        secondaryFixed: AppColors.primaryfixed,
         brightness: Brightness.light,
         primary: AppColors.primarycolor,
         onPrimary: AppColors.onprimary,
@@ -22,8 +23,9 @@ class Thems {
         onSurface: AppColors.onSurface,
         secondary: AppColors.secondry,
         onSecondary: AppColors.onsecondry,
-      ),
+      ),useMaterial3: true
     );
+
   }
 
   static ThemeData darktheme() {

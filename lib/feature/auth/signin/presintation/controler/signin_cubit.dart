@@ -15,12 +15,13 @@ class SigninCubit extends Cubit<SigninState> {
 
   Future<void> axcute({email, password}) async {
 
-    emit(SigninLoading());
+   // emit(SigninLoading());
     // Either<Failure, Unit> result = await _baseSigninusecase.excute(
     //   SignInEntity(email: email, password: password),
     // );
     // result.fold((left) {emit(SigninFail(left.error!));}, (_) {
-    //   emit(SigninSuccess());
+       emit(SigninSuccess());
     // });
+
   }
 }

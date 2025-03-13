@@ -11,6 +11,7 @@ class AppColors {
   static Color oneror = const Color.fromARGB(255, 255, 255, 255);
   static Color onbackground = const Color.fromARGB(255, 31, 32, 28);
   static Color Surface = Colors.blue;
+  static Color primaryfixed=Color(0x91FFFFFF);
 
   //static Color onSurface = Color.fromARGB(203, 62, 62, 62);
   static Color onSurface = Color.fromARGB(203, 0, 0, 0);

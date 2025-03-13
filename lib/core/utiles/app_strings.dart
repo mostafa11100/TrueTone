@@ -11,6 +11,11 @@ class Apptrings {
   static String soundsourceai = "sound's source using Ai";
   static String rememberPassword = "Remember Password?";
   static String hasbeencreated =  "Account created successfully! Please proceed to sign in";
+static String share="Share";
+  static String delete="Delete";
+  static String cancel="Cancel";
+  static String areyousure= "Are You Shure You Want To Delete Audio1";
+
 
   static String gettstart = "Get start";
   static String verify =  "Verify";
