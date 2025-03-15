@@ -9,6 +9,9 @@ class DioNetwork {
   }
   DioNetwork._nstance() {
     BaseOptions options = BaseOptions(
+      validateStatus: (i)=>true,
+      connectTimeout: Duration(seconds: 3),
+      receiveTimeout: Duration(seconds: 3),
       receiveDataWhenStatusError: true,
       responseType: ResponseType.json,
     );
@@ -17,12 +20,24 @@ class DioNetwork {
       InterceptorsWrapper(
         onRequest: (options, handle) {
           //add options in any request
-
+options.headers={'Content-Type': 'application/json'};
           return handle.next(options);
         },
+        onError: (e,handle)
+        {
+          if(e.type==DioExceptionType.badResponse)
+            {
+              if(e.response!.statusCode=="401")
+
+              {
+
+              }
+
+            }
+        }
       ),
     );
-    {}
+
 
     // init dio;
   }
@@ -35,11 +50,34 @@ class DioNetwork {
 
 
     return response;
+  }
+  Future<Response?> post({url, data}) async {
+    Response? response;
+try {
+  print("dio enter to----==== $data $url");
+  response = await _dio.post(url,data: data);
+  print("after enter to----==== $data $url");
+}on DioException catch(e)
+{
+  print("dio errrrrrrrrr----==== ${e.type}");
+}
+catch(e)
+    {
+      print("dio errrrrrrrrr----==== ${e.toString()}");
+
+    }
+return response;
 
   }
 
   Future uploadfile({Map<String, dynamic>? json, filepath, apikey}) async {}
-  Future get({Map<String, dynamic>? pramiter, apikey}) async {}
+  Future get({ url,Map<String, dynamic>? data}) async
+  { Response? response;
+
+  response = await _dio.get(url, data: data);
+  return response;
+
+  }
   Future update({Map<String, dynamic>? json, apikey}) async {}
   Future delete({Map<String, dynamic>? json, apikey}) async {}
 }

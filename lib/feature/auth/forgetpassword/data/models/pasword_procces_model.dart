@@ -12,6 +12,8 @@ class PasswordProccesModel
  email!=null?   jsn['email']=email:null;
  otp!=null?   jsn['code']=otp:null;
  password!=null?jsn['password']=password:null;
+
+ password!=null?jsn['confirmNewPassword']=password:null;
     return jsn;
   }
 }

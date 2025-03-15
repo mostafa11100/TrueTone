@@ -10,9 +10,9 @@ abstract class BaseRemoteSignUp {
 class SignupRemote extends BaseRemoteSignUp {
   @override
   Future<Response?> signup({Map<String, dynamic>? json}) async {
-    Response? response = await sl<DioNetwork>().request(
+    Response? response = await sl<DioNetwork>().post(
       data: json,
-      url: baseurl,
+      url: baseurl.signupurl,
     );
     return response;
   }

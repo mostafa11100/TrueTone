@@ -11,11 +11,11 @@ class PasswordProccesImp extends BasePasswordProccess<Unit>
  final BaseRemotePasswordBrocess _remote;
   PasswordProccesImp(this._remote);
   @override
-  Future<Either<Failure, Unit>> createpasword({password})async
+  Future<Either<Failure, Unit>> createpasword({newpaosswrdmodel})async
   {
 
     try {
-      await _remote.createnewpassword(data: password!.tojson());
+      await _remote.createnewpassword(data: newpaosswrdmodel!.tojson());
       return Right(unit);
     }on DioException catch(e)
     {

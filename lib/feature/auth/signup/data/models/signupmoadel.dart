@@ -21,9 +21,10 @@ class Signupmoadel extends SignUpEntity {
 
     email != null ? json['email'] = email : null;
     password != null ? json['password'] = password : null;
-    image != null ? json['image'] = image : null;
-    address != null ? json['addres'] = address : null;
-    phone != null ? json['phone'] = phone : null;
+    password != null ? json['confirmPassword'] = password : null;
+    // image != null ? json['image'] = image : null;
+    // address != null ? json['addres'] = address : null;
+    // phone != null ? json['phone'] = phone : null;
     return json;
   }
 }

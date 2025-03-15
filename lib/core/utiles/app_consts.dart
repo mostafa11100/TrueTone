@@ -1,6 +1,11 @@
-String baseurl = "";
-String emailvrifcationurl = "";
-String newpasswordurl = "";
+class baseurl{
+  static String signinurl = 'http://truetoneapi.runasp.net/api/Email/login';
+  static String signupurl = 'http://truetoneapi.runasp.net/api/Email/register';
+  static String emailvrifcationurl = "http://truetoneapi.runasp.net/api/Email/verify-email";
+
+  static String sendverification = "http://truetoneapi.runasp.net/api/Email/send-verification";
+  static String newpasswordurl = "http://truetoneapi.runasp.net/api/Auth/reset-password";
+}
 
 
 

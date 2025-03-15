@@ -47,7 +47,7 @@ class Failure {
           error="Security issue! The server certificate is not trusted";
           break;
       case DioExceptionType.badResponse:
-        error=badresponse(diotype.response!.statusCode);
+        error=badresponse(diotype.response!);
         break;
       case DioExceptionType.cancel:
         error="Request was canceled!";
@@ -68,46 +68,47 @@ class Failure {
 }
 
 
-String badresponse(statuscode)
+String badresponse(Response  response)
 {
 
+  Map<String,dynamic> message =response.data;
   String error="";
-  switch (statuscode) {
+  switch (response.statusCode) {
     case 400:
-      error = "Invalid request, please check the sent data.";
+      error =message['message']?? "Invalid request, please check the sent data.";
       break;
     case 401:
-      error = "You need to log in to continue.";
+      error =message['message']?? "You need to log in to continue.";
       break;
     case 402:
-      error = "Payment is required for this service.";
+      error =message['message']?? "Payment is required for this service.";
       break;
     case 403:
-      error = "You do not have permission to access this content.";
+      error =message['message']?? "You do not have permission to access this content.";
       break;
     case 404:
-      error = "Content not found, please check the URL.";
+      error =message['message']?? "Content not found, please check the URL.";
       break;
     case 408:
-      error = "Request timeout, please try again.";
+      error =message['message']?? "Request timeout, please try again.";
       break;
     case 409:
-      error = "Request conflict, please check your data.";
+      error =message['message']?? "Request conflict, please check your data.";
       break;
     case 500:
-      error = "Internal server error, please try again later.";
+      error =message['message']?? "Internal server error, please try again later.";
       break;
     case 502:
-      error = "The server is currently unavailable, please try later.";
+      error =message['message']?? "The server is currently unavailable, please try later.";
       break;
     case 503:
-      error = "Service is unavailable now, please try later.";
+      error =message['message']?? "Service is unavailable now, please try later.";
       break;
     case 504:
-      error = "Connection timeout with the server, please try again.";
+      error = message['message']??"Connection timeout with the server, please try again.";
       break;
     default:
-      error = "An unexpected error occurred, please try again.";
+      error =message['message']?? "An unexpected error occurred, please try again.";
       break;
   }
   return error;

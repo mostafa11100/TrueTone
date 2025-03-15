@@ -10,6 +10,7 @@ import '../../../../../core/component/custom_button.dart';
 import '../../../../../core/component/custom_sniper.dart';
 import '../../../../../core/component/dialog.dart';
 import '../../../../../core/component/textrich.dart';
+import '../../../../../core/di/si.dart';
 import '../../../forgetpassword/presintation/controler/create_new_password_procces_bloc.dart';
 import '../widgets.dart';
 
@@ -31,7 +32,9 @@ class _VerifyEmalScreenState extends State<VerifyEmalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+  create: (context) => sl<CreateNewPasswordProccesBloc>(),
+  child: Scaffold(
       appBar: AppBar(
         leading: Padding(
           padding: EdgeInsets.all(10.0.w),
@@ -145,6 +148,7 @@ class _VerifyEmalScreenState extends State<VerifyEmalScreen> {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 }
