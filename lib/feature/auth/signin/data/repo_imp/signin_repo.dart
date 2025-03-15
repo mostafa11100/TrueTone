@@ -20,7 +20,7 @@ class SigninRepo extends BaseSignin<Unit, SignInEntity> {
       Response? result = await _remoteSignIn.excute(mdel.tojson());
       // cashinggg=====>
      await sl<Cashhelper>().setuserinfo(result!.data);
-      await sl<Cashhelper>().setuserlogin();
+     await sl<Cashhelper>().setuserlogin();
 
      return Right(unit);
 

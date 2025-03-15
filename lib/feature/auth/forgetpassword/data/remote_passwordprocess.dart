@@ -6,39 +6,37 @@ import '../../../../core/utiles/app_consts.dart';
 
 abstract class BaseRemotePasswordBrocess<T> {
   Future<T> sendemailverify({data});
+
   Future<T> checkotp({data});
+
   Future<T> createnewpassword({data});
 }
 
 class RemotePasswordProcces extends BaseRemotePasswordBrocess<Response?> {
   @override
   Future<Response?> createnewpassword({data}) async {
-
-    Response? result = await sl<DioNetwork>().request(
+    Response? result = await sl<DioNetwork>().post(
       data: data,
-      url: newpasswordurl,
+      url: baseurl.newpasswordurl,
     );
 
     return result;
   }
 
   @override
-  Future<Response?> sendemailverify({data}) async
-  {
-
-    Response? result = await sl<DioNetwork>().request(
+  Future<Response?> sendemailverify({data}) async {
+    Response? result = await sl<DioNetwork>().post(
       data: data,
-      url: emailvrifcationurl,
+      url: baseurl.sendverification,
     );
     return result;
   }
 
   @override
-  Future<Response?> checkotp({data}) async
-  {
-    Response? result = await sl<DioNetwork>().request(
+  Future<Response?> checkotp({data}) async {
+    Response? result = await sl<DioNetwork>().post(
       data: data,
-      url: emailvrifcationurl,
+      url: baseurl.emailvrifcationurl,
     );
 
     return result;

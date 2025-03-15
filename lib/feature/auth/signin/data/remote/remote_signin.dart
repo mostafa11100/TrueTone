@@ -7,13 +7,17 @@ abstract class BaseRemoteSignIn<T, pramitar> {
   Future<T?> excute(pramitar data);
 }
 
-class RemoteSignin extends BaseRemoteSignIn<Response, Map> {
+class RemoteSignin extends BaseRemoteSignIn<Response, Map>
+{
   @override
-  Future<Response?> excute(data) async {
-    Response? response = await sl<DioNetwork>().request(
-      url: baseurl,
+  Future<Response?> excute(data) async
+  {
+    print("enter to remote ${data}");
+    Response? response = await sl<DioNetwork>().post(
+      url:baseurl.signinurl,
       data: data,
     );
+    print("after to remote ${response!.data}");
     return response;
   }
 }

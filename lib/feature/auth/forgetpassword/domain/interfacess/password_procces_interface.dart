@@ -7,5 +7,5 @@ abstract class BasePasswordProccess<T>
 {
   Future<Either<Failure,T>> sendcode({ email});
   Future<Either<Failure,T>> checkotp({ otp});
-  Future<Either<Failure,T>> createpasword({password});
+  Future<Either<Failure,T>> createpasword({newpaosswrdmodel});
 }

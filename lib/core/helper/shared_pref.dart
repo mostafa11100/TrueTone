@@ -49,6 +49,17 @@ class Cashhelper {
     return sharedPreferences.getString("id");
   }
 
+
+  Future<void> setemail(email) async {
+    SharedPreferences? sharedPreferences =
+    await SharedPreferences.getInstance();
+    sharedPreferences.setString("email", email);
+  }
+  Future<String?> getemail() async {
+    SharedPreferences? sharedPreferences =
+    await SharedPreferences.getInstance();
+    return sharedPreferences.getString("email");
+  }
   Future<String?> getlocation() async {
     SharedPreferences? sharedPreferences =
     await SharedPreferences.getInstance();
@@ -59,6 +70,16 @@ class Cashhelper {
     SharedPreferences? sharedPreferences =
     await SharedPreferences.getInstance();
     return sharedPreferences.getString("lang");
+  }
+  Future<void> setotp(otp) async {
+    SharedPreferences? sharedPreferences =
+    await SharedPreferences.getInstance();
+    sharedPreferences.setString("otp", otp);
+  }
+  Future<String?> getotp() async {
+    SharedPreferences? sharedPreferences =
+    await SharedPreferences.getInstance();
+    return sharedPreferences.getString("otp");
   }
 
   Future<Map<String, dynamic>> getuserinfo() async {
