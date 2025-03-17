@@ -3,12 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
 
-loadingdialog(context) {
-  if (ModalRoute.of(context)?.isCurrent == false) {
-    Navigator.of(context).pop();
-  }
+loadingdialog(BuildContext context) {
+
+  // if (context!=null) {
+  //   Navigator.of(context).pop();
+  // }
 
   Future.delayed(Duration(seconds: 3), () {
+    if(context.mounted!=false)
     if (ModalRoute.of(context)?.isCurrent == false) {
       Navigator.of(context).pop();
     }
@@ -84,12 +86,12 @@ ontap1();
                           top: BorderSide(
                             color: Theme.of(
                               context,
-                            ).colorScheme.onSurface.withOpacity((.5)),
+                            ).colorScheme.onPrimary,
                           ),
                           left: BorderSide(
                             color: Theme.of(
                               context,
-                            ).colorScheme.onSurface.withOpacity((.5)),
+                            ).colorScheme.onPrimary.withOpacity((.9)),
                           ),
                         ),
                       ),

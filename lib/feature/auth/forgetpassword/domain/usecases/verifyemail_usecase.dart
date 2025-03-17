@@ -48,6 +48,7 @@ class CheckOtpUseCase {
   {
    await sl<Cashhelper>().setotp(otp);
    String? email=  await sl<Cashhelper>().getemail();
+   print("emaillll===$email");
     return  await _basePasswordProccess.checkotp(
       otp: PasswordProccesModel(otp:otp,email: email),
     );

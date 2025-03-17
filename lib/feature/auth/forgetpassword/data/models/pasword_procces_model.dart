@@ -9,8 +9,8 @@ class PasswordProccesModel
   PasswordProccesModel({this.email,this.password,this.otp});
   Map<String,dynamic> tojson()
   {
- email!=null?   jsn['email']=email:null;
- otp!=null?   jsn['code']=otp:null;
+ email!=null? jsn['email']=email:null;
+ otp!=null?   jsn['otp']=otp:null;
  password!=null?jsn['password']=password:null;
 
  password!=null?jsn['confirmNewPassword']=password:null;

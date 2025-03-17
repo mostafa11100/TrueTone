@@ -11,8 +11,7 @@ sealed class CreateNewPasswordProccesEvent extends Equatable {
   const SendOTP(this.email);
 
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [email];
 }
 
  class VerifyOTP extends CreateNewPasswordProccesEvent

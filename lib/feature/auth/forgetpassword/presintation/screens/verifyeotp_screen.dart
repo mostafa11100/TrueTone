@@ -85,7 +85,8 @@ class _VerifyEmalScreenState extends State<VerifyeotpScreen> {
               child: customButton(
                 context,
                 onpress:!checkvaidation()?null: ()
-                {
+                {//1
+                  //context.read<CreateNewPasswordProccesBloc>().add(VerifyOTP(otp));
 
                   BlocProvider.of<CreateNewPasswordProccesBloc>(context).add(VerifyOTP(otp));
                 },

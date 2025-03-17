@@ -26,20 +26,20 @@ class CreateNewPasswordProccesBloc
         event.email,
       );
       result.fold(
-        (left) {
+            (left) {
           emit(CreateNewPasswordFail(left.error!));
         },
-        (_) {
+            (_) {
           emit(CreateNewPasswordSuccess());
         },
       );
-
+    });
       on<VerifyOTP>((event, emit) async {
         _checkOtpUseCase = CheckOtpUseCase(_basePasswordProccess);
         emit(CreateNewPasswordLoading());
         Either<Failure, Unit> result = await _checkOtpUseCase.excute(event.otp);
         result.fold(
-          (left) {
+          (left) {print("errrrrror here ${left.error}");
             emit(CreateNewPasswordFail(left.error!));
           },
           (_) {
@@ -64,6 +64,6 @@ class CreateNewPasswordProccesBloc
           },
         );
       });
-    });
+
   }
 }
