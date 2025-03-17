@@ -42,10 +42,10 @@ class PasswordProccesImp extends BasePasswordProccess<Unit>
   Future<Either<Failure, Unit>> checkotp({otp}) async{
 
     try {
-      await _remote.createnewpassword(data: otp.tojson());
+      await _remote.checkotp(data: otp.tojson());
       return Right(unit);
     }on DioException catch(e)
-    {
+    {print("errrrrrrororororo er in repo ${e.response!.data}");
       return Left(Failure.handleHttpError(e));
     }
   }

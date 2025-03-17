@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:truetone/core/error/exeptions.dart';
 
 class DioNetwork {
   static final DioNetwork _dioNetwork = DioNetwork._nstance();
@@ -9,7 +10,13 @@ class DioNetwork {
   }
   DioNetwork._nstance() {
     BaseOptions options = BaseOptions(
-      validateStatus: (i)=>true,
+      validateStatus: (i)
+
+      {
+        print("stattttttttt  $i");
+
+       return i==200;
+      },
       connectTimeout: Duration(seconds: 3),
       receiveTimeout: Duration(seconds: 3),
       receiveDataWhenStatusError: true,
@@ -23,18 +30,8 @@ class DioNetwork {
 options.headers={'Content-Type': 'application/json'};
           return handle.next(options);
         },
-        onError: (e,handle)
-        {
-          if(e.type==DioExceptionType.badResponse)
-            {
-              if(e.response!.statusCode=="401")
 
-              {
 
-              }
-
-            }
-        }
       ),
     );
 
@@ -53,19 +50,8 @@ options.headers={'Content-Type': 'application/json'};
   }
   Future<Response?> post({url, data}) async {
     Response? response;
-try {
-  print("dio enter to----==== $data $url");
-  response = await _dio.post(url,data: data);
-  print("after enter to----==== $data $url");
-}on DioException catch(e)
-{
-  print("dio errrrrrrrrr----==== ${e.type}");
-}
-catch(e)
-    {
-      print("dio errrrrrrrrr----==== ${e.toString()}");
+  response = await _dio.post(url, data: data);
 
-    }
 return response;
 
   }

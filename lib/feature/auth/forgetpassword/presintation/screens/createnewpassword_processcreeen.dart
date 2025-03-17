@@ -67,7 +67,8 @@ class _CreatenewpasswordProcesscreeenState
                         curve: Curves.ease,
                       );
                     }
-                  } else if (state is CreateNewPasswordFail) {
+                  } else if (state is CreateNewPasswordFail)
+                  {
                     customsnackbar(
                       color: Theme.of(context).colorScheme.error,
                       context: context,

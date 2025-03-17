@@ -1,4 +1,4 @@
-class ClientError implements Exception {
+class ClientError  implements Exception  {
   String error;
   ClientError(this.error);
 }

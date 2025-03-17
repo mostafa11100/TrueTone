@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:truetone/core/Approuts/routs.dart';
@@ -7,6 +9,10 @@ import 'package:truetone/core/utiles/theams.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details); // بيظهر الخطأ في الكونسول
+    exit(1); // ده هيوقف التطبيق تمامًا زي الكراش الحقيقي
+  };
   runApp(const TrueTone());
 }
 
