@@ -22,7 +22,8 @@ Future.delayed(Duration(seconds: 2),(){
     super.initState();
   }
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return Scaffold(
       body: Center(
         child: Image.asset(loading1)

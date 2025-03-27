@@ -13,7 +13,11 @@ class Apptrings {
   static String hasbeencreated =  "Account created successfully! Please proceed to sign in";
 static String share="Share";
   static String delete="Delete";
+  static String phone="Phone";
+  static String country="Country";
   static String cancel="Cancel";
+  static String date="Date";
+  static String savechanges="Save Changes";
   static String areyousure= "Are You Shure You Want To Delete Audio1";
 
 
@@ -22,6 +26,7 @@ static String share="Share";
   static String forgotPassword =  "Forgot Password";
   static String createnwpassword =  "Creat new password";
   static String next = "Next";
+  static String name = "Name";
   static String signup = "Sign up";
   static String iddnthavecode = "i didn't receive acod";
   static String Resend = "Resend";

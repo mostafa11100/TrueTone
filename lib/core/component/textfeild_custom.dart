@@ -14,17 +14,17 @@ class CutomTextFeild extends StatelessWidget {
     required this.controler,
     required this.hint,
     required this.label,
-
     required this.prefixicon,
+    this.secure
   });
 
   bool? hasvalidationrul;
   bool? hasindecator;
   bool? sufficas;
-
+  bool?secure;
   String hint;
   String label;
-  IconData prefixicon;
+  IconData? prefixicon;
 
   String? Function(String?)? validator;
 
@@ -43,16 +43,19 @@ class CutomTextFeild extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextstyleConst.texts18
-                .copyWith(fontWeight: FontWeight.w600),
+            style: TextstyleConst.texts18.copyWith(fontWeight: FontWeight.w600),
           ),
           SizedBox(
             child: FancyPasswordField(
-              obscureText: sufficas == false ? false : null,
+
+              obscureText:secure==false?false:
+                  (sufficas == false || sufficas == null) ? false : null,
               validator: validator,
               controller: controler,
               hasShowHidePassword: sufficas ?? false,
-              style: TextstyleConst.texts16,
+              style: TextstyleConst.texts16.copyWith(
+                color: color.onSurface.withAlpha((.6 * 255).toInt()),
+              ),
               showPasswordIcon:
                   sufficas == false ? null : customvisibleiocon(context, true),
               hidePasswordIcon:
@@ -118,7 +121,10 @@ class CutomTextFeild extends StatelessWidget {
                                         SizedBox(width: 11.w),
                                         Text(
                                           rule.name,
-                                          style: TextstyleConst.texts16.copyWith(fontWeight: FontWeight.w500),
+                                          style: TextstyleConst.texts16
+                                              .copyWith(
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                         ),
                                       ],
                                     )
@@ -141,7 +147,10 @@ class CutomTextFeild extends StatelessWidget {
                                         SizedBox(width: 12.w),
                                         Text(
                                           rule.name,
-                                          style: TextstyleConst.texts16.copyWith(fontWeight: FontWeight.w500),
+                                          style: TextstyleConst.texts16
+                                              .copyWith(
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -162,17 +171,20 @@ InputDecoration decoration(
   color,
   String hint,
 
-  IconData prefixicon,
+  IconData? prefixicon,
 
   dynamic validator,
 ) {
   return InputDecoration(
-    contentPadding: EdgeInsets.symmetric(vertical: 17.h),
-    prefixIcon: Icon(
-      prefixicon,
-      size: 24.r,
-      color: Theme.of(context).colorScheme.onSecondary,
-    ),
+    contentPadding: EdgeInsets.symmetric(vertical: 17.h, horizontal: 15.w),
+    prefixIcon:
+        prefixicon != null
+            ? Icon(
+              prefixicon,
+              size: 24.r,
+              color: Theme.of(context).colorScheme.onSecondary,
+            )
+            : null,
     errorStyle: TextstyleConst.texts16.copyWith(
       color: Theme.of(context).colorScheme.error,
     ),
@@ -227,45 +239,3 @@ calccolor(val) {
     return listofcolors[2];
 }
 
-// Widget customTextFeild(
-//
-//     context, {
-//   required String hint,
-//   required String label,
-//   required IconData prefixicon,
-//   Icon? sufixicon,
-//
-//   height,
-//   validator,
-//   secure,
-//   required TextEditingController controler,
-// }) {
-//   ColorScheme color = Theme.of(context).colorScheme;
-//
-//   return SizedBox(
-//     //height: height ?? 125.h,
-//     child: Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       spacing: 20.h,
-//       children: [
-//         Text(label, style: TextstyleConst.texts18),
-//         TextFormField(
-//           obscureText: secure ?? false,
-//
-//           controller: controler,
-//           validator: validator,
-//           decoration: decoration(
-//             context,
-//
-//             color,
-//             hint,
-//             prefixicon,
-//             sufixicon,
-//             height,
-//             validator,
-//           ),
-//         ),
-//       ],
-//     ),
-//   );
-// }

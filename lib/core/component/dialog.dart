@@ -9,19 +9,19 @@ loadingdialog(BuildContext context) {
   //   Navigator.of(context).pop();
   // }
 
-  Future.delayed(Duration(seconds: 3), () {
-    if(context.mounted!=false)
+  Future.delayed(Duration(seconds: 2), () {
+    if(context.mounted==false)
     if (ModalRoute.of(context)?.isCurrent == false) {
       Navigator.of(context).pop();
     }
   });
   return showDialog(
-    barrierDismissible: false,
+    barrierDismissible: true,
     context: context,
     builder: (context) {
       return Center(
         child: LoadingAnimationWidget.inkDrop(
-          color: Theme.of(context).colorScheme.onSurface,
+          color: Theme.of(context).colorScheme.onPrimary,
           size: 30.w,
         ),
       );
