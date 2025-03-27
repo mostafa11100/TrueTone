@@ -9,6 +9,7 @@ import 'package:truetone/feature/history_feature/presintation/screens/voice_play
 import 'package:truetone/feature/home/presintation/screens/home_views.dart';
 
 import 'core/di/si.dart';
+import 'feature/setting/presintation/screens/eddit_profile.dart';
 
 class Mainscreen extends StatefulWidget {
   Mainscreen({super.key});
@@ -31,7 +32,7 @@ class _MainscreenState extends State<Mainscreen> {
           _onItemTap(3);
         },
       ),
-      SettingScreen(),
+      EdditprofileScreen(),
       VoicePlayeScreen(voiceEntitylist: [VoiceEntity()]),
     ];
     _pageController = PageController();
@@ -186,24 +187,3 @@ class _MainscreenState extends State<Mainscreen> {
     );
   }
 }
-
-class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text("Settings Page")));
-  }
-}
-
-//
-// class history extends StatelessWidget {
-//   const history({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Scaffold(
-//       body:),
-//     );
-//   }
-// }

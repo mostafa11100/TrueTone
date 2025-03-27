@@ -9,6 +9,7 @@ import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dar
 import 'package:truetone/feature/history_feature/presintation/screens/history_screen.dart';
 import 'package:truetone/feature/history_feature/presintation/screens/voice_playe_screen.dart';
 import 'package:truetone/feature/home/presintation/screens/widget/AiSoundpage.dart';
+import 'package:truetone/feature/setting/presintation/screens/eddit_profile.dart';
 
 import 'package:truetone/feature/splash_onbording/onbording.dart';
 import 'package:truetone/feature/splash_onbording/splash.dart';
@@ -20,7 +21,9 @@ import '../../feature/auth/signup/presintation/screens/signup_screen.dart';
 import '../di/si.dart';
 
 class AppRouts {
-  static String splashscreen = "/";
+  static String splashscreen = "/s";
+
+  static String setting = "/";
 
   static String onbording = "/onbording";
 
@@ -116,6 +119,7 @@ class AppRouts {
       //     return HistoryScreen(navigatefunction: () {  },);
       //   },
       // ),
+
       GoRoute(
         path: forgetpassword,
         builder: (context, state) {
@@ -125,6 +129,13 @@ class AppRouts {
           );
         },
       ),
+
+      GoRoute(
+        path: setting,
+        builder: (context, state) {
+          return EdditprofileScreen();
+        },
+      )
     ],
   );
 

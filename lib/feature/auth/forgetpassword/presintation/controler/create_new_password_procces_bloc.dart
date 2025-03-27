@@ -21,6 +21,7 @@ class CreateNewPasswordProccesBloc
   CreateNewPasswordProccesBloc(this._basePasswordProccess)
     : super(CreateNewPasswordProccesInitial()) {
     on<SendOTP>((event, emit) async {
+      emit(CreateNewPasswordLoading());
       _verifyEmailUseCase = VerifyEmailUseCase(_basePasswordProccess);
       Either<Failure, Unit> result = await _verifyEmailUseCase.excute(
         event.email,
@@ -39,7 +40,7 @@ class CreateNewPasswordProccesBloc
         emit(CreateNewPasswordLoading());
         Either<Failure, Unit> result = await _checkOtpUseCase.excute(event.otp);
         result.fold(
-          (left) {print("errrrrror here ${left.error}");
+          (left) {
             emit(CreateNewPasswordFail(left.error!));
           },
           (_) {

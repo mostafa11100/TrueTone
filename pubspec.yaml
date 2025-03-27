@@ -49,6 +49,10 @@ dependencies:
   loading_animation_widget: ^1.3.0
   flutter_otp_text_field: ^1.5.1+1
   just_audio: ^0.9.46
+  date_field: ^6.0.0
+  image_picker: ^1.1.2
+  cached_network_image: ^3.4.1
+
 
 dev_dependencies:
   flutter_test:
@@ -92,6 +96,7 @@ flutter:
     - assets/images/loading.png
     - assets/images/man.png
     - assets/images/fake.png
+    - assets/images/empty_image.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

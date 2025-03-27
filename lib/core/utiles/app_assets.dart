@@ -5,7 +5,7 @@ String logoapple = "assets/images/Apple Logo.png";
 String splasset = "assets/images/splash.png";
 String onp1asset="assets/images/onp1.png";
 
-
+String emptyimage="assets/images/empty_image.png";
 String onp2asset="assets/images/onp2.png";
 String ropot2="assets/images/ropot_history.png";
 
