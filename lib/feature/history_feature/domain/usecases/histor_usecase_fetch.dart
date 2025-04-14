@@ -8,10 +8,21 @@ class UseCaseHistoryfitch
 {
   UseCaseHistoryfitch(this._baseHistoryRepo);
 BaseHistoryRepo _baseHistoryRepo;
- Future<Either<Failure, dynamic>> excute({data})async
+ Future<Either<Failure, List<VoiceEntity>>> excute({data})async
  {
-   Either<Failure, dynamic> result=await  _baseHistoryRepo.fetch( data);
+   Either<Failure, List<VoiceEntity>> result=await  _baseHistoryRepo.fetch( data);
    return result;
  }
 }
 
+
+class UseCaseDelete
+{
+  UseCaseDelete(this._baseHistoryRepo);
+  BaseHistoryRepo _baseHistoryRepo;
+  Future<Either<Failure, Unit>> excute({data})async
+  {
+    Either<Failure, Unit> result=await  _baseHistoryRepo.delete( data);
+    return result;
+  }
+}

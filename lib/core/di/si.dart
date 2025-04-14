@@ -14,6 +14,10 @@ import '../../feature/auth/forgetpassword/data/remote_passwordprocess.dart';
 import '../../feature/auth/forgetpassword/data/repo_imp/password_procees_repo_imp.dart';
 import '../../feature/auth/signup/presintation/controler/cubit/sign_up_cubit.dart';
 import '../../feature/history_feature/presintation/controlers/voice_screen_bloc.dart';
+import '../../feature/home/data/remote/remote_home.dart';
+import '../../feature/home/data/repo_imp/home_repo_imp.dart';
+import '../../feature/home/domain/usecases/check_audio_usecase.dart';
+import '../../feature/home/presintation/controlers/home_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -29,7 +33,6 @@ setupLocator() {
   sl.registerFactory(() {
     return SigninCubit(SigninUseCase(SigninRepo(RemoteSignin())));
   });
-
   sl.registerFactory(() {
     return CreateNewPasswordProccesBloc(
       PasswordProccesImp(RemotePasswordProcces()),
@@ -39,4 +42,7 @@ setupLocator() {
   sl.registerFactory(() {
     return VoiceScreenBloc(
     );});
+  sl.registerFactory(() {
+    return
+      HomeCubit(UsecaseCheckAudio(HomeCheckFileTypeRepo(HomeRemoteUploadFile())));});
 }

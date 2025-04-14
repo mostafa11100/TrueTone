@@ -13,7 +13,7 @@ class VoiceScreenBloc extends Bloc<VoiceScreenEvent, VoiceScreenState> {
 
   VoiceScreenBloc() : super(VoiceScreenInitial()) {
     on<InitPlayList>((event, emit) async {
-      player == AudioPlayer();
+      player = AudioPlayer();
       final ConcatenatingAudioSource playlist = await ConcatenatingAudioSource(
         useLazyPreparation: true,
         shuffleOrder: DefaultShuffleOrder(),

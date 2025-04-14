@@ -5,6 +5,9 @@ class baseurl{
 
   static String sendverification = "http://truetoneapi.runasp.net/api/Email/send-verification";
   static String newpasswordurl = "http://truetoneapi.runasp.net/api/Auth/reset-password";
+  static String uploadfile="";
+  static String fetchhistory="";
+  static String delethistory="";
 }
 
 

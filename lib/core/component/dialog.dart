@@ -4,16 +4,15 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
 
 loadingdialog(BuildContext context) {
-
   // if (context!=null) {
   //   Navigator.of(context).pop();
   // }
 
   Future.delayed(Duration(seconds: 2), () {
-    if(context.mounted==false)
-    if (ModalRoute.of(context)?.isCurrent == false) {
-      Navigator.of(context).pop();
-    }
+    if (context.mounted == false)
+      if (ModalRoute.of(context)?.isCurrent == false) {
+        Navigator.of(context).pop();
+      }
   });
   return showDialog(
     barrierDismissible: true,
@@ -48,12 +47,11 @@ simpledialog(
               children: [
                 Flexible(
                   child: InkWell(
-                borderRadius: BorderRadius.only(
-      bottomLeft: Radius.circular(40.r),
-      ),
-                    onTap: ()
-                    {
-ontap1();
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(40.r),
+                    ),
+                    onTap: () {
+                      ontap1();
                     },
                     child: Container(
                       height: 70.h,
@@ -77,16 +75,16 @@ ontap1();
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(40.r),
                     ),
-                    onTap:(){ontap2();},
+                    onTap: () {
+                      ontap2();
+                    },
                     child: Container(
                       height: 70.h,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         border: Border(
                           top: BorderSide(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onPrimary,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                           left: BorderSide(
                             color: Theme.of(

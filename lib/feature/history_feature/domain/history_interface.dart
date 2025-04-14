@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:truetone/core/error/Failure.dart';
+import 'package:truetone/feature/history_feature/data/model_history.dart';
+import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
 
-abstract class BaseHistoryRepo<Tfetch,Pramitarfetch,Tdelete,Pramitardelet>
+abstract class BaseHistoryRepo
 {
- Future<Either<Failure,Tfetch>> fetch([Pramitarfetch pr]);
- Future<Either<Failure,Tdelete>>   delete([Pramitardelet pr]);
+ Future<Either<Failure,List<VoiceEntity>>> fetch([HsirotyResponseModel pr]);
+ Future<Either<Failure,Unit>>   delete([HsirotyResponseModel pr]);
 }

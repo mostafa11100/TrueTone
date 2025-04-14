@@ -8,6 +8,7 @@ import 'package:truetone/feature/auth/verify_email/presintaion/screens/verify_em
 import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
 import 'package:truetone/feature/history_feature/presintation/screens/history_screen.dart';
 import 'package:truetone/feature/history_feature/presintation/screens/voice_playe_screen.dart';
+import 'package:truetone/feature/home/domain/%20entitys/homeentity_uploadfile.dart';
 import 'package:truetone/feature/home/presintation/screens/widget/AiSoundpage.dart';
 import 'package:truetone/feature/setting/presintation/screens/eddit_profile.dart';
 
@@ -18,27 +19,27 @@ import 'package:truetone/mainScreen.dart';
 import '../../feature/auth/forgetpassword/presintation/screens/createnewpassword_processcreeen.dart';
 import '../../feature/auth/signup/presintation/controler/cubit/sign_up_cubit.dart';
 import '../../feature/auth/signup/presintation/screens/signup_screen.dart';
+import '../../feature/home/presintation/screens/widget/typeof_audio_screen.dart';
 import '../di/si.dart';
 
 class AppRouts {
   static String splashscreen = "/s";
 
-  static String setting = "/";
+  static String setting = "/setting";
 
   static String onbording = "/onbording";
 
   static String signin = "/signin";
 
   static String signup = "/signup";
-  static String app_home = "/app_home";
+  static String app_home = "/app";
   static String verifyemalScreen = "/verifyemail";
   static String forgetpassword = "/forgetpassword";
   static String loading = "/loading";
-  static String mainscreen = "/mainscreen";
+  static String mainscreen = "/";
   static String voicescreen = "/voicescreen";
-  static String aisound = "/aisound";
+  static String typeaudioscreen = "/typeaudioscreen";
   static String history = "/history";
-
 
   static GoRouter routs = GoRouter(
     redirect: (context, state) {
@@ -104,22 +105,23 @@ class AppRouts {
         path: voicescreen,
         builder: (context, state) {
           return VoicePlayeScreen(
-              voiceEntitylist: state.extra as List<VoiceEntity>);
+            voiceEntitylist: state.extra as List<VoiceEntity>,
+          );
         },
       ),
       GoRoute(
-        path: aisound,
+        path: typeaudioscreen,
         builder: (context, state) {
-          return AiSoundPage();
+          return TypeofAudioScreen(result: state.extra as HomeEntity,);
         },
       ),
+
       // GoRoute(
       //   path: history,
       //   builder: (context, state) {
       //     return HistoryScreen(navigatefunction: () {  },);
       //   },
       // ),
-
       GoRoute(
         path: forgetpassword,
         builder: (context, state) {
@@ -135,9 +137,9 @@ class AppRouts {
         builder: (context, state) {
           return EdditprofileScreen();
         },
-      )
+      ),
     ],
   );
 
-//   static GoRouter routs = GoRouter(routes: []);
+  //   static GoRouter routs = GoRouter(routes: []);
 }

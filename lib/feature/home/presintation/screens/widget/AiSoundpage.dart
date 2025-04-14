@@ -1,5 +1,7 @@
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:truetone/core/Approuts/routs.dart';
 import 'package:truetone/core/utiles/app_assets.dart';
@@ -7,9 +9,11 @@ import 'package:truetone/core/utiles/app_colors.dart';
 import 'package:truetone/core/utiles/app_strings.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
 
-class AiSoundPage extends StatelessWidget {
-  const AiSoundPage({super.key});
+import '../../../domain/ entitys/homeentity_uploadfile.dart';
 
+class AiSoundPage extends StatelessWidget {
+  const AiSoundPage({super.key, required this.result});
+  final HomeEntity result;
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -38,6 +42,47 @@ class AiSoundPage extends StatelessWidget {
               children: [
                 SizedBox(height: screenSize.height * 0.17),
 
+                SizedBox(
+                  height: 250.h,
+
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AnimatedTextKit(
+                        onFinished: ()
+                        {
+
+                        },displayFullTextOnTap: true,totalRepeatCount: 4,
+                        animatedTexts: [
+                          TypewriterAnimatedText(speed: Duration(milliseconds: 200),
+
+                            Apptrings.AIsound,
+                            textStyle: TextstyleConst.texts40.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.onprimary,
+                              fontStyle: FontStyle.italic,
+                            ),
+
+                          ),
+
+                        ],
+                      ),
+                      //SizedBox(height: screenSize.height * 0.1),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal:30),
+                        child: Text(
+                          (result.rate?? "95.22%").toString(),
+                          style: TextstyleConst.texts24.copyWith(
+                            color: AppColors.onprimary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+
+
+                    ],
+                  ),
+                ),
            
                 Text(
                   Apptrings.AIsound,
@@ -51,7 +96,7 @@ class AiSoundPage extends StatelessWidget {
                 SizedBox(height: screenSize.height * 0.1),
 
                 Text(
-                  "95.22%",
+                  (result.rate?? "95.22%").toString(),
                   style: TextstyleConst.texts24.copyWith(
                     color: AppColors.onprimary,
                     fontWeight: FontWeight.bold,
