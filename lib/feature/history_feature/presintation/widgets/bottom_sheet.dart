@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:truetone/core/component/custom_button.dart';
@@ -56,14 +57,11 @@ custom_bottomsheet(BuildContext context) {
                           color: Theme.of(context).colorScheme.error,
                         ),
                       ),
-                      ontap1: ()
-                      {
-                        print("enter tobutton");
-GoRouter.of(context).pop();
+                      ontap1: () {
+                        GoRouter.of(context).pop();
                       },
                       ontap2: ()
                       {
-
                       },
                     );
                   },

@@ -20,7 +20,7 @@ static String share="Share";
   static String savechanges="Save Changes";
   static String areyousure= "Are You Shure You Want To Delete Audio1";
 
-
+static String hasbeendleted="the voice has been deleted successfuly";
   static String gettstart = "Get start";
   static String verify =  "Verify";
   static String forgotPassword =  "Forgot Password";

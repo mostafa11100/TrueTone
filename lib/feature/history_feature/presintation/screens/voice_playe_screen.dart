@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:truetone/core/utiles/app_assets.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
 import 'package:truetone/feature/history_feature/presintation/controlers/voice_screen_bloc.dart';
-import 'package:truetone/feature/history_feature/presintation/widgets/photo_hero_custom.dart';
 
 import '../../../../core/component/custom_sniper.dart';
 import '../../domain/entitys/voice_entity.dart';
