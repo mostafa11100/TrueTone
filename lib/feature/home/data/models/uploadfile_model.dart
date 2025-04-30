@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:path/path.dart';
@@ -13,7 +12,7 @@ class HomeModel extends Equatable {
 
   Future<Map<String, dynamic>> tojson() async {
     return {
-      "file": await MultipartFile.fromFile(
+        "AudioFile": await MultipartFile.fromFile(
         file!.path,
         filename: basename(file!.path),
       ),
@@ -21,8 +20,9 @@ class HomeModel extends Equatable {
   }
 HomeModel.fromjson({required Map<String,dynamic>json})
 {
-  typefile=json['typefile'];
-  rate=json['rate'];
+  print("enter to model  and result ======= ${json}");
+  typefile=json['result'];
+  rate=json['confidence'];
 }
 
   @override

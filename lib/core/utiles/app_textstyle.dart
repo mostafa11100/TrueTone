@@ -63,4 +63,8 @@ class TextstyleConst {
     fontSize: 40.sp,
     fontWeight: FontWeight.w500,
   );
+  static TextStyle texts42 = TextStyle(
+    fontSize: 48.sp,
+    fontWeight: FontWeight.w800
+  );
 }

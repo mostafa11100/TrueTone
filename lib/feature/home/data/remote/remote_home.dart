@@ -11,7 +11,8 @@ abstract class BaseHomeRemote {
 
 class HomeRemoteUploadFile extends BaseHomeRemote {
   @override
-  Future<Response> uploadfile({HomeModel? homemodel}) async {
+  Future<Response> uploadfile({HomeModel? homemodel}) async
+  {
     Response result = await sl<DioNetwork>().uploadfile(
       url: baseurl.uploadfile,
       json: await homemodel!.tojson(),

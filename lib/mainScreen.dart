@@ -9,6 +9,7 @@ import 'package:truetone/feature/history_feature/presintation/screens/voice_play
 import 'package:truetone/feature/home/presintation/screens/home_views.dart';
 
 import 'core/di/si.dart';
+import 'feature/history_feature/presintation/controlers/history_bloc/history_bloc.dart';
 import 'feature/setting/presintation/screens/eddit_profile.dart';
 
 class Mainscreen extends StatefulWidget {
@@ -20,32 +21,39 @@ class Mainscreen extends StatefulWidget {
 
 class _MainscreenState extends State<Mainscreen> {
   late final PageController _pageController;
-
   late final ValueNotifier<int> _selectedNotifier;
-
-  @override
-  void initState() {
-    _screens = [
-      HomeViews(),
-      HistoryScreen(
-        navigatefunction: () {
-          _onItemTap(3);
-        },
-      ),
-      EdditprofileScreen(),
-      VoicePlayeScreen(voiceEntitylist: [VoiceEntity()]),
-    ];
-    _pageController = PageController();
-    _selectedNotifier = ValueNotifier(0);
-
-    super.initState();
-  }
-
   late final List<Widget> _screens;
 
   void _onItemTap(int index) {
     _selectedNotifier.value = index;
     _pageController.jumpToPage(index);
+  }
+
+  @override
+  void didChangeDependencies() {
+    _screens = [
+      HomeViews(),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => sl<HistoryBloc>(),
+          ),
+          BlocProvider(
+            create: (context) => sl<VoiceScreenBloc>(),
+          ),
+        ],
+        child: HistoryScreen(
+          navigatefunction: () {
+            // _onItemTap(3);
+          },
+        ),
+      ),
+      EdditprofileScreen(),
+    ];
+    _pageController = PageController();
+    _selectedNotifier = ValueNotifier(0);
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -56,132 +64,134 @@ class _MainscreenState extends State<Mainscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<VoiceScreenBloc>(),
-      child: SafeArea(
-        child: Scaffold(
-          body: Stack(
-            children: [
-              PageView(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.primarycolor,
+        body: Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(bottom: 80.h),
+              child: PageView(
                 controller: _pageController,
                 onPageChanged: (value) => _selectedNotifier.value = value,
                 physics: const NeverScrollableScrollPhysics(),
                 children: _screens,
               ),
+            ),
 
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: ValueListenableBuilder<int>(
-                  valueListenable: _selectedNotifier,
-                  builder: (context, selectedIndex, _) {
-                    return Container(
-                      margin: EdgeInsets.only(bottom: 5),
-                      height: 80.h,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(35.r)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 10,
-                            spreadRadius: 2,
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
-                            onTap: () => _onItemTap(1),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.history,
-                                  size: 30.r,
-                                  color:
-                                      selectedIndex == 1
-                                          ? AppColors.primarycolor
-                                          : AppColors.onSurface,
-                                ),
-                                Text(
-                                  "History",
-                                  style: TextStyle(
-                                    color:
-                                        selectedIndex == 1
-                                            ? AppColors.primarycolor
-                                            : Colors.black,
-                                    fontSize: 12.sp,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          GestureDetector(
-                            onTap: () => _onItemTap(0),
-                            child: Container(
-                              width: 60.w,
-                              height: 60.h,
-                              decoration: BoxDecoration(
-                                color:
-                                    selectedIndex == 0
-                                        ? AppColors.primarycolor
-                                        : AppColors.onprimary,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color:
-                                      selectedIndex == 0
-                                          ? Colors.transparent
-                                          : AppColors.primarycolor,
-                                  width: 2,
-                                ),
-                              ),
-                              child: Icon(
-                                Icons.graphic_eq,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ValueListenableBuilder<int>(
+                valueListenable: _selectedNotifier,
+                builder: (context, selectedIndex, _) {
+                  return Container(
+                    height: 80.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        GestureDetector(
+                          onTap: () => _onItemTap(1),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.history,
                                 size: 30.r,
                                 color:
-                                    selectedIndex == 0
-                                        ? AppColors.onprimary
-                                        : AppColors.primarycolor,
+                                selectedIndex == 1
+                                    ? AppColors.primarycolor
+                                    : AppColors.onSurface,
+                              ),
+                              Text(
+                                "History",
+                                style: TextStyle(
+                                  color:
+                                  selectedIndex == 1
+                                      ? AppColors.primarycolor
+                                      : Colors.black,
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        GestureDetector(
+                          onTap: () => _onItemTap(0),
+                          child: Container(
+                            width: 60.w,
+                            height: 60.h,
+                            decoration: BoxDecoration(
+                              color:
+                              selectedIndex == 0
+                                  ? AppColors.primarycolor
+                                  : AppColors.onprimary,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color:
+                                selectedIndex == 0
+                                    ? Colors.transparent
+                                    : AppColors.primarycolor,
+                                width: 2,
                               ),
                             ),
-                          ),
-
-                          GestureDetector(
-                            onTap: () => _onItemTap(2),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.settings_outlined,
-                                  size: 30.r,
-                                  color:
-                                      selectedIndex == 2
-                                          ? AppColors.primarycolor
-                                          :  AppColors.onSurface,
-                                ),
-                                Text(
-                                  "Settings",
-                                  style: TextStyle(
-                                    color:
-                                        selectedIndex == 2
-                                            ? AppColors.primarycolor
-                                            : AppColors.black,
-                                    fontSize: 12.sp,
-                                  ),
-                                ),
-                              ],
+                            child: Icon(
+                              Icons.graphic_eq,
+                              size: 30.r,
+                              color:
+                              selectedIndex == 0
+                                  ? AppColors.onprimary
+                                  : AppColors.primarycolor,
                             ),
                           ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                        ),
+
+                        GestureDetector(
+                          onTap: () => _onItemTap(2),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.settings_outlined,
+                                size: 30.r,
+                                color:
+                                selectedIndex == 2
+                                    ? AppColors.primarycolor
+                                    : AppColors.onSurface,
+                              ),
+                              Text(
+                                "Settings",
+                                style: TextStyle(
+                                  color:
+                                  selectedIndex == 2
+                                      ? AppColors.primarycolor
+                                      : AppColors.black,
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

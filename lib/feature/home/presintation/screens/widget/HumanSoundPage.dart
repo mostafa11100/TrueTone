@@ -1,11 +1,14 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:truetone/core/utiles/app_assets.dart';
 import 'package:truetone/core/utiles/app_colors.dart';
 import 'package:truetone/core/utiles/app_strings.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
 import 'package:truetone/feature/home/domain/%20entitys/homeentity_uploadfile.dart';
+
+import '../../../../../core/Approuts/routs.dart';
 
 class HumanSoundPage extends StatefulWidget {
   const HumanSoundPage({super.key, required this.result});
@@ -47,12 +50,13 @@ late  AnimatedTextController animatedTextController;
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: screenSize.height * 0.17),
+                SizedBox(height: screenSize.height * 0.20),
 
                 SizedBox(
-                  height: 250.h,
+                  height: 280.h,
 
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       AnimatedTextKit(
@@ -64,8 +68,8 @@ late  AnimatedTextController animatedTextController;
                           TypewriterAnimatedText(
                             speed: Duration(milliseconds: 200),
                             Apptrings.Humansound,
-                            textStyle: TextstyleConst.texts40.copyWith(
-                              fontWeight: FontWeight.w700,
+                            textStyle: TextstyleConst.texts42.copyWith(
+                              fontWeight: FontWeight.w900,
                               color: AppColors.onprimary,
                               fontStyle: FontStyle.italic,
                             ),
@@ -75,14 +79,11 @@ late  AnimatedTextController animatedTextController;
                         ],
                       ),
                       //SizedBox(height: screenSize.height * 0.1),
-                      Padding(
-                        padding:  EdgeInsets.symmetric(horizontal:25.w),
-                        child: Text(
-                          (widget.result.rate?? "95.22%").toString(),
-                          style: TextstyleConst.texts24.copyWith(
-                            color: AppColors.onprimary,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      Text(
+                        (widget.result.rate?? "").toString(),
+                        style: TextstyleConst.texts28.copyWith(
+                          color: AppColors.onprimary,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
 
@@ -91,30 +92,16 @@ late  AnimatedTextController animatedTextController;
                   ),
                 ),
 
-                // Text(
-                //   Apptrings.Humansound,
-                //   style: TextstyleConst.texts40.copyWith(
-                //     fontWeight: FontWeight.w700,
-                //     color: AppColors.onprimary,
-                //     fontStyle: FontStyle.italic,
-                //   ),
-                // ),
-                //
-                // SizedBox(height: screenSize.height * 0.1),
-                //
-                // Text(
-                //   (result.rate?? "95.22%").toString(),
-                //   style: TextstyleConst.texts24.copyWith(
-                //     color: AppColors.onprimary,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
-                SizedBox(height: screenSize.height * 0.19),
+
+                SizedBox(height: screenSize.height * 0.18),
+
 
                 Align(
                   alignment: Alignment.centerLeft,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      GoRouter.of(context).push(AppRouts.mainscreen);
+                    },
                     style: ElevatedButton.styleFrom(
                       shape: const CircleBorder(),
                       padding: EdgeInsets.all(screenSize.width * 0.13),
@@ -122,9 +109,8 @@ late  AnimatedTextController animatedTextController;
                     ),
                     child: Text(
                       Apptrings.continue1,
-                      style: TextstyleConst.texts20.copyWith(
-                        color: AppColors.primarycolor,
-                      ),
+                      style:
+                      TextstyleConst.texts24.copyWith(fontWeight: FontWeight.w600,color: AppColors.primarycolor),
                     ),
                   ),
                 ),

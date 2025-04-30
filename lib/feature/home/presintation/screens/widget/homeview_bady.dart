@@ -14,6 +14,7 @@ import 'package:truetone/feature/home/presintation/controlers/home_cubit.dart';
 import '../../../../../core/component/custom_sniper.dart';
 import '../../../../../core/component/loading.dart';
 import '../../../../../core/di/si.dart';
+import 'home_button_animation.dart';
 
 class HomeviewBady extends StatefulWidget {
   const HomeviewBady({super.key});
@@ -33,7 +34,7 @@ class _HomeviewBadyState extends State<HomeviewBady> {
     super.initState();
   }
 
-  void _onImageTap() async {
+  void _onImageTap(context) async {
     // Handle any additional functionality if needed
     setState(() {
       _scale = 0.8;
@@ -56,6 +57,8 @@ class _HomeviewBadyState extends State<HomeviewBady> {
     });
   }
 
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -64,61 +67,71 @@ class _HomeviewBadyState extends State<HomeviewBady> {
     return BlocProvider(
       create: (context) => sl<HomeCubit>(),
 
-      child: BlocListener<HomeCubit, HomeState>(
-        listener: (context, state) {
-          if (state is HomeFail) {
-            if (GoRouter.of(context).canPop()) {
-              GoRouter.of(context).pop();
-            }
-            customsnackbar(
-              textcolor: AppColors.onSurface,
-              text: state.error,
-              color: AppColors.errorcolor,
-            );
-          }
-          if (state is HomeSuccess) {
-            GoRouter.of(
-              context,
-            ).pushReplacement(AppRouts.typeaudioscreen, extra: state.entity);
-          } else {
-            showloadingdialog(context);
-          }
-        },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: GestureDetector(
-                onTap: _onImageTap, // Trigger the animation and navigation
-                child: AnimatedScale(
-                  scale: _scale,
-                  duration: Duration(milliseconds: 100),
-                  // Duration of the scale animation
-                  curve: Curves.easeInOut,
-                  // Smooth animation curve
-                  child: Image.asset(homeimage),
-                ),
-              ),
-            ),
-            SizedBox(height: 20.h),
-            GestureDetector(
-              onTap: () async {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    Apptrings.hometitle,
-                    style: TextstyleConst.texts18.copyWith(
-                      fontStyle: FontStyle.italic,
-                      color: AppColors.onprimary,
+      child: Builder(
+        builder: (context) {
+          return BlocListener<HomeCubit, HomeState>(
+            listener: (context, state) {
+              if (state is HomeFail) {
+                loading = false;
+                if (GoRouter.of(context).canPop()) {
+                  GoRouter.of(context).pop();
+                }
+                customsnackbar(
+                  context: context,
+                  textcolor: AppColors.onSurface,
+                  text: state.error,
+                  color: AppColors.errorcolor,
+                );
+              }
+              if (state is HomeSuccess) {
+                GoRouter.of(
+                  context,
+                ).push(AppRouts.typeaudioscreen, extra: state.entity);
+              } else {
+                setState(() {
+                  loading = true;
+                });
+              }
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: GestureDetector(
+                    onTap: loading?  (){
+                      _onImageTap(context);
+                    }:null, // Trigger the animation and navigation
+                    child: AnimatedScale(
+                      scale: _scale,
+                      duration: Duration(milliseconds: 100),
+                      // Duration of the scale animation
+                      curve: Curves.easeInOut,
+                      // Smooth animation curve
+                      child: HomeButtonAnimation(state: loading),
                     ),
                   ),
-                ],
-              ),
+                ),
+                SizedBox(height: 20.h),
+                GestureDetector(
+                  onTap: () async {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        Apptrings.hometitle,
+                        style: TextstyleConst.texts18.copyWith(
+                          fontStyle: FontStyle.italic,
+                          color: AppColors.onprimary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20.h),
+              ],
             ),
-            SizedBox(height: 20.h),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

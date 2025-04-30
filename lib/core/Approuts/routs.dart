@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:truetone/core/component/loading.dart';
+import 'package:truetone/core/helper/shared_pref.dart';
 import 'package:truetone/feature/auth/forgetpassword/presintation/controler/create_new_password_procces_bloc.dart';
 import 'package:truetone/feature/auth/signin/presintation/controler/signin_cubit.dart';
 import 'package:truetone/feature/auth/signin/presintation/screens/signin_screen.dart';
@@ -19,11 +20,13 @@ import 'package:truetone/mainScreen.dart';
 import '../../feature/auth/forgetpassword/presintation/screens/createnewpassword_processcreeen.dart';
 import '../../feature/auth/signup/presintation/controler/cubit/sign_up_cubit.dart';
 import '../../feature/auth/signup/presintation/screens/signup_screen.dart';
+import '../../feature/history_feature/presintation/controlers/voice_screen_bloc.dart';
+import '../../feature/history_feature/presintation/widgets/blocvalue_widget.dart';
 import '../../feature/home/presintation/screens/widget/typeof_audio_screen.dart';
 import '../di/si.dart';
 
 class AppRouts {
-  static String splashscreen = "/s";
+  static String splashscreen = "/";
 
   static String setting = "/setting";
 
@@ -36,15 +39,24 @@ class AppRouts {
   static String verifyemalScreen = "/verifyemail";
   static String forgetpassword = "/forgetpassword";
   static String loading = "/loading";
-  static String mainscreen = "/";
+  static String mainscreen = "/mainscreen";
   static String voicescreen = "/voicescreen";
   static String typeaudioscreen = "/typeaudioscreen";
   static String history = "/history";
 
   static GoRouter routs = GoRouter(
-    redirect: (context, state) {
-      return null;
-    },
+    initialLocation: splashscreen,
+    // redirect: (context, state)async {
+    //
+    //   bool visit =await sl<Cashhelper>().gituservisit()??false;
+    //   if(visit) {
+    //     bool login = await sl<Cashhelper>().getuserlogin()??false ;
+    //     return login ? mainscreen : signin;
+    //   }
+    //   else {
+    //     sl<Cashhelper>().setvisit();
+    //     return null;}
+    // },
     routes: [
       GoRoute(
         path: splashscreen,
@@ -104,24 +116,27 @@ class AppRouts {
       GoRoute(
         path: voicescreen,
         builder: (context, state) {
-          return VoicePlayeScreen(
-            voiceEntitylist: state.extra as List<VoiceEntity>,
+          final Map<String, dynamic> extra =
+              state.extra as Map<String, dynamic>;
+          final dynamic bloc = extra['bloc'] as VoiceScreenBloc;
+          List<VoiceEntity> voice = extra['voices'];
+          int index = extra['index'];
+          return BlocProvider.value(
+            value: bloc,
+            child: VoiceScreenBlocValue(
+              voices: voice,
+              bloc: bloc,
+              index: index,
+            ),
           );
         },
       ),
       GoRoute(
         path: typeaudioscreen,
         builder: (context, state) {
-          return TypeofAudioScreen(result: state.extra as HomeEntity,);
+          return TypeofAudioScreen(result: state.extra as HomeEntity);
         },
       ),
-
-      // GoRoute(
-      //   path: history,
-      //   builder: (context, state) {
-      //     return HistoryScreen(navigatefunction: () {  },);
-      //   },
-      // ),
       GoRoute(
         path: forgetpassword,
         builder: (context, state) {

@@ -20,18 +20,22 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
 
   HistoryBloc(this._baseHistoryRepo) : super(HistoryInitial()) {
     on<FetchHistoryEvent>((event, emit) async {
-      _useCaseHistoryfitch = UseCaseHistoryfitch(_baseHistoryRepo);
-      emit(HistoryLoading());
-      Either<Failure, List<VoiceEntity>> rslt = await _useCaseHistoryfitch
-          .excute(data: HsirotyResponseModel);
-      rslt.fold(
-        (left) {
-          emit(HistoryFail(left.error!));
-        },
-        (right) {
-          emit(HistorySuccessFetch(right));
-        },
-      );
+      try {
+        _useCaseHistoryfitch = UseCaseHistoryfitch(_baseHistoryRepo);
+        emit(HistoryLoading());
+        Either<Failure, List<VoiceEntity>> rslt = await _useCaseHistoryfitch
+            .excute(data: HsirotyResponseModel());
+        rslt.fold(
+          (left) {
+            emit(HistoryFail(left.error!));
+          },
+          (right) {
+            emit(HistorySuccessFetch(right));
+          },
+        );
+      } catch (e) {
+        emit(HistoryFail(Failure.firbaseeror(e.toString()).error!));
+      }
     });
     //
     on<DeleteHistory>((event, emit) async {

@@ -19,12 +19,14 @@ class _LoadingscreenState extends State<Loadingscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(backgroundColor: AppColors.onprimary,
       body: SafeArea(
-        child: Center(
-          child: LoadingAnimationWidget.stretchedDots(
-            color: AppColors.primarycolor,
-            size: 110.w,
+        child: SizedBox(width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,
+          child: Center(
+            child: LoadingAnimationWidget.stretchedDots(
+              color: AppColors.primarycolor,
+              size: 100.w,
+            ),
           ),
         ),
       ),

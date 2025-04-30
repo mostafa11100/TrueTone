@@ -9,103 +9,137 @@ import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dar
 import '../controlers/voice_screen_bloc.dart';
 
 class aUdioPlayerCutom extends StatefulWidget {
-  const aUdioPlayerCutom({super.key});
+  aUdioPlayerCutom({super.key, required this.loading, required this.index});
+
+  int index;
+  bool loading;
 
   @override
   State<aUdioPlayerCutom> createState() => _aUdioPlayerCutomState();
 }
 
 class _aUdioPlayerCutomState extends State<aUdioPlayerCutom> {
-  bool playe=false;
-  bool playefirst=false;
-
   @override
   void initState() {
-
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 25.w,
-      children: [
-        InkWell(onTap: ()async
+    return BlocBuilder<VoiceScreenBloc, VoiceScreenState>(
+      builder: (context, state) {
+        if (state is Voiceloading || widget.loading) {
+          return button_custom(context: context, loading: true);
+        }
+        if (state is VoiceFail)
         {
-        //  await widget.audioplayer.;
-          BlocProvider.of<VoiceScreenBloc>(context).add(PlayBefore())
-        ;},
-          child: Icon(
-            Icons.fast_rewind_rounded,
-            size: 32.r,
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
-        ),
-
-        SizedBox(
-          width: 75.w,
-          height: 75.h,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              backgroundColor: Theme.of(
-                context,
-              ).colorScheme.onPrimary.withOpacity(.4),
-            ),
-            onPressed: ()async
-            {
-
-
-              if(playefirst)
-                {
-                  if(playe)
-                    {
-                      BlocProvider.of<VoiceScreenBloc>(context).add(Stop());
-
-                    }
-                  else
-                    {BlocProvider.of<VoiceScreenBloc>(context).add(Pause());
-
-                    }
-                }else
-                {
-
-                playefirst=true;
-              }
-
-
-
-            },
-            child: Center(
-              child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 300),
-                child:playe? Icon(
-                  Icons.pause,
-                  size: 35.r,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ):Icon(
-                  Icons.pause,
-                  size: 35.r,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
-              ),
-            ),
-          ),
-        ),
-
-        InkWell(
-          onTap: ()
-          {
-            BlocProvider.of<VoiceScreenBloc>(context).add(Pause());
-          },
-          child: Icon(
-            Icons.fast_forward_rounded,
-            size: 32.r,
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
-        ),
-      ],
+          return  button_custom(
+            context: context,
+            loading: false,
+            index: widget.index,
+          );
+        }
+        if (state is VoiceButtonstate) {
+          return button_custom(
+            context: context,
+            loading: false,
+            play: state.play,
+            index: widget.index,
+          );
+        } else {
+          return button_custom(
+            context: context,
+            loading: false,
+            index: widget.index,
+          );
+        }
+      },
     );
   }
 }
 
+Widget button_custom({context, loading = false, play = false, index = 0}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    spacing: 25.w,
+    children: [
+      InkWell(
+        onTap: () async {
+          BlocProvider.of<VoiceScreenBloc>(context).add(PlayBefore());
+        },
+        child: Icon(
+          Icons.fast_rewind_rounded,
+          size: 32.r,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
+      ),
+
+      SizedBox(
+        width: 75.w,
+        height: 75.h,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: CircleBorder(),
+            backgroundColor: Theme.of(
+              context,
+            ).colorScheme.onPrimary.withOpacity(.4),
+          ),
+          onPressed:
+              loading
+                  ? null
+                  : () async {
+                    if (!play)
+                      BlocProvider.of<VoiceScreenBloc>(context).add(Pause());
+                    else
+                      BlocProvider.of<VoiceScreenBloc>(context).add(Stop());
+                  },
+          child: Center(
+            child: AnimatedSwitcher(
+              duration: Duration(milliseconds: 300),
+              child:
+                  loading
+                      ? Center(
+                        child: SizedBox(
+                          height: 25.r,
+                          width: 25.r,
+                          child: CircularProgressIndicator(
+                            color: AppColors.onprimary,
+                          ),
+                        ),
+                      )
+                      : play
+                      ? Icon(
+                        Icons.pause,
+                        size: 35.r,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      )
+                      : Icon(
+                        Icons.play_arrow_rounded,
+                        size: 35.r,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+            ),
+          ),
+        ),
+      ),
+
+      InkWell(
+        onTap: () {
+          BlocProvider.of<VoiceScreenBloc>(context).add(PlayNext());
+        },
+        child: Icon(
+          Icons.fast_forward_rounded,
+          size: 32.r,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
+      ),
+    ],
+  );
+}
+
+audioplayerputtoncustom(state, indx) {
+  if (state is Voiceloading)
+    return aUdioPlayerCutom(loading: true, index: indx!);
+  else
+    return aUdioPlayerCutom(loading: false, index: indx!);
+}

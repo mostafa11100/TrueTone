@@ -5,6 +5,6 @@ import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dar
 
 abstract class BaseHistoryRepo
 {
- Future<Either<Failure,List<VoiceEntity>>> fetch([HsirotyResponseModel pr]);
+ Future<Either<Failure,List<VoiceEntity>>> fetch();
  Future<Either<Failure,Unit>>   delete([HsirotyResponseModel pr]);
 }

@@ -7,10 +7,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Cashhelper {
-  Future<void> setuserid(id) async {
+
+  Future<void> setusertoken(token) async {
     SharedPreferences? sharedPreferences =
     await SharedPreferences.getInstance();
-    sharedPreferences.setString("id", id);
+    sharedPreferences.setString("token", token);
+  } Future<void> setvisit() async {
+    SharedPreferences? sharedPreferences =
+    await SharedPreferences.getInstance();
+    sharedPreferences.setBool("visit", true);
   }
 
   Future<void> setlanguage(lang) async {
@@ -43,10 +48,10 @@ class Cashhelper {
     sharedPreferences.setString("local", local);
   }
 
-  Future<String?> getuserid() async {
+  Future<String?> getusertoken() async {
     SharedPreferences? sharedPreferences =
     await SharedPreferences.getInstance();
-    return sharedPreferences.getString("id");
+    return sharedPreferences.getString("token");
   }
 
 
@@ -93,6 +98,11 @@ class Cashhelper {
     SharedPreferences? sharedPreferences =
     await SharedPreferences.getInstance();
 
-    return sharedPreferences.getBool("login");
+    return sharedPreferences.getBool("login")??false;
+  }Future<bool?> gituservisit() async {
+    SharedPreferences? sharedPreferences =
+    await SharedPreferences.getInstance();
+
+    return sharedPreferences.getBool("visit");
   }
 }

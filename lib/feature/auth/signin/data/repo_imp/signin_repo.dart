@@ -19,7 +19,7 @@ class SigninRepo extends BaseSignin<Unit, SignInEntity> {
       SigninModel mdel = entity.maptosigninmodel();
       Response? result = await _remoteSignIn.excute(mdel.tojson());
       // cashinggg=====>
-     await sl<Cashhelper>().setuserinfo(result!.data);
+     await sl<Cashhelper>().setusertoken(result!.data['token']);
      await sl<Cashhelper>().setuserlogin();
 
      return Right(unit);
@@ -28,5 +28,7 @@ class SigninRepo extends BaseSignin<Unit, SignInEntity> {
     {
       return Left(Failure.handleHttpError(e));
     }
+    catch(e)
+    { return Left(Failure.firbaseeror(e.toString()));}
   }
 }
