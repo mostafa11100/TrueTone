@@ -40,13 +40,14 @@ class AiSoundPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: screenSize.height * 0.17),
+                SizedBox(height: screenSize.height * 0.21),
 
                 SizedBox(
-                  height: 250.h,
+                  height: 280.h,
 
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AnimatedTextKit(
                         onFinished: ()
@@ -54,11 +55,11 @@ class AiSoundPage extends StatelessWidget {
 
                         },displayFullTextOnTap: true,totalRepeatCount: 4,
                         animatedTexts: [
-                          TypewriterAnimatedText(speed: Duration(milliseconds: 200),
+                          TypewriterAnimatedText(speed: Duration(milliseconds: 150),
 
                             Apptrings.AIsound,
-                            textStyle: TextstyleConst.texts40.copyWith(
-                              fontWeight: FontWeight.w700,
+                            textStyle: TextstyleConst.texts42.copyWith(
+                              fontWeight: FontWeight.w900,
                               color: AppColors.onprimary,
                               fontStyle: FontStyle.italic,
                             ),
@@ -68,38 +69,16 @@ class AiSoundPage extends StatelessWidget {
                         ],
                       ),
                       //SizedBox(height: screenSize.height * 0.1),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal:30),
-                        child: Text(
-                          (result.rate?? "95.22%").toString(),
-                          style: TextstyleConst.texts24.copyWith(
-                            color: AppColors.onprimary,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      Text(
+                        (result.rate?? "").toString(),
+                        style: TextstyleConst.texts28.copyWith(
+                          color: AppColors.onprimary,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
 
 
                     ],
-                  ),
-                ),
-           
-                Text(
-                  Apptrings.AIsound,
-                  style: TextstyleConst.texts40.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.onprimary,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-
-                SizedBox(height: screenSize.height * 0.1),
-
-                Text(
-                  (result.rate?? "95.22%").toString(),
-                  style: TextstyleConst.texts24.copyWith(
-                    color: AppColors.onprimary,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
 
@@ -120,7 +99,7 @@ class AiSoundPage extends StatelessWidget {
                     child: Text(
                       Apptrings.continue1,
                       style:
-                          TextstyleConst.texts20.copyWith(color: AppColors.primarycolor),
+                          TextstyleConst.texts24.copyWith(fontWeight: FontWeight.w600,color: AppColors.primarycolor),
                     ),
                   ),
                 ),

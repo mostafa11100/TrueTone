@@ -22,18 +22,20 @@ static HomeCubit blocprovider(context)
   checkaudio({required HomeEntity entity}) async {
     emit(HomeLoading());
     try {
+      print("enter to cubit  send voice");
       Either<Failure, HomeModel> result = await _usecaseCheckAudio.excute(
         entity,
       );
       result.fold(
-        (left) {
+        (left) {print("enter to cubit  send voice errrror ${left.error}");
           emit(HomeFail(left.error!));
         },
         (right) {
+          print("enter to cubit  send voice  success sended ");
           emit(HomeSuccess(right.tohomeentity()));
         },
       );
-    } catch (e) {
+    } catch (e) {print("enter to cubit  send voice catch error ${e.toString()}");
       emit(HomeFail(e.toString()));
     }
   }

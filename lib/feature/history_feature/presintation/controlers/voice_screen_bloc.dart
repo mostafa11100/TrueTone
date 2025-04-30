@@ -1,100 +1,204 @@
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:meta/meta.dart';
+import 'package:truetone/core/error/Failure.dart';
 import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
+
+import '../../../../core/helper/audio_service.dart';
 
 part 'voice_screen_event.dart';
 
 part 'voice_screen_state.dart';
 
 class VoiceScreenBloc extends Bloc<VoiceScreenEvent, VoiceScreenState> {
-  late final AudioPlayer player;
-
+  late AudioPlayer player;
+  late AudioService audioService;
+  bool intializd = false;
 
   VoiceScreenBloc() : super(VoiceScreenInitial()) {
     on<InitPlayList>((event, emit) async {
-      player = AudioPlayer();
-      final ConcatenatingAudioSource playlist = await ConcatenatingAudioSource(
-        useLazyPreparation: true,
-        shuffleOrder: DefaultShuffleOrder(),
-        children: List.generate(event.listofvoice.length, (i) {
-          return AudioSource.uri(Uri.parse(event.listofvoice[i].url!));
-        }),
-      );
-    });
-      on<Seektopostion>((event, emit) async {
-        try {
-          int position = (event.position * 100).toInt();
-          await player.seek(
-              Duration(minutes: position), index: player.currentIndex);
-
-          emit(Voicesucce(player.duration!,player.position,player.currentIndex!));
-        } on PlayerException catch (e) {
-          emit(VoiceFail("Error message: ${e.message}"));
-        } on PlayerInterruptedException catch (e) {
-          emit(VoiceFail("Connection aborted: ${e.message}"));
-        } catch (e) {
-          // Fallback for all other errors
-          emit(VoiceFail('oop Unown error'));
-        }
-      });
-    on<Stop>((event, emit) async {
+      emit(Voiceloading());
       try {
-
-        await player.stop(
-           );
-
-        emit(Voicesucce(player.duration!,player.position,player.currentIndex!));
-      } on PlayerException catch (e) {
-        emit(VoiceFail("Error message: ${e.message}"));
-      } on PlayerInterruptedException catch (e) {
-        emit(VoiceFail("Connection aborted: ${e.message}"));
+        audioService = AudioService();
+        if (intializd == false) {
+          Either<Failure, Duration> result = await audioService.initplaylist(
+            listofvoice: event.listofvoice,
+            index: event.index,
+            listenfunction: (d) {
+              add(Changeposition(d));
+            },
+            playing: () {
+              add(PlayingEvent());
+            },
+            stop: () {
+              add(Stop());
+            },
+            completed: () {
+              add(PlayCompleltedEvent());
+            },
+            loading: () {
+              add(PlayLoadingEvent());
+            },
+            ready: () {
+              add(PlayRedayEvent());
+            },
+          );
+          result.fold(
+            (left) {
+              emit(VoiceFail(left.error!));
+            },
+            (right) {
+              emit(
+                Voicesucce(
+                  right,
+                  Duration.zero,
+                  audioService.player.currentIndex,
+                ),
+              );
+            },
+          );
+        } else {
+          Either<Failure, Duration> result = await audioService.seektoindex(
+            index: event.index,
+          );
+          result.fold(
+            (left) {
+              emit(VoiceFail(left.error!));
+            },
+            (right) {
+              Voicesucce(
+                right,
+                Duration.zero,
+                audioService.player.currentIndex,
+              );
+            },
+          );
+        }
       } catch (e) {
-        // Fallback for all other errors
-        emit(VoiceFail('oop Unown error'));
+        emit(VoiceFail(Failure.firbaseeror(e.toString()).error!));
       }
     });
-      on<PlayBefore>((event, emit) async
-      {
-        try {
-          await player.seekToPrevious();
-          emit(Voicesucce(player.duration!,player.position,player.currentIndex!));
-        } on PlayerException catch (e) {
-          emit(VoiceFail("Error message: ${e.message}"));
-        } on PlayerInterruptedException catch (e) {
-          emit(VoiceFail("Connection aborted: ${e.message}"));
-        } catch (e) {
-          // Fallback for all other errors
-          emit(VoiceFail('oop Unown error'));
-        }
-      });
-      on<PlayNext>((event, emit) async
-      {
+    on<Changeposition>((event, emit) {
+      emit(Voicedurationupdate(event.position));
+    });
+    on<Seektopostion>((event, emit) async {
+      emit(Voiceloading());
+      Either<Failure, Duration> result = await audioService.seektoposition(
+        position: event.position.toInt(),
+      );
+      result.fold(
+        (left) {
+          emit(VoiceFail(left.error!));
+        },
+        (right) {
+          emit(
+            Voicesucce(
+              Duration(
+                seconds:
+                    audioService.player.duration!.inSeconds - right.inSeconds,
+              ),
+              right,
+              audioService.player.currentIndex,
+            ),
+          );
+        },
+      );
+    });
+    on<Stop>((event, emit) async
+    {
+      emit(Voiceloading());
 
-        try {
-          await player.seekToNext();
-          emit(Voicesucce(player.duration!,player.position,player.currentIndex!));
-        } on PlayerException catch (e) {
-          emit(VoiceFail("Error message: ${e.message}"));
-        } on PlayerInterruptedException catch (e) {
-          emit(VoiceFail("Connection aborted: ${e.message}"));
-        } catch (e) {
-          // Fallback for all other errors
-          emit(VoiceFail('oop Unown error'));
-        }
-      });
-      on<play>((event, emit) async {
-        try {
+      Either<Failure, Unit> result = await audioService.stop();
+      emit(VoiceButtonstate(play: false));
 
-          emit(Voicesucce(player.duration!,player.position,player.currentIndex!));
-          await player.play();
-        } on PlayerException catch (e) {
-          emit(VoiceFail("Error message: ${e.message}"));
-        } on PlayerInterruptedException catch (e) {
-          emit(VoiceFail("Connection aborted: ${e.message}"));
-        } catch (e) {
-          // Fallback for all other errors
-          emit(VoiceFail('oop Unown error'));
-        }
-      });
-  }}
+      result.fold(
+        (left) {
+          emit(VoiceFail(left.error!));
+        },
+        (right) {
+          emit(VoiceButtonstate());
+        },
+      );
+    });
+    on<PlayBefore>((event, emit) async {
+      emit(Voiceloading());
+      Either<Failure, Duration> result = await audioService.playbefore();
+
+      result.fold(
+        (left) {
+          emit(VoiceFail(left.error!));
+        },
+        (right) {
+          emit(
+            Voicesucce(
+              right,
+              audioService.player.position,
+              audioService.player.currentIndex,
+            ),
+          );
+        },
+      );
+    });
+    on<PlayNext>((event, emit) async {
+      emit(Voiceloading());
+      Either<Failure, Duration> result = await audioService.playnext();
+      result.fold(
+        (left) {
+          emit(VoiceFail(left.error!));
+        },
+        (right) {
+          emit(
+            Voicesucce(right, Duration.zero, audioService.player.currentIndex),
+          );
+        },
+      );
+    });
+    on<SeekToindex>((event, emit) async {
+      emit(Voiceloading());
+
+      Either<Failure, Duration> result = await audioService.seektoindex(
+        index: event.index,
+      );
+      result.fold(
+        (left) {
+          emit(VoiceFail(left.error!));
+        },
+        (right) {
+          emit(
+            Voicesucce(right, Duration.zero, audioService.player.currentIndex),
+          );
+        },
+      );
+    });
+
+    on<Pause>((event, emit) async
+    {
+
+      Either<Failure, Unit> result = await audioService.play();
+
+      result.fold(
+        (left) {
+          emit(VoiceFail(left.error!));
+        },
+        (right) {
+          emit(VoiceButtonstate(play: true));
+        },
+      );
+    });
+  on<PlayingEvent>((event,emit){
+    emit(VoiceButtonstate(play: true));
+  });
+  on<PlayCompleltedEvent>((event,emit){
+    if(audioService.player.playing)
+      emit(VoiceButtonstate(play: true));
+    else
+      emit(VoiceButtonstate(play: false));
+    });
+    on<PlayLoadingEvent>((event,emit){
+      emit(Voiceloading());
+    });
+
+
+  }
+}

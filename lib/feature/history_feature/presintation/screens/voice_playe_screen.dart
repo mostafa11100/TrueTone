@@ -4,17 +4,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:truetone/core/utiles/app_assets.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
 import 'package:truetone/feature/history_feature/presintation/controlers/voice_screen_bloc.dart';
+import 'package:truetone/feature/history_feature/presintation/widgets/customabbBarvoicescreen.dart';
 
 import '../../../../core/component/custom_sniper.dart';
+import '../../../../core/di/si.dart';
 import '../../domain/entitys/voice_entity.dart';
 import '../widgets/audio_player_widget.dart';
 import '../widgets/bottom_sheet.dart';
 import '../widgets/custom_proggres_indector.dart';
 
 class VoicePlayeScreen extends StatefulWidget {
-  const VoicePlayeScreen({super.key, required this.voiceEntitylist});
+  const VoicePlayeScreen({
+    super.key,
+    required this.voiceEntity,
+    required this.index,
+  });
 
-  final List<VoiceEntity> voiceEntitylist;
+  final List<VoiceEntity> voiceEntity;
+  final int index;
 
   @override
   State<VoicePlayeScreen> createState() => _VoicePlayeScreenState();
@@ -22,78 +29,49 @@ class VoicePlayeScreen extends StatefulWidget {
 
 class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
   @override
-  void initState() {
-    // BlocProvider.of<VoiceScreenBloc>(
-    //   context,
-    // ).add(InitPlayList(widget.voiceEntitylist));
-
-    super.initState();
+  void didChangeDependencies() {
+    BlocProvider.of<VoiceScreenBloc>(
+      context,
+    ).add(InitPlayList(widget.voiceEntity, widget.index));
+    super.didChangeDependencies();
   }
 
+  int? indx;
+  Duration voicelngth = Duration.zero;
+
   @override
-  void dispose() {
-    super.dispose();
+  void initState() {
+    indx = widget.index;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leadingWidth: 70.w,
-        leading: Padding(
-          padding: EdgeInsets.all(10.0.w),
-          child: CircleAvatar(
-            radius: 12.r,
-            backgroundColor: Theme.of(context).colorScheme.onPrimary,
-            child: Icon(
-              Icons.arrow_back_outlined,
-              color: Theme.of(
-                context,
-              ).colorScheme.onSurface.withAlpha((.9 * 255).toInt()),
-            ),
-          ),
-        ),
-        actions: [
-          InkWell(
-            onTap: () {
-              custom_bottomsheet(context);
-            },
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0.w),
-              child: Icon(
-                Icons.more_horiz_outlined,
-                size: 28.r,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-            ),
-          ),
-          SizedBox(height: 8.h),
-        ],
-      ),
+      appBar: customabbBarvoicescreen(context),
       backgroundColor: Theme.of(context).colorScheme.primary,
-      body: BlocConsumer<VoiceScreenBloc, VoiceScreenState>(
-        listener: (context, state) {
-          if (state is VoiceFail) {
-            customsnackbar(
-              context: context,
-              textcolor: Theme.of(context).colorScheme.onError,
-              color: Theme.of(context).colorScheme.error,
-              then: () {},
-            );
-          }
-        },
-        builder: (context, state) {
-          int indx = 0;
-          Duration lngth = Duration.zero;
-          Duration position = Duration.zero;
-          if (state is Voicesucce) {
-            indx = state.index;
-            lngth = state.duration;
-            position = state.durationplayed;
-          }
-          return SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: BlocConsumer<VoiceScreenBloc, VoiceScreenState>(
+          listener: (context, state) {
+            if (state is VoiceFail) {
+              print("errrrrrrrrrrrrrrrrrrrrrrrrrrror");
+              customsnackbar(
+                context: context,
+                textcolor: Theme.of(context).colorScheme.onError,
+                color: Theme.of(context).colorScheme.error,
+                text: state.error,
+                then: () {},
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state is Voicesucce) {
+              voicelngth = state.duration!;
+              indx = state.index!;
+            }
+
+            return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -111,12 +89,16 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
                   ),
                   height: 225.h,
                   width: 225.w,
-                  child: Image.asset(humanbig),
+                  child: Image.asset(
+                    widget.voiceEntity[indx!].type == 'real'
+                        ? humanbig
+                        : ropotbig,
+                  ),
                 ),
 
                 SizedBox(height: 10.h),
                 Text(
-                  widget.voiceEntitylist[indx].name ?? "notfound",
+                  widget.voiceEntity[indx!].name ?? "notfound",
                   style: TextstyleConst.texts28.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
@@ -125,7 +107,7 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
                 Opacity(
                   opacity: .7,
                   child: Text(
-                    widget.voiceEntitylist[indx].type ?? "knowo",
+                    widget.voiceEntity[indx!].type ?? "knowo",
                     style: TextstyleConst.texts18.copyWith(
                       fontWeight: FontWeight.w500,
                       color: Theme.of(context).colorScheme.onPrimary,
@@ -133,16 +115,17 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
                   ),
                 ),
                 SizedBox(height: 40.h),
-                aUdioPlayerCutom(),
+                audioplayerputtoncustom(state, indx),
                 SizedBox(height: 40.h),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: Customprogress(context, lngth, position),
+                  child:custombrogressBarWidget(context,state: state,lngth: voicelngth),
+
                 ),
               ],
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

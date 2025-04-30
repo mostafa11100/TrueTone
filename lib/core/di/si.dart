@@ -9,10 +9,14 @@ import 'package:truetone/feature/auth/signin/presintation/controler/signin_cubit
 import 'package:truetone/feature/auth/signup/data/remote_datasource/signup_remote.dart';
 import 'package:truetone/feature/auth/signup/data/repo_imp/signup_repo_imp.dart';
 import 'package:truetone/feature/auth/signup/domain/usecases/signup_usecase.dart';
+import 'package:truetone/feature/history_feature/domain/history_interface.dart';
 
 import '../../feature/auth/forgetpassword/data/remote_passwordprocess.dart';
 import '../../feature/auth/forgetpassword/data/repo_imp/password_procees_repo_imp.dart';
 import '../../feature/auth/signup/presintation/controler/cubit/sign_up_cubit.dart';
+import '../../feature/history_feature/data/remote/history_remoteprocces.dart';
+import '../../feature/history_feature/data/repo_imp/repo_imp_fetchhistory.dart';
+import '../../feature/history_feature/presintation/controlers/history_bloc/history_bloc.dart';
 import '../../feature/history_feature/presintation/controlers/voice_screen_bloc.dart';
 import '../../feature/home/data/remote/remote_home.dart';
 import '../../feature/home/data/repo_imp/home_repo_imp.dart';
@@ -37,12 +41,16 @@ setupLocator() {
     return CreateNewPasswordProccesBloc(
       PasswordProccesImp(RemotePasswordProcces()),
     );
-
   });
   sl.registerFactory(() {
-    return VoiceScreenBloc(
-    );});
+    return VoiceScreenBloc();
+  });
   sl.registerFactory(() {
-    return
-      HomeCubit(UsecaseCheckAudio(HomeCheckFileTypeRepo(HomeRemoteUploadFile())));});
+    return HistoryBloc(FetchHistoryRepo(RemoteHistory()));
+  });
+  sl.registerFactory(() {
+    return HomeCubit(
+      UsecaseCheckAudio(HomeCheckFileTypeRepo(HomeRemoteUploadFile())),
+    );
+  });
 }

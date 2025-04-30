@@ -4,15 +4,17 @@ import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dar
 class HsirotyResponseModel {
   List<HistoryModel> listofhistory = [];
 
+  HsirotyResponseModel() {}
+
   Map<String, dynamic> tojson({voiceid}) {
-    return {"voiceid": voiceid};
+    return voiceid != null ? {"voiceid": voiceid} : {};
   }
 
-  HsirotyResponseModel.fromjson({required Map<String, dynamic> js}) {
-    //update letter
-    js['data'].forEach((v) {
+  HsirotyResponseModel.fromjson({required List lst}) {
+    lst.forEach((v) {
       listofhistory.add(HistoryModel.fromjson(js: v));
     });
+    //update letter
   }
 }
 
@@ -22,8 +24,8 @@ class HistoryModel extends VoiceEntity {
   Map<String, dynamic> json = {};
 
   HistoryModel.fromjson({required Map<String, dynamic> js}) {
-    name = js['name'] ?? "";
-    type = js['type'] ?? "";
-    url = js['url'] ?? "";
+    name = js['id'].toString() ;
+    type = js['result'] ?? "";
+    url = js['audioFilePath'] ?? "";
   }
 }

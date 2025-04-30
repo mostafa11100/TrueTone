@@ -100,13 +100,18 @@ class _SigninScreenState extends State<SigninScreen> {
                   SizedBox(height: 10.h),
                   BlocConsumer<SigninCubit, SigninState>(
                     listener: (context, state) {
+
                       if (state is SigninLoading) {
                         loadingdialog(context);
                       }
 
                       if (state is SigninSuccess) {
+                          GoRouter.of(context).pop();
                         GoRouter.of(context).push(AppRouts.mainscreen);
                       }
+                      if(state is SigninFail)
+                        {
+                          GoRouter.of(context).pop();}
                     },
                     builder: (context, state) {
                       if (state is SigninFail) {

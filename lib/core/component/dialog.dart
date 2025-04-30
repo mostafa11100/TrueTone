@@ -15,7 +15,7 @@ loadingdialog(BuildContext context) {
       }
   });
   return showDialog(
-    barrierDismissible: true,
+    barrierDismissible: false,
     context: context,
     builder: (context) {
       return Center(

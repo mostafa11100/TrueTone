@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:truetone/core/utiles/app_assets.dart';
+import 'package:truetone/core/utiles/app_colors.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
 import 'package:truetone/feature/history_feature/presintation/widgets/photo_hero_custom.dart';
 
 import '../../../../core/Approuts/routs.dart';
 import 'bottom_sheet.dart';
 
-Widget cUstomListTile(context, type, text, lngth, ontap) {
+Widget cUstomListTile(context, type, text,Future<String>  lngth, ontap) {
   return CustomListTile(
     onTap: ontap,
-    height: 67.h,
+    height: 72.h,
     leading: Container(
       alignment: Alignment.bottomCenter,
       padding: EdgeInsets.all(0.r),
@@ -25,7 +26,7 @@ Widget cUstomListTile(context, type, text, lngth, ontap) {
         borderRadius: BorderRadius.circular(8.r),
       ),
       width: 76.w,
-      child: Image.asset(humanbig),
+      child: Image.asset(type=="real"? humanbig:ropotbig),
     ),
     title: Padding(
       padding: EdgeInsets.symmetric(vertical: 4.0),
@@ -39,7 +40,7 @@ Widget cUstomListTile(context, type, text, lngth, ontap) {
     subTitle: Opacity(
       opacity: .7,
       child: Text(
-        type ? "Real" : "Fake",
+        type ,
         style: TextstyleConst.texts18.copyWith(
           fontWeight: FontWeight.w400,
           color: Theme.of(context).colorScheme.onPrimary,
@@ -47,8 +48,9 @@ Widget cUstomListTile(context, type, text, lngth, ontap) {
       ),
     ),
     trailing: Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding:  EdgeInsets.symmetric(horizontal:4.0.w),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           InkWell(
@@ -61,15 +63,28 @@ Widget cUstomListTile(context, type, text, lngth, ontap) {
               color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: 14.h),
           Opacity(
             opacity: .7,
-            child: Text(
-              lngth.toString(),
-              style: TextstyleConst.texts18.copyWith(
-                fontWeight: FontWeight.w400,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
+            child: FutureBuilder(
+              
+              future: lngth, builder: (context,snapchat) {
+                if(snapchat.data==null)
+                  return   Text(
+                  "00:00",
+                    style: TextstyleConst.texts18.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  );
+              return Text(
+                snapchat.data.toString(),
+                style: TextstyleConst.texts18.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              );
+            },
             ),
           ),
         ],

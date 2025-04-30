@@ -55,6 +55,8 @@ dependencies:
   path: ^1.9.1
   file_picker: ^10.0.0
   animated_text_kit: ^4.2.3
+  simple_ripple_animation: ^0.1.0
+  rive_animated_icon: ^2.0.5
 
 
 dev_dependencies:
@@ -95,11 +97,13 @@ flutter:
     - assets/images/human.png
     - assets/images/human_big.png
     - assets/images/ropot_big.png
-    - assets/images/home1.png
+    - assets/images/home_button.png
     - assets/images/loading.png
     - assets/images/man.png
     - assets/images/fake.png
     - assets/images/empty_image.png
+    - assets/images/empty.png
+    - assets/images/error_image.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

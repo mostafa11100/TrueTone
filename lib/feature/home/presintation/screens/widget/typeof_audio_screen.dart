@@ -8,6 +8,6 @@ class TypeofAudioScreen extends StatelessWidget {
  final HomeEntity result;
   @override
   Widget build(BuildContext context) {
-    return result.type=="Human"?HumanSoundPage(result: result,):AiSoundPage(result: result,) ;
+    return result.type!="fake"?HumanSoundPage(result: result,):AiSoundPage(result: result,) ;
   }
 }
