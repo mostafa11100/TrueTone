@@ -37,7 +37,6 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
   }
 
   int? indx;
-  Duration voicelngth = Duration.zero;
 
   @override
   void initState() {
@@ -55,7 +54,6 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
         child: BlocConsumer<VoiceScreenBloc, VoiceScreenState>(
           listener: (context, state) {
             if (state is VoiceFail) {
-              print("errrrrrrrrrrrrrrrrrrrrrrrrrrror");
               customsnackbar(
                 context: context,
                 textcolor: Theme.of(context).colorScheme.onError,
@@ -67,7 +65,6 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
           },
           builder: (context, state) {
             if (state is Voicesucce) {
-              voicelngth = state.duration!;
               indx = state.index!;
             }
 
@@ -119,8 +116,7 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
                 SizedBox(height: 40.h),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child:custombrogressBarWidget(context,state: state,lngth: voicelngth),
-
+                  child: custombrogressBarWidget(context, state: state),
                 ),
               ],
             );

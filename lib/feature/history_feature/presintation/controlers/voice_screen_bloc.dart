@@ -12,7 +12,6 @@ part 'voice_screen_event.dart';
 part 'voice_screen_state.dart';
 
 class VoiceScreenBloc extends Bloc<VoiceScreenEvent, VoiceScreenState> {
-  late AudioPlayer player;
   late AudioService audioService;
   bool intializd = false;
 
@@ -20,19 +19,21 @@ class VoiceScreenBloc extends Bloc<VoiceScreenEvent, VoiceScreenState> {
     on<InitPlayList>((event, emit) async {
       emit(Voiceloading());
       try {
-        audioService = AudioService();
         if (intializd == false) {
+          audioService = AudioService();
+          intializd = true;
           Either<Failure, Duration> result = await audioService.initplaylist(
             listofvoice: event.listofvoice,
             index: event.index,
             listenfunction: (d) {
+              print(audioService.player.duration!.inSeconds);
               add(Changeposition(d));
             },
             playing: () {
-              add(PlayingEvent());
+              add(PlayingEvent(true));
             },
             stop: () {
-              add(Stop());
+              add(PlayingEvent(false));
             },
             completed: () {
               add(PlayCompleltedEvent());
@@ -41,7 +42,7 @@ class VoiceScreenBloc extends Bloc<VoiceScreenEvent, VoiceScreenState> {
               add(PlayLoadingEvent());
             },
             ready: () {
-              add(PlayRedayEvent());
+              // add(PlayRedayEvent());
             },
           );
           result.fold(
@@ -67,6 +68,7 @@ class VoiceScreenBloc extends Bloc<VoiceScreenEvent, VoiceScreenState> {
               emit(VoiceFail(left.error!));
             },
             (right) {
+              print("in  seeeeeeeeek${right.inSeconds}");
               Voicesucce(
                 right,
                 Duration.zero,
@@ -80,35 +82,32 @@ class VoiceScreenBloc extends Bloc<VoiceScreenEvent, VoiceScreenState> {
       }
     });
     on<Changeposition>((event, emit) {
-      emit(Voicedurationupdate(event.position));
+      emit(Voicedurationupdate(event.position,audioService.player.duration!));
     });
     on<Seektopostion>((event, emit) async {
       emit(Voiceloading());
       Either<Failure, Duration> result = await audioService.seektoposition(
-        position: event.position.toInt(),
+        position: event.position,
       );
       result.fold(
         (left) {
           emit(VoiceFail(left.error!));
         },
         (right) {
-          emit(
-            Voicesucce(
-              Duration(
-                seconds:
-                    audioService.player.duration!.inSeconds - right.inSeconds,
-              ),
-              right,
-              audioService.player.currentIndex,
-            ),
-          );
+     //     emit(
+            // Voicesucce(
+            //   Duration(
+            //     seconds:
+            //         audioService.player.duration!.inSeconds - right.inSeconds,
+            //   ),
+    //          right,
+  //            audioService.player.currentIndex,
+//            ),
+        //  );
         },
       );
     });
-    on<Stop>((event, emit) async
-    {
-      emit(Voiceloading());
-
+    on<Stop>((event, emit) async {
       Either<Failure, Unit> result = await audioService.stop();
       emit(VoiceButtonstate(play: false));
 
@@ -122,7 +121,6 @@ class VoiceScreenBloc extends Bloc<VoiceScreenEvent, VoiceScreenState> {
       );
     });
     on<PlayBefore>((event, emit) async {
-      emit(Voiceloading());
       Either<Failure, Duration> result = await audioService.playbefore();
 
       result.fold(
@@ -172,9 +170,7 @@ class VoiceScreenBloc extends Bloc<VoiceScreenEvent, VoiceScreenState> {
       );
     });
 
-    on<Pause>((event, emit) async
-    {
-
+    on<Pause>((event, emit) async {
       Either<Failure, Unit> result = await audioService.play();
 
       result.fold(
@@ -186,19 +182,17 @@ class VoiceScreenBloc extends Bloc<VoiceScreenEvent, VoiceScreenState> {
         },
       );
     });
-  on<PlayingEvent>((event,emit){
-    emit(VoiceButtonstate(play: true));
-  });
-  on<PlayCompleltedEvent>((event,emit){
-    if(audioService.player.playing)
-      emit(VoiceButtonstate(play: true));
-    else
-      emit(VoiceButtonstate(play: false));
+    on<PlayingEvent>((event, emit) {
+      emit(VoiceButtonstate(play: event.play));
     });
-    on<PlayLoadingEvent>((event,emit){
+    on<PlayCompleltedEvent>((event, emit) {
+      if (audioService.player.playing)
+        emit(VoiceButtonstate(play: true));
+      else
+        emit(VoiceButtonstate(play: false));
+    });
+    on<PlayLoadingEvent>((event, emit) {
       emit(Voiceloading());
     });
-
-
   }
 }

@@ -19,7 +19,7 @@ class SeekToindex extends VoiceScreenEvent {
 class Stop extends VoiceScreenEvent {}
 
 class Seektopostion extends VoiceScreenEvent {
-  final double position;
+  final Duration position;
 
   Seektopostion(this.position);
 }
@@ -41,4 +41,8 @@ class PlayCompleltedEvent extends VoiceScreenEvent {}
 
 class PlayRedayEvent extends VoiceScreenEvent {}
 
-class PlayingEvent extends VoiceScreenEvent {}
+class PlayingEvent extends VoiceScreenEvent
+{
+  bool play;
+  PlayingEvent(this.play);
+}

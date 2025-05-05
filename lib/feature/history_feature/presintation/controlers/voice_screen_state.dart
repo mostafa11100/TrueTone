@@ -18,8 +18,9 @@ final class Voiceloading extends VoiceScreenState {}
 final class Voicedurationupdate extends VoiceScreenState {
 
   final Duration position;
+  final Duration lngth;
 
-  Voicedurationupdate(this.position);
+  Voicedurationupdate(this.position,this.lngth);
 }
 
 final class VoiceButtonstate extends VoiceScreenState  {
