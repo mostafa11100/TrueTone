@@ -12,12 +12,11 @@ class RemoteSignin extends BaseRemoteSignIn<Response, Map>
   @override
   Future<Response?> excute(data) async
   {
-    print("enter to remote ${data}");
     Response? response = await sl<DioNetwork>().post(
       url:baseurl.signinurl,
       data: data,
     );
-    print("after to remote ${response!.data}");
+
     return response;
   }
 }

@@ -26,12 +26,21 @@ class _aUdioPlayerCutomState extends State<aUdioPlayerCutom> {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<VoiceScreenBloc, VoiceScreenState>(
+      buildWhen: (previce,current)
+      {if(current is VoiceFail||current is VoiceButtonstate ||current is Voicesucce)return true;
+        return false;
+
+
+      },
       builder: (context, state) {
-        if (state is Voiceloading || widget.loading) {
+
+
+        if ( widget.loading) {
           return button_custom(context: context, loading: true);
         }
-        if (state is VoiceFail)
+        if (state is VoiceFail||state is  Voicesucce)
         {
           return  button_custom(
             context: context,
@@ -39,17 +48,21 @@ class _aUdioPlayerCutomState extends State<aUdioPlayerCutom> {
             index: widget.index,
           );
         }
-        if (state is VoiceButtonstate) {
+        if (state is VoiceButtonstate)
+        {
+          print("entttttttttttttttttttttttttttttttttttttttttttttttttter ${state.play}");
           return button_custom(
             context: context,
             loading: false,
             play: state.play,
             index: widget.index,
           );
-        } else {
+        }
+        else {
           return button_custom(
             context: context,
             loading: false,
+            play: false,
             index: widget.index,
           );
         }
@@ -137,7 +150,8 @@ Widget button_custom({context, loading = false, play = false, index = 0}) {
   );
 }
 
-audioplayerputtoncustom(state, indx) {
+audioplayerputtoncustom(state, indx)
+{
   if (state is Voiceloading)
     return aUdioPlayerCutom(loading: true, index: indx!);
   else

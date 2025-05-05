@@ -10,11 +10,11 @@ class AudioService {
     required List<VoiceEntity> listofvoice,
     required int index,
     Function(Duration d)? listenfunction,
-    playing,
-    stop,
-    completed,
-    loading,
-    ready,
+   required Function() playing,
+    required Function() stop,
+    required Function() completed,
+    required Function() loading,
+    required Function() ready,
   }) async {
     try {
       player = AudioPlayer();
@@ -38,32 +38,34 @@ class AudioService {
         final islodng = state.processingState == ProcessingState.buffering;
 
         if (isPlaying) {
-          print("🎵 الصوت شغال");
-          playing;
+          playing();
         }
         if (isPaused) {
-          print("⏸️ الصوت متوقف مؤقتاً");
-          stop;
+          stop();
         }
         if (isCompleted) {
-          print("✅ الصوت انتهى");
-          await player.stop();
-          await player.seek(Duration.zero);
-          completed;
+          completed();
           //  change ui
         }
         if (isready) {
-          ready;
+          ready();
         }
         if (islodng) {
-          print("🔄 الصوت بيحمل...");
-          // ممكن هنا تبعت event للـ Bloc إن الصوت في مرحلة تحميل
-          loading;
+          loading();
         }
       });
 
       await player.positionStream.listen((d) async {
         listenfunction!(d);
+        print("possssiton ==${d.inSeconds}");
+        if(d.inSeconds==player.duration!.inSeconds)
+          {
+            print("✅ الصوت انتهاااااااااا");
+            await player.pause();
+            await player.seek(Duration.zero);
+
+            completed();
+          }
       });
       return Right(duration ?? Duration.zero);
     } on PlayerException catch (e) {
@@ -77,11 +79,11 @@ class AudioService {
   }
 
   Future<Either<Failure, Duration>> seektoposition({
-    required int position,
+    required Duration position,
   }) async {
     try {
       await player.seek(
-        Duration(minutes: position),
+        position,
         index: player.currentIndex,
       );
       return Right(player.position);
@@ -97,8 +99,8 @@ class AudioService {
 
   Future<Either<Failure, Unit>> stop() async {
     try {
-      if(!player.playing)
-      await player.stop();
+
+      await player.pause();
       return Right(unit);
     } on PlayerException catch (e) {
       return Left(Failure.firbaseeror("Error message: ${e.message}"));
@@ -126,7 +128,12 @@ class AudioService {
 
   Future<Either<Failure, Duration>> playnext() async {
     try {
-      await player.seekToNext();
+      if (player.playing || player.sequenceState != null) {
+
+        await player.seekToNext();
+      } else {
+        return Left(Failure.firbaseeror("Player is not ready yet"));
+      }
       return Right(player.duration!);
     } on PlayerException catch (e) {
       return Left(Failure.firbaseeror("Error message: ${e.message}"));
@@ -140,11 +147,18 @@ class AudioService {
 
   Future<Either<Failure, Duration>> seektoindex({required int index}) async {
     try {
-      await player.seek(Duration.zero, index: index);
+      if (player.playing || player.sequenceState != null) {
+        player.pause();
+        await player.seek(Duration.zero, index: index);
+      } else {
+        return Left(Failure.firbaseeror("Player is not ready yet"));
+      }
+     
       return Right(player.duration!);
     } on PlayerException catch (e) {
       return Left(Failure.firbaseeror("Error message: ${e.message}"));
     } on PlayerInterruptedException catch (e) {
+
       return Left(Failure.firbaseeror("Connection aborted: ${e.message}"));
     } catch (e) {
       // Fallback for all other errors
@@ -154,10 +168,12 @@ class AudioService {
 
   Future<Either<Failure, Unit>> play() async {
     try {
-      if (player.processingState == ProcessingState.ready&&!player.playing)
-      {
+      // if (player.processingState == ProcessingState.ready&&!player.playing)
+      // {
+
+      await player.stop();
         await player.play();
-      }
+      // }
 
       return Right(unit);
     } on PlayerException catch (e) {
