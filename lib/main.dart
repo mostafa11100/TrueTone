@@ -7,7 +7,7 @@ import 'package:truetone/core/di/si.dart';
 import 'package:truetone/core/utiles/theams.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  //WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
 
   runApp(const TrueTone());

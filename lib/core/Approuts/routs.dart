@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:truetone/core/component/loading.dart';
+import 'package:truetone/core/network/api_server.dart';
 import 'package:truetone/feature/auth/forgetpassword/presintation/controler/create_new_password_procces_bloc.dart';
 import 'package:truetone/feature/auth/signin/presintation/controler/signin_cubit.dart';
 import 'package:truetone/feature/auth/signin/presintation/screens/signin_screen.dart';
@@ -10,7 +12,11 @@ import 'package:truetone/feature/history_feature/presintation/screens/history_sc
 import 'package:truetone/feature/history_feature/presintation/screens/voice_playe_screen.dart';
 import 'package:truetone/feature/home/domain/%20entitys/homeentity_uploadfile.dart';
 import 'package:truetone/feature/home/presintation/screens/widget/AiSoundpage.dart';
+import 'package:truetone/feature/setting/data/rebo/homereboimp.dart';
+import 'package:truetone/feature/setting/presintation/manger/fetch/fetchprofile_cubit.dart';
 import 'package:truetone/feature/setting/presintation/screens/eddit_profile.dart';
+import 'package:truetone/feature/setting/presintation/screens/language.dart';
+import 'package:truetone/feature/setting/presintation/screens/settinghome.dart';
 
 import 'package:truetone/feature/splash_onbording/onbording.dart';
 import 'package:truetone/feature/splash_onbording/splash.dart';
@@ -23,9 +29,9 @@ import '../../feature/home/presintation/screens/widget/typeof_audio_screen.dart'
 import '../di/si.dart';
 
 class AppRouts {
-  static String splashscreen = "/s";
+  static String splashscreen = "/";
 
-  static String setting = "/setting";
+  static String EdditprofileScreen1 = "/EdditprofileScreen";
 
   static String onbording = "/onbording";
 
@@ -36,11 +42,12 @@ class AppRouts {
   static String verifyemalScreen = "/verifyemail";
   static String forgetpassword = "/forgetpassword";
   static String loading = "/loading";
-  static String mainscreen = "/";
+  static String mainscreen = "/mainscreen";
+   static String SettingsScreen2 = "/SettingsScreen";
   static String voicescreen = "/voicescreen";
   static String typeaudioscreen = "/typeaudioscreen";
   static String history = "/history";
-
+static String LanguagePage1="/LanguagePage";
   static GoRouter routs = GoRouter(
     redirect: (context, state) {
       return null;
@@ -133,9 +140,28 @@ class AppRouts {
       ),
 
       GoRoute(
-        path: setting,
+        path: EdditprofileScreen1,
         builder: (context, state) {
-          return EdditprofileScreen();
+          return EdditprofileScreen() ;
+        },
+      ),
+        GoRoute(
+  path: AppRouts.SettingsScreen2,
+  builder: (context, state) {
+    final dio = Dio();
+    final apiService = ApiService(dio);
+    final homeRepo = HomeRepoImpl(apiService);
+    return BlocProvider(
+      create: (context) => FetchProfileCubit(homeRepo)..fetchProfile(),
+      child: SettingsScreen(),
+    );
+  },
+),
+      
+        GoRoute(
+        path: LanguagePage1,
+        builder: (context, state) {
+          return LanguagePage() ;
         },
       ),
     ],

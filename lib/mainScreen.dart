@@ -7,6 +7,7 @@ import 'package:truetone/feature/history_feature/presintation/controlers/voice_s
 import 'package:truetone/feature/history_feature/presintation/screens/history_screen.dart';
 import 'package:truetone/feature/history_feature/presintation/screens/voice_playe_screen.dart';
 import 'package:truetone/feature/home/presintation/screens/home_views.dart';
+import 'package:truetone/feature/setting/presintation/screens/settinghome.dart';
 
 import 'core/di/si.dart';
 import 'feature/setting/presintation/screens/eddit_profile.dart';
@@ -32,7 +33,7 @@ class _MainscreenState extends State<Mainscreen> {
           _onItemTap(3);
         },
       ),
-      EdditprofileScreen(),
+    SettingsScreen(),
       VoicePlayeScreen(voiceEntitylist: [VoiceEntity()]),
     ];
     _pageController = PageController();
