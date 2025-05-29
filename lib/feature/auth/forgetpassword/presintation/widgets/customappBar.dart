@@ -5,19 +5,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/utiles/app_textstyle.dart';
 
 customAppBar(context,
-    text
+    text,{ontap}
     )
 {
   return AppBar(
     leadingWidth: 70.w,
-    leading: Padding(
-      padding:  EdgeInsets.all(10.0.w),
-      child: CircleAvatar(
-        radius: 12.r,
-        backgroundColor: Colors.black,
-        child: Icon(
-          Icons.arrow_back_outlined,
-          color: Theme.of(context).colorScheme.onPrimary,
+    leading: InkWell(
+      onTap: ontap,
+      child: Padding(
+        padding:  EdgeInsets.all(10.0.w),
+        child: CircleAvatar(
+          radius: 12.r,
+          backgroundColor: Colors.black,
+          child: Icon(
+            Icons.arrow_back_outlined,
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
         ),
       ),
     ),

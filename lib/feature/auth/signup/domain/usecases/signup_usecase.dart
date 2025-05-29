@@ -10,7 +10,7 @@ class SignupUsecase {
   SignupUsecase(this._baseSignUp);
   Future<Either<Failure, Unit>> signup({SignUpEntity? signupentity}) async
   {
-    await sl<Cashhelper>().setemail(signupentity!.email);
+     sl<Cashhelper>().setemail(signupentity!.email);
     Either<Failure, Unit> result = await _baseSignUp.signup(
       signupentity: signupentity,
     );

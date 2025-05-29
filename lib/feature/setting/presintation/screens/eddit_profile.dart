@@ -56,11 +56,16 @@ class _EdditprofileScreenState extends State<EdditprofileScreen> {
           child: CircleAvatar(
             radius: 12.r,
             backgroundColor: Theme.of(context).colorScheme.onPrimary,
-            child: Icon(
-              Icons.arrow_back_outlined,
-              color: Theme.of(
-                context,
-              ).colorScheme.onSurface.withAlpha((.9 * 255).toInt()),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back_outlined,
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withAlpha((.9 * 255).toInt()),
+              ),
             ),
           ),
         ),

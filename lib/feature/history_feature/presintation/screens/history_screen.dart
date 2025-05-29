@@ -54,10 +54,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
               }
               if (state is HistoryDeleteSuccess) {
                 //GoRouter.of(context).pop();
-                customsnackbar(
-                  textcolor: AppColors.onSurface,
+                customsnackbar(context: context,
+                  textcolor: AppColors.onprimary,
                   text: Apptrings.hasbeendleted,
-                  color: AppColors.primarycolor,
+                  color: AppColors.green,
                 );
               }
               if (state is HistoryFail) {
@@ -72,6 +72,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
               }
             },
             builder: (BuildContext context, HistoryState state) {
+              if(state is HistoryLoading)
+                {
+                  return Center(child: Opacity(opacity: .7,
+                  child: SizedBox(width: 20.w,height: 20.h,
+                      child: CircularProgressIndicator(color: AppColors.onprimary,))),);
+                }
               if (state is HistorySuccessFetch) {
                 return listofvoices.isEmpty
                     ? eMptyHistory()

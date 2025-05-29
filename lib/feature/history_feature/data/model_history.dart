@@ -6,9 +6,6 @@ class HsirotyResponseModel {
 
   HsirotyResponseModel() {}
 
-  Map<String, dynamic> tojson({voiceid}) {
-    return voiceid != null ? {"voiceid": voiceid} : {};
-  }
 
   HsirotyResponseModel.fromjson({required List lst}) {
     lst.forEach((v) {
@@ -24,8 +21,10 @@ class HistoryModel extends VoiceEntity {
   Map<String, dynamic> json = {};
 
   HistoryModel.fromjson({required Map<String, dynamic> js}) {
-    name = js['id'].toString() ;
+    id = js['id'];
+    name = js['id'].toString();
     type = js['result'] ?? "";
     url = js['audioFilePath'] ?? "";
   }
+
 }

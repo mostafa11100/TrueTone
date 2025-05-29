@@ -1,96 +1,103 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:truetone/core/utiles/app_assets.dart';
 import 'package:truetone/core/utiles/app_colors.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
+import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
 import 'package:truetone/feature/history_feature/presintation/widgets/photo_hero_custom.dart';
 
 import '../../../../core/Approuts/routs.dart';
+import '../controlers/history_bloc/history_bloc.dart';
 import 'bottom_sheet.dart';
 
-Widget cUstomListTile(context, type, text,Future<String>  lngth, ontap) {
-  return CustomListTile(
-    onTap: ontap,
-    height: 72.h,
-    leading: Container(
-      alignment: Alignment.bottomCenter,
-      padding: EdgeInsets.all(0.r),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondaryFixed,
-        border: Border.all(
-          color: Theme.of(context).colorScheme.onSurface,
-          width: .8,
+Widget cUstomListTile(context, type, text,Future<String>  lngth, ontap,VoiceEntity voiceentity) {
+
+  return  CustomListTile(
+        onTap:ontap,
+        height:72.h,
+        leading:Container(
+          alignment: Alignment.bottomCenter,
+          padding: EdgeInsets.all(0.r),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.secondaryFixed,
+            border: Border.all(
+              color: Theme.of(context).colorScheme.onSurface,
+              width: .8,
+            ),
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+          width: 76.w,
+          child: Image.asset(type=="real"? humanbig:ropotbig),
         ),
-        borderRadius: BorderRadius.circular(8.r),
-      ),
-      width: 76.w,
-      child: Image.asset(type=="real"? humanbig:ropotbig),
-    ),
-    title: Padding(
-      padding: EdgeInsets.symmetric(vertical: 4.0),
-      child: Text(
-        text,
-        style: TextstyleConst.texts20.copyWith(
-          color: Theme.of(context).colorScheme.onPrimary,
-        ),
-      ),
-    ),
-    subTitle: Opacity(
-      opacity: .7,
-      child: Text(
-        type ,
-        style: TextstyleConst.texts18.copyWith(
-          fontWeight: FontWeight.w400,
-          color: Theme.of(context).colorScheme.onPrimary,
-        ),
-      ),
-    ),
-    trailing: Padding(
-      padding:  EdgeInsets.symmetric(horizontal:4.0.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          InkWell(
-            onTap: () {
-              custom_bottomsheet(context);
-            },
-            child: Icon(
-              Icons.more_horiz_outlined,
-              size: 26.r,
+        title: Padding(
+          padding: EdgeInsets.symmetric(vertical: 4.0),
+          child: Text(
+            text,
+            style: TextstyleConst.texts20.copyWith(
               color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
-          SizedBox(height: 14.h),
-          Opacity(
-            opacity: .7,
-            child: FutureBuilder(
-              
-              future: lngth, builder: (context,snapchat) {
-                if(snapchat.data==null)
-                  return   Text(
-                  "00:00",
+        ),
+        subTitle: Opacity(
+          opacity: .7,
+          child: Text(
+            type ,
+            style: TextstyleConst.texts18.copyWith(
+              fontWeight: FontWeight.w400,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+        ),
+        trailing: Padding(
+          padding:  EdgeInsets.symmetric(horizontal:4.0.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: () {
+
+                  custom_bottomsheet(context,voiceentity);
+                },
+                child: Icon(
+                  Icons.more_horiz_outlined,
+                  size: 26.r,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              ),
+              SizedBox(height: 14.h),
+              Opacity(
+                opacity: .7,
+                child: FutureBuilder(
+
+                  future: lngth, builder: (context,snapchat) {
+                    if(snapchat.data==null)
+                      return   Text(
+                      "00:00",
+                        style: TextstyleConst.texts18.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      );
+                  return Text(
+                    snapchat.data.toString(),
                     style: TextstyleConst.texts18.copyWith(
                       fontWeight: FontWeight.w400,
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   );
-              return Text(
-                snapchat.data.toString(),
-                style: TextstyleConst.texts18.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: Theme.of(context).colorScheme.onPrimary,
+                },
                 ),
-              );
-            },
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
+
+
 }
 
 // Custom list tile definition

@@ -29,7 +29,7 @@ class UseCaseDelete {
 
   BaseHistoryRepo _baseHistoryRepo;
 
-  Future<Either<Failure, Unit>> excute({data}) async {
+  Future<Either<Failure, Unit>> excute({required VoiceEntity data}) async {
     Either<Failure, Unit> result = await _baseHistoryRepo.delete(data);
     return result;
   }

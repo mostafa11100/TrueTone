@@ -46,7 +46,7 @@ class _CreatenewPasswordScreenState extends State<CreatenewPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, Apptrings.createnwpassword),
+
       body: Padding(
         padding: EdgeInsets.all(20.w),
         child: SingleChildScrollView(
