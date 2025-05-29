@@ -4,105 +4,89 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 class Cashhelper {
+  SharedPreferences? sharedPreferences;
 
-  Future<void> setusertoken(token) async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    sharedPreferences.setString("token", token);
-  } Future<void> setvisit() async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    sharedPreferences.setBool("visit", true);
+  Cashhelper(shared) {
+    sharedPreferences = shared;
   }
 
-  Future<void> setlanguage(lang) async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    sharedPreferences.setString("lang", lang);
+  static chachhelperinit() async {
+    SharedPreferences? s;
+    s = await SharedPreferences.getInstance();
+    return Cashhelper(s);
   }
 
-  Future<void> setlocation(location) async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    sharedPreferences.setString("location", location);
+  setusertoken(token) {
+    sharedPreferences!.setString("token", token);
   }
 
-  Future<void> setuserlogin() async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    sharedPreferences.setBool("login", true);
+  setvisit() {
+    sharedPreferences!.setBool("visit", true);
   }
 
-  Future<void> setuserinfo(info) async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    sharedPreferences.setString("userinfo", jsonEncode(info));
+  setlanguage(lang) {
+    sharedPreferences!.setString("lang", lang);
   }
 
-  Future<void> setuserlocalization(local) async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    sharedPreferences.setString("local", local);
+  setlocation(location) {
+    sharedPreferences!.setString("location", location);
   }
 
-  Future<String?> getusertoken() async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    return sharedPreferences.getString("token");
+  setuserlogin() {
+    sharedPreferences!.setBool("login", true);
   }
 
-
-  Future<void> setemail(email) async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    sharedPreferences.setString("email", email);
-  }
-  Future<String?> getemail() async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    return sharedPreferences.getString("email");
-  }
-  Future<String?> getlocation() async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    return sharedPreferences.getString("location");
+  setuserinfo(info) {
+    sharedPreferences!.setString("userinfo", jsonEncode(info));
   }
 
-  Future<String?> getlanguage() async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    return sharedPreferences.getString("lang");
-  }
-  Future<void> setotp(otp) async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    sharedPreferences.setString("otp", otp);
-  }
-  Future<String?> getotp() async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-    return sharedPreferences.getString("otp");
+  setuserlocalization(local) {
+    sharedPreferences!.setString("local", local);
   }
 
-  Future<Map<String, dynamic>> getuserinfo() async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
-
-    return jsonDecode(sharedPreferences.getString("userinfo")!);
+  String? getusertoken() {
+    return sharedPreferences!.getString("token");
+  }  String? getrefreshtoken() {
+    return sharedPreferences!.getString("refreshtoken");
   }
 
-  Future<bool?> getuserlogin() async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
+  void setemail(email) {
+    sharedPreferences!.setString("email", email);
+  }
+  void setrefreshtoken(rfrshtoken) {
+    sharedPreferences!.setString("refreshtoken", rfrshtoken);
+  }
 
-    return sharedPreferences.getBool("login")??false;
-  }Future<bool?> gituservisit() async {
-    SharedPreferences? sharedPreferences =
-    await SharedPreferences.getInstance();
+  String? getemail() {
+    return sharedPreferences!.getString("email");
+  }
 
-    return sharedPreferences.getBool("visit");
+  String? getlocation() {
+    return sharedPreferences!.getString("location");
+  }
+
+  String? getlanguage() {
+    return sharedPreferences!.getString("lang");
+  }
+
+  setotp(otp) {
+    sharedPreferences!.setString("otp", otp);
+  }
+
+  String? getotp() {
+    return sharedPreferences!.getString("otp");
+  }
+
+  Map<String, dynamic> getuserinfo() {
+    return jsonDecode(sharedPreferences!.getString("userinfo")!);
+  }
+
+  bool? getuserlogin() {
+    return sharedPreferences!.getBool("login") ?? false;
+  }
+
+  bool? gituservisit() {
+    return sharedPreferences!.getBool("visit");
   }
 }

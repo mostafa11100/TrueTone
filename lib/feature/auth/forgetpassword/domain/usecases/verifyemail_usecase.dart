@@ -32,7 +32,7 @@ class CreateNewPasswordUseCase {
       newpaosswrdmodel: PasswordProccesModel(password: password,email: email,otp: otpfromcashing),
     );
     else
-      {print("otp no founnnnnddd");
+      {
         return Left(Failure.networkError());
       }
 
@@ -61,7 +61,7 @@ class Sendotptomail {
   Sendotptomail(this._basePasswordProccess);
 
   Future<Either<Failure, Unit>> excute(email) async
-  { await sl<Cashhelper>().setemail(email);
+  {  sl<Cashhelper>().setemail(email);
     return  await _basePasswordProccess.sendcode(
       email: PasswordProccesModel(email: email),
     );

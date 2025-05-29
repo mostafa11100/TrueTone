@@ -3,18 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:truetone/core/helper/shared_pref.dart';
 
 import '../../../../../core/component/custom_button.dart';
 import '../../../../../core/component/textrich.dart';
+import '../../../../../core/di/si.dart';
 import '../../../../../core/utiles/app_strings.dart';
 import '../../../../../core/utiles/app_textstyle.dart';
 import '../../../verify_email/presintaion/widgets.dart';
 import '../controler/create_new_password_procces_bloc.dart';
 
 class VerifyeotpScreen extends StatefulWidget {
-  const VerifyeotpScreen({super.key, required this.email});
+  const VerifyeotpScreen({super.key});
 
-  final String email;
 
   @override
   State<VerifyeotpScreen> createState() => _VerifyEmalScreenState();
@@ -30,23 +31,7 @@ class _VerifyEmalScreenState extends State<VerifyeotpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: EdgeInsets.all(10.0.w),
-          child: CircleAvatar(
-            radius: 12.r,
-            backgroundColor: Colors.black,
-            child: Icon(
-              Icons.arrow_back_outlined,
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
-          ),
-        ),
-        title: Text(
-          Apptrings.vrifyemail,
-          style: TextstyleConst.texts22.copyWith(fontWeight: FontWeight.w700),
-        ),
-      ),
+
       body: Padding(
         padding: EdgeInsets.all(20.w),
         child: Column(
@@ -65,7 +50,7 @@ class _VerifyEmalScreenState extends State<VerifyeotpScreen> {
             Opacity(
               opacity: .9,
               child: Text(
-                widget.email,
+                sl<Cashhelper>().getemail()??"",
                 style: TextstyleConst.texts20.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -98,7 +83,7 @@ class _VerifyEmalScreenState extends State<VerifyeotpScreen> {
               context,
               ontap: ()
               {
-                BlocProvider.of<CreateNewPasswordProccesBloc>(context).add(SendOTP(widget.email));
+                BlocProvider.of<CreateNewPasswordProccesBloc>(context).add(SendOTP(sl<Cashhelper>().getemail()!));
               },
               text1: Apptrings.iddnthavecode,
               text2: Apptrings.Resend,

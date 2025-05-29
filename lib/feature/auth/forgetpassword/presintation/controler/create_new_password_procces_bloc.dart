@@ -27,44 +27,43 @@ class CreateNewPasswordProccesBloc
         event.email,
       );
       result.fold(
-            (left) {
+        (left) {
           emit(CreateNewPasswordFail(left.error!));
         },
-            (_) {
+        (_) {
           emit(CreateNewPasswordSuccess());
         },
       );
     });
-      on<VerifyOTP>((event, emit) async {
-        _checkOtpUseCase = CheckOtpUseCase(_basePasswordProccess);
-        emit(CreateNewPasswordLoading());
-        Either<Failure, Unit> result = await _checkOtpUseCase.excute(event.otp);
-        result.fold(
-          (left) {
-            emit(CreateNewPasswordFail(left.error!));
-          },
-          (_) {
-            emit(CreateNewPasswordSuccess());
-          },
-        );
-      });
-      on<NewPassword>((event, emit) async {
-        _createNewPasswordUseCase = CreateNewPasswordUseCase(
-          _basePasswordProccess,
-        );
-        emit(CreateNewPasswordLoading());
-        Either<Failure, Unit> result = await _createNewPasswordUseCase.excute(
-          event.password,
-        );
-        result.fold(
-          (left) {
-            emit(CreateNewPasswordFail(left.error!));
-          },
-          (_) {
-            emit(CreateNewPasswordSuccess());
-          },
-        );
-      });
-
+    on<VerifyOTP>((event, emit) async {
+      _checkOtpUseCase = CheckOtpUseCase(_basePasswordProccess);
+      emit(CreateNewPasswordLoading());
+      Either<Failure, Unit> result = await _checkOtpUseCase.excute(event.otp);
+      result.fold(
+        (left) {
+          emit(CreateNewPasswordFail(left.error!));
+        },
+        (_) {
+          emit(CreateNewPasswordSuccess());
+        },
+      );
+    });
+    on<NewPassword>((event, emit) async {
+      _createNewPasswordUseCase = CreateNewPasswordUseCase(
+        _basePasswordProccess,
+      );
+      emit(CreateNewPasswordLoading());
+      Either<Failure, Unit> result = await _createNewPasswordUseCase.excute(
+        event.password,
+      );
+      result.fold(
+        (left) {
+          emit(CreateNewPasswordFail(left.error!));
+        },
+        (_) {
+          emit(CreateNewPasswordSuccess());
+        },
+      );
+    });
   }
 }

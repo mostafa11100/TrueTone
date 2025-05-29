@@ -15,13 +15,18 @@ abstract class BaseRemotePasswordBrocess<T> {
 class RemotePasswordProcces extends BaseRemotePasswordBrocess<Response?> {
   @override
   Future<Response?> createnewpassword({data}) async {
+    try{
     Response? result = await sl<DioNetwork>().post(
       data: data,
       url: baseurl.newpasswordurl,
     );
 
     return result;
-  }
+  }on DioException catch(e)
+    {
+     print("errrrrror ${e.response!.data}");
+     throw e;
+    }}
 
   @override
   Future<Response?> sendemailverify({data}) async {

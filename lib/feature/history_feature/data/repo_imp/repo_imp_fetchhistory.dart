@@ -14,9 +14,9 @@ class FetchHistoryRepo extends BaseHistoryRepo {
   FetchHistoryRepo(this._baseRemoteHistory);
 
   @override
-  Future<Either<Failure, Unit>> delete([HsirotyResponseModel? pr]) async {
+  Future<Either<Failure, Unit>> delete([VoiceEntity? pr]) async {
     try {
-      await _baseRemoteHistory.delet(pr: pr!.tojson());
+      await _baseRemoteHistory.delet(pr: pr!.id!.toString());
       return Right(unit);
     } on DioException catch (e) {
       return Left(Failure.handleHttpError(e));
@@ -27,15 +27,14 @@ class FetchHistoryRepo extends BaseHistoryRepo {
   Future<Either<Failure, List<VoiceEntity>>> fetch() async {
     try {
       Response reslt = await _baseRemoteHistory.fetch();
-
       HsirotyResponseModel model = HsirotyResponseModel.fromjson(
         lst: reslt.data,
       );
-
       return Right(model.listofhistory);
     } on DioException catch (e) {
       return Left(Failure.handleHttpError(e));
     } catch (e) {
+
       return Left(Failure.firbaseeror(e.toString()));
     }
   }
