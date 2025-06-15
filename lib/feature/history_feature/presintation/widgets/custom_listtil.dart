@@ -102,11 +102,11 @@ Widget cUstomListTile(context, type, text,Future<String>  lngth, ontap,VoiceEnti
 
 // Custom list tile definition
 class CustomListTile extends StatelessWidget {
-  final Widget? leading; // Optional leading widget
-  final Widget? title; // Required title text
-  final Widget? subTitle; // Optional subtitle text
+  final Widget? leading; 
+  final Widget? title; 
+  final Widget? subTitle; 
   final Function()? onTap; // Optional tap event handler
-  final Function? onLongPress; // Optional long press event handler
+  final Function? onLongPress; 
   final Function? onDoubleTap; // Optional double tap event handler
   final Widget? trailing; // Optional trailing widget
   final Color? tileColor; // Optional tile background color

@@ -13,8 +13,7 @@ import 'package:truetone/feature/history_feature/presintation/screens/history_sc
 import 'package:truetone/feature/history_feature/presintation/screens/voice_playe_screen.dart';
 import 'package:truetone/feature/home/domain/%20entitys/homeentity_uploadfile.dart';
 import 'package:truetone/feature/home/presintation/screens/widget/AiSoundpage.dart';
-import 'package:truetone/feature/setting/data/rebo/homereboimp.dart';
-import 'package:truetone/feature/setting/presintation/manger/fetch/fetchprofile_cubit.dart';
+import 'package:truetone/feature/setting/date/model.dart';
 import 'package:truetone/feature/setting/presintation/screens/eddit_profile.dart';
 import 'package:truetone/feature/setting/presintation/screens/language.dart';
 import 'package:truetone/feature/setting/presintation/screens/settinghome.dart';
@@ -34,7 +33,7 @@ import '../di/si.dart';
 class AppRouts {
   static String splashscreen = "/";
 
-  static String EdditprofileScreen1 = "/EdditprofileScreen";
+  static String setting1 = "/EditProfileScreen";
 
   static String onbording = "/onbording";
 
@@ -50,7 +49,8 @@ class AppRouts {
   static String voicescreen = "/voicescreen";
   static String typeaudioscreen = "/typeaudioscreen";
   static String history = "/history";
-  static String LanguagePage1 = "/LanguagePage";
+  
+
   static GoRouter routs = GoRouter(
     initialLocation:splashscreen,
     redirect: (context, state) {
@@ -156,31 +156,14 @@ class AppRouts {
         },
       ),
 
-      GoRoute(
-        path: EdditprofileScreen1,
-        builder: (context, state) {
-          return EdditprofileScreen();
-        },
-      ),
-      GoRoute(
-        path: AppRouts.SettingsScreen2,
-        builder: (context, state) {
-          final dio = Dio();
-          final apiService = ApiService(dio);
-          final homeRepo = HomeRepoImpl(apiService);
-          return BlocProvider(
-            create: (context) => FetchProfileCubit(homeRepo)..fetchProfile(),
-            child: SettingsScreen(),
-          );
-        },
-      ),
-
-      GoRoute(
-        path: LanguagePage1,
-        builder: (context, state) {
-          return LanguagePage();
-        },
-      ),
+     GoRoute(
+  path: setting1,
+  builder: (context, state) {
+    final profile = state.extra as UserProfile;
+    return EditProfileScreen(profile: profile,);
+  },
+),
+   
     ],
   );
 

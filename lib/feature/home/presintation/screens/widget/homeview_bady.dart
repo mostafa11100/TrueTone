@@ -36,6 +36,8 @@ class _HomeviewBadyState extends State<HomeviewBady> {
 
   void _onImageTap(context) async {
     // Handle any additional functionality if needed
+    
+                      print("pefforrrrrrrrrrrrrrrrrrr to pooton");
     setState(() {
       _scale = 0.8;
     });
@@ -98,15 +100,16 @@ class _HomeviewBadyState extends State<HomeviewBady> {
               children: [
                 Center(
                   child: GestureDetector(
-                    onTap: loading?  (){
+                    onTap: !loading?  (){
+                      print("enter to pooton");
                       _onImageTap(context);
-                    }:null, // Trigger the animation and navigation
+                    }:null, 
                     child: AnimatedScale(
                       scale: _scale,
                       duration: Duration(milliseconds: 100),
-                      // Duration of the scale animation
+                     
                       curve: Curves.easeInOut,
-                      // Smooth animation curve
+                     
                       child: HomeButtonAnimation(state: loading),
                     ),
                   ),

@@ -1,6 +1,7 @@
-import 'package:bloc/bloc.dart';
-import 'package:truetone/feature/setting/data/rebo/homerebo.dart';
-import 'package:truetone/feature/setting/data/model.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:truetone/feature/setting/date/rebo/homerebo.dart';
 import 'package:truetone/feature/setting/presintation/manger/update/updataprofile_state.dart';
 
 
@@ -18,6 +19,13 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
     String? profileImage,
   }) async {
     emit(UpdateProfileLoading());
+    debugPrint("📤 Sending updateProfile request with data:");
+    debugPrint("  📝 name: $name");
+    debugPrint("  📞 phoneNumber: $phoneNumber");
+    debugPrint("  🌍 country: $country");
+    debugPrint("  📧 email: $email");
+    debugPrint("  🎂 dateOfBirth: $dateOfBirth");
+    debugPrint("  🖼️ profileImage: $profileImage");
 
     final result = await homeRepo.updateProfile(
       name: name,
@@ -29,8 +37,14 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
     );
 
     result.fold(
-      (failure) => emit(UpdateProfileFailure(failure.error ?? "Unexpected Error")),
-      (profile) => emit(UpdateProfileSuccess(profile)),
+      (failure) {
+        
+        emit(UpdateProfileFailure(failure.error ?? "Unexpected Error"));
+      },
+      (profile) {
+        debugPrint("✅ updateProfile succeeded. New profile: $profile");
+        emit(UpdateProfileSuccess(profile));
+      },
     );
   }
 }
