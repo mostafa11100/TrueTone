@@ -13,6 +13,7 @@ import '../widgets/reachtextwidget.dart';
 class SendCodeToEmailScreen extends StatefulWidget {
   const SendCodeToEmailScreen({super.key});
 
+
   @override
   State<SendCodeToEmailScreen> createState() => _SendCodeToEmailScreenState();
 }
@@ -41,7 +42,6 @@ checkvalidatio()
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, Apptrings.forgotPassword),
       body: Padding(
         padding: EdgeInsets.all(20.0.r),
         child: SingleChildScrollView(

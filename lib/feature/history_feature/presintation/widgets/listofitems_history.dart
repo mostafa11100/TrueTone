@@ -14,6 +14,7 @@ Widget listOfItems(
   context,
   void Function() navigte_function,
   List<VoiceEntity> listofvoices,
+
 ) {
   return ListView.builder(
     itemCount: listofvoices.length,
@@ -34,7 +35,7 @@ Widget listOfItems(
                 "bloc": context.read<VoiceScreenBloc>(),
               },
             );
-          },
+          },listofvoices[i]
         ),
       );
     },

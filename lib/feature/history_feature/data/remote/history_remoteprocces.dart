@@ -7,29 +7,22 @@ import '../../../../core/utiles/app_consts.dart';
 abstract class BaseRemoteHistory {
   Future<Response> fetch();
 
-  Future<Response> delet({required Map<String,dynamic>  pr});
+  Future<Response> delet({required String pr});
 }
 
 class RemoteHistory extends BaseRemoteHistory {
   @override
-  Future<Response> delet({required Map<String,dynamic> pr}) async {
-
-    Response resonse = await sl<DioNetwork>().get(
-      data: pr,
-      url: baseurl.delethistory,
-    );
+  Future<Response> delet({required String pr}) async {
+    print("before delete");
+    String url = "${baseurl.delethistory}/$pr";
+    Response resonse = await sl<DioNetwork>().delete(url: url);
+    print("afterrrrrrrrrrr elete");
     return resonse;
   }
 
   @override
   Future<Response> fetch() async {
-
-      Response resonse = await sl<DioNetwork>().get(
-        data: {},
-        url: baseurl.fetchhistory,
-      );
-      print("after  remote   ${resonse.data}");
-      return resonse;
-
+    Response resonse = await sl<DioNetwork>().get(url: baseurl.fetchhistory);
+    return resonse;
   }
 }

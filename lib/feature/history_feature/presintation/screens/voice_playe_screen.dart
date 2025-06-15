@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:truetone/core/component/loading.dart';
 import 'package:truetone/core/utiles/app_assets.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
+import 'package:truetone/feature/history_feature/presintation/controlers/history_bloc/history_bloc.dart';
 import 'package:truetone/feature/history_feature/presintation/controlers/voice_screen_bloc.dart';
 import 'package:truetone/feature/history_feature/presintation/widgets/customabbBarvoicescreen.dart';
 
@@ -36,7 +39,7 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
     super.didChangeDependencies();
   }
 
-  int? indx;
+  int indx = 0;
 
   @override
   void initState() {
@@ -47,7 +50,7 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customabbBarvoicescreen(context),
+      appBar: customabbBarvoicescreen(context, widget.voiceEntity[indx]),
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -72,7 +75,7 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 60.h),
+                SizedBox(height: 90.h),
                 Container(
                   //  alignment: Alignment.bottomCenter,
                   padding: EdgeInsets.only(top: 15.h),
@@ -87,7 +90,7 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
                   height: 225.h,
                   width: 225.w,
                   child: Image.asset(
-                    widget.voiceEntity[indx!].type == 'real'
+                    widget.voiceEntity[indx].type == 'real'
                         ? humanbig
                         : ropotbig,
                   ),
@@ -95,7 +98,7 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
 
                 SizedBox(height: 10.h),
                 Text(
-                  widget.voiceEntity[indx!].name ?? "notfound",
+                  widget.voiceEntity[indx].name ?? "notfound",
                   style: TextstyleConst.texts28.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
@@ -104,7 +107,7 @@ class _VoicePlayeScreenState extends State<VoicePlayeScreen> {
                 Opacity(
                   opacity: .7,
                   child: Text(
-                    widget.voiceEntity[indx!].type ?? "knowo",
+                    widget.voiceEntity[indx].type ?? "knowo",
                     style: TextstyleConst.texts18.copyWith(
                       fontWeight: FontWeight.w500,
                       color: Theme.of(context).colorScheme.onPrimary,

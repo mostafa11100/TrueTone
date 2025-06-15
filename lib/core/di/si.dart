@@ -28,7 +28,10 @@ final sl = GetIt.instance;
 setupLocator() {
   sl.registerSingleton<DioNetwork>(DioNetwork.init());
 
-  sl.registerSingleton<Cashhelper>(Cashhelper());
+  sl.registerSingletonAsync<Cashhelper>(()async
+  {
+    return await Cashhelper.chachhelperinit();
+  });
 
   sl.registerFactory(() {
     return SignUpCubit(SignupUsecase(SignupRepoImp(SignupRemote())));

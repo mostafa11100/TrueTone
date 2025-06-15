@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:truetone/core/component/loading.dart';
+import 'package:truetone/core/network/api_server.dart';
 import 'package:truetone/core/helper/shared_pref.dart';
 import 'package:truetone/feature/auth/forgetpassword/presintation/controler/create_new_password_procces_bloc.dart';
 import 'package:truetone/feature/auth/signin/presintation/controler/signin_cubit.dart';
@@ -13,6 +15,8 @@ import 'package:truetone/feature/home/domain/%20entitys/homeentity_uploadfile.da
 import 'package:truetone/feature/home/presintation/screens/widget/AiSoundpage.dart';
 import 'package:truetone/feature/setting/date/model.dart';
 import 'package:truetone/feature/setting/presintation/screens/eddit_profile.dart';
+import 'package:truetone/feature/setting/presintation/screens/language.dart';
+import 'package:truetone/feature/setting/presintation/screens/settinghome.dart';
 
 import 'package:truetone/feature/splash_onbording/onbording.dart';
 import 'package:truetone/feature/splash_onbording/splash.dart';
@@ -41,24 +45,27 @@ class AppRouts {
   static String forgetpassword = "/forgetpassword";
   static String loading = "/loading";
   static String mainscreen = "/mainscreen";
+  static String SettingsScreen2 = "/SettingsScreen";
   static String voicescreen = "/voicescreen";
   static String typeaudioscreen = "/typeaudioscreen";
   static String history = "/history";
   
 
   static GoRouter routs = GoRouter(
-    initialLocation: splashscreen,
-    // redirect: (context, state)async {
-    //
-    //   bool visit =await sl<Cashhelper>().gituservisit()??false;
-    //   if(visit) {
-    //     bool login = await sl<Cashhelper>().getuserlogin()??false ;
-    //     return login ? mainscreen : signin;
-    //   }
-    //   else {
-    //     sl<Cashhelper>().setvisit();
-    //     return null;}
-    // },
+    initialLocation:splashscreen,
+    redirect: (context, state) {
+      if (state.fullPath == onbording) {
+        bool visit = sl<Cashhelper>().gituservisit() ?? false;
+
+        if (visit) {
+          bool login = sl<Cashhelper>().getuserlogin() ?? false;
+          return login ? signin : signin;
+        } else {
+          sl<Cashhelper>().setvisit();
+        }
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         path: splashscreen,

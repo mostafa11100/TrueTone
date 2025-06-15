@@ -14,6 +14,7 @@ class PasswordProccesModel
  password!=null?jsn['password']=password:null;
 
  password!=null?jsn['confirmNewPassword']=password:null;
+ print("jsonnnnnnnnnnnnnnnnnnnnnn $jsn");
     return jsn;
   }
 }

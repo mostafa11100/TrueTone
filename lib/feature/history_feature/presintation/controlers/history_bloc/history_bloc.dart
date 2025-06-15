@@ -42,7 +42,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       _useCaseDelete = UseCaseDelete(_baseHistoryRepo);
       emit(HistoryLoading());
       Either<Failure, Unit> rslt = await _useCaseDelete.excute(
-        data: HsirotyResponseModel,
+        data:event.voiceEntity,
       );
       rslt.fold(
         (left) {
@@ -50,8 +50,9 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
         },
         (right) {
           emit(HistoryDeleteSuccess());
+          add(FetchHistoryEvent());
         },
-      );
+      );add(FetchHistoryEvent());
     });
   }
 }

@@ -48,7 +48,7 @@ class DioNetwork {
       response = await _dio.request(url, data: data);
       return response;
     } catch (e) {
-      throw Exception(e);
+      throw e;
     }
   }
 
@@ -59,7 +59,7 @@ class DioNetwork {
 
       return response;
     } catch (e) {
-      throw Exception(e);
+      throw e;
     }
   }
 
@@ -69,7 +69,8 @@ class DioNetwork {
   }) async {
     try {
       final formData = FormData.fromMap(json);
-      final Response response = await _dio.get(url, data: formData);
+      final Response response = await _dio.post(url, data: formData,options: Options(headers: {"Content-Type": "multipart/form-data"}));
+      print("aplouuuuuuudbbbbbbbbbbbbbbbbbbbbbbbbb========/////====${response.data}");
       return response;
     } catch (e) {
       throw Exception(e);

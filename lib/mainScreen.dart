@@ -3,14 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:truetone/core/utiles/app_colors.dart';
 import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
+import 'package:truetone/feature/history_feature/presintation/controlers/history_bloc/history_bloc.dart';
 import 'package:truetone/feature/history_feature/presintation/controlers/voice_screen_bloc.dart';
 import 'package:truetone/feature/history_feature/presintation/screens/history_screen.dart';
 import 'package:truetone/feature/history_feature/presintation/screens/voice_playe_screen.dart';
 import 'package:truetone/feature/home/presintation/screens/home_views.dart';
 import 'package:truetone/feature/setting/presintation/screens/settinghome.dart';
+import 'package:truetone/feature/setting/presintation/screens/settinghome.dart';
 
 import 'core/di/si.dart';
-import 'feature/history_feature/presintation/controlers/history_bloc/history_bloc.dart';
 import 'feature/setting/presintation/screens/eddit_profile.dart';
 
 class Mainscreen extends StatefulWidget {
@@ -22,16 +23,11 @@ class Mainscreen extends StatefulWidget {
 
 class _MainscreenState extends State<Mainscreen> {
   late final PageController _pageController;
-  late final ValueNotifier<int> _selectedNotifier;
-  late final List<Widget> _screens;
 
-  void _onItemTap(int index) {
-    _selectedNotifier.value = index;
-    _pageController.jumpToPage(index);
-  }
+  late final ValueNotifier<int> _selectedNotifier;
 
   @override
-  void didChangeDependencies() {
+  void initState() {
     _screens = [
       HomeViews(),
       MultiBlocProvider(
@@ -45,7 +41,7 @@ class _MainscreenState extends State<Mainscreen> {
         ],
         child: HistoryScreen(
           navigatefunction: () {
-            // _onItemTap(3);
+            _onItemTap(3);
           },
         ),
       ),
@@ -54,7 +50,14 @@ class _MainscreenState extends State<Mainscreen> {
     _pageController = PageController();
     _selectedNotifier = ValueNotifier(0);
 
-    super.didChangeDependencies();
+    super.initState();
+  }
+
+  late final List<Widget> _screens;
+
+  void _onItemTap(int index) {
+    _selectedNotifier.value = index;
+    _pageController.jumpToPage(index);
   }
 
   @override
