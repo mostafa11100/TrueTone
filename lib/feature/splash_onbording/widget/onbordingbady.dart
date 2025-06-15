@@ -166,16 +166,7 @@ class _OnbordingbadyState extends State<Onbordingbady> {
             ),
 
             customindicator2(index),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     customindicator(actaive: index==0),
-            //     SizedBox(width: 5.w,),
-            //      customindicator(actaive: index==1),
-            //           SizedBox(width: 5.w,),
-            //       customindicator(actaive: index==2),
-            //
-            // ],),
+      
             SizedBox(height: 20.h),
 
             Padding(

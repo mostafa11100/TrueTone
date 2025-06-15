@@ -11,6 +11,7 @@ import 'package:truetone/feature/history_feature/presintation/screens/history_sc
 import 'package:truetone/feature/history_feature/presintation/screens/voice_playe_screen.dart';
 import 'package:truetone/feature/home/domain/%20entitys/homeentity_uploadfile.dart';
 import 'package:truetone/feature/home/presintation/screens/widget/AiSoundpage.dart';
+import 'package:truetone/feature/setting/date/model.dart';
 import 'package:truetone/feature/setting/presintation/screens/eddit_profile.dart';
 
 import 'package:truetone/feature/splash_onbording/onbording.dart';
@@ -28,7 +29,7 @@ import '../di/si.dart';
 class AppRouts {
   static String splashscreen = "/";
 
-  static String setting = "/setting";
+  static String setting1 = "/EditProfileScreen";
 
   static String onbording = "/onbording";
 
@@ -43,6 +44,7 @@ class AppRouts {
   static String voicescreen = "/voicescreen";
   static String typeaudioscreen = "/typeaudioscreen";
   static String history = "/history";
+  
 
   static GoRouter routs = GoRouter(
     initialLocation: splashscreen,
@@ -147,12 +149,14 @@ class AppRouts {
         },
       ),
 
-      GoRoute(
-        path: setting,
-        builder: (context, state) {
-          return EdditprofileScreen();
-        },
-      ),
+     GoRoute(
+  path: setting1,
+  builder: (context, state) {
+    final profile = state.extra as UserProfile;
+    return EditProfileScreen(profile: profile,);
+  },
+),
+   
     ],
   );
 
