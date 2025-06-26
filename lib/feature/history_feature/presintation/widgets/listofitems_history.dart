@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:truetone/core/Approuts/routs.dart';
 import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
 import 'package:truetone/feature/history_feature/presintation/controlers/voice_screen_bloc.dart';
 
-import '../../../../core/utiles/app_assets.dart';
 import 'custom_listtil.dart';
 import 'getlngthofaudio.dart';
 
@@ -14,7 +12,6 @@ Widget listOfItems(
   context,
   void Function() navigte_function,
   List<VoiceEntity> listofvoices,
-
 ) {
   return ListView.builder(
     itemCount: listofvoices.length,
@@ -35,7 +32,8 @@ Widget listOfItems(
                 "bloc": context.read<VoiceScreenBloc>(),
               },
             );
-          },listofvoices[i]
+          },
+          listofvoices[i],
         ),
       );
     },

@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:truetone/core/utiles/app_colors.dart';
-import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
 
 import '../controlers/voice_screen_bloc.dart';
 
@@ -26,39 +23,36 @@ class _aUdioPlayerCutomState extends State<aUdioPlayerCutom> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<VoiceScreenBloc, VoiceScreenState>(
-      buildWhen: (previce,current)
-      {if(current is VoiceFail||current is VoiceButtonstate ||current is Voicesucce)return true;
+      buildWhen: (previce, current) {
+        if (current is VoiceFail ||
+            current is VoiceButtonstate ||
+            current is Voicesucce)
+          return true;
         return false;
-
-
       },
       builder: (context, state) {
-
-
-        if ( widget.loading) {
+        if (widget.loading) {
           return button_custom(context: context, loading: true);
         }
-        if (state is VoiceFail||state is  Voicesucce)
-        {
-          return  button_custom(
+        if (state is VoiceFail || state is Voicesucce) {
+          return button_custom(
             context: context,
             loading: false,
             index: widget.index,
           );
         }
-        if (state is VoiceButtonstate)
-        {
-          print("entttttttttttttttttttttttttttttttttttttttttttttttttter ${state.play}");
+        if (state is VoiceButtonstate) {
+          print(
+            "entttttttttttttttttttttttttttttttttttttttttttttttttter ${state.play}",
+          );
           return button_custom(
             context: context,
             loading: false,
             play: state.play,
             index: widget.index,
           );
-        }
-        else {
+        } else {
           return button_custom(
             context: context,
             loading: false,
@@ -150,8 +144,7 @@ Widget button_custom({context, loading = false, play = false, index = 0}) {
   );
 }
 
-audioplayerputtoncustom(state, indx)
-{
+audioplayerputtoncustom(state, indx) {
   if (state is Voiceloading)
     return aUdioPlayerCutom(loading: true, index: indx!);
   else

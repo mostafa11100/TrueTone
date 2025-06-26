@@ -20,6 +20,6 @@ customsnackbar({context, text, color, required textcolor, then}) async {
       )
       .closed
       .then((v) {
-        then;
+        if (then != null) then();
       });
 }

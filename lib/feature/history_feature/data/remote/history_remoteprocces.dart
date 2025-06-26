@@ -13,10 +13,9 @@ abstract class BaseRemoteHistory {
 class RemoteHistory extends BaseRemoteHistory {
   @override
   Future<Response> delet({required String pr}) async {
-    print("before delete");
     String url = "${baseurl.delethistory}/$pr";
     Response resonse = await sl<DioNetwork>().delete(url: url);
-    print("afterrrrrrrrrrr elete");
+
     return resonse;
   }
 

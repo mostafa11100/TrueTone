@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
-import 'package:truetone/feature/home/domain/%20entitys/homeentity_uploadfile.dart';
 
 import '../../../../../core/error/Failure.dart';
 import '../../../data/model_history.dart';
@@ -34,7 +33,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
           },
         );
       } catch (e) {
-        emit(HistoryFail(Failure.firbaseeror(e.toString()).error!));
+        emit(HistoryFail(Failure.gineralerror(e.toString()).error!));
       }
     });
     //
@@ -42,7 +41,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       _useCaseDelete = UseCaseDelete(_baseHistoryRepo);
       emit(HistoryLoading());
       Either<Failure, Unit> rslt = await _useCaseDelete.excute(
-        data:event.voiceEntity,
+        data: event.voiceEntity,
       );
       rslt.fold(
         (left) {
@@ -52,7 +51,8 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
           emit(HistoryDeleteSuccess());
           add(FetchHistoryEvent());
         },
-      );add(FetchHistoryEvent());
+      );
+      add(FetchHistoryEvent());
     });
   }
 }

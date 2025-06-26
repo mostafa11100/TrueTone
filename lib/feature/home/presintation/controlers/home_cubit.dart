@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -14,20 +13,19 @@ class HomeCubit extends Cubit<HomeState> {
   UsecaseCheckAudio _usecaseCheckAudio;
 
   HomeCubit(this._usecaseCheckAudio) : super(HomeInitial());
-static HomeCubit blocprovider(context)
-{
-  return BlocProvider.of<HomeCubit>(context);
-}
+  static HomeCubit blocprovider(context) {
+    return BlocProvider.of<HomeCubit>(context);
+  }
 
   checkaudio({required HomeEntity entity}) async {
     emit(HomeLoading());
     try {
-      print("enter to cubit  send voice");
       Either<Failure, HomeModel> result = await _usecaseCheckAudio.excute(
         entity,
       );
       result.fold(
-        (left) {print("enter to cubit  send voice errrror ${left.error}");
+        (left) {
+          print("enter to cubit  send voice errrror ${left.error}");
           emit(HomeFail(left.error!));
         },
         (right) {
@@ -35,7 +33,8 @@ static HomeCubit blocprovider(context)
           emit(HomeSuccess(right.tohomeentity()));
         },
       );
-    } catch (e) {print("enter to cubit  send voice catch error ${e.toString()}");
+    } catch (e) {
+      print("enter to cubit  send voice catch error ${e.toString()}");
       emit(HomeFail(e.toString()));
     }
   }

@@ -59,6 +59,7 @@ static String hasbeendleted="the voice has been deleted successfuly";
 
   static String cantbeepty = "Can't be empty";
   static String hometitle="Tap to detect the Sound";
+  static String homeloading="Analyzing sound, please wait";
    static String continue1 = "continue";
     static String AIsound=  "It,s a\nAi\nsound";
     static String Humansound="It,s a\nHuman\nsound";

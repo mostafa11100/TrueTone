@@ -5,40 +5,43 @@ import '../../../../core/network/api_dio.dart';
 import '../../../../core/utiles/app_consts.dart';
 
 abstract class BaseRemotePasswordBrocess<T> {
-  Future<T> sendemailverify({data});
+  Future<Response> sendemailverify({data});
 
-  Future<T> checkotp({data});
+  Future<Response> checkotp({data});
 
-  Future<T> createnewpassword({data});
+  Future<Response> createnewpassword({data});
 }
 
 class RemotePasswordProcces extends BaseRemotePasswordBrocess<Response?> {
   @override
-  Future<Response?> createnewpassword({data}) async {
-    try{
-    Response? result = await sl<DioNetwork>().post(
-      data: data,
-      url: baseurl.newpasswordurl,
-    );
+  Future<Response> createnewpassword({data}) async {
+    try {
+      Response? result = await sl<DioNetwork>().post(
+        data: data,
+        url: baseurl.newpasswordurl,
+      );
 
-    return result;
-  }on DioException catch(e)
-    {
-     print("errrrrror ${e.response!.data}");
-     throw e;
-    }}
+      return result;
+    } on DioException catch (e) {
+      print("errrrrror ${e.response!.data}");
+      throw e;
+    } catch (e) {
+      print("errrroror in remote create new password ${e.toString()}");
+      throw e;
+    }
+  }
 
   @override
-  Future<Response?> sendemailverify({data}) async {
-    Response? result = await sl<DioNetwork>().post(
-      data: data,
+  Future<Response> sendemailverify({data}) async {
+    Response result = await sl<DioNetwork>().post(
+      data: {"email": "mostafasalem39956@gmail.com"},
       url: baseurl.sendverification,
     );
     return result;
   }
 
   @override
-  Future<Response?> checkotp({data}) async {
+  Future<Response> checkotp({data}) async {
     Response? result = await sl<DioNetwork>().post(
       data: data,
       url: baseurl.emailvrifcationurl,

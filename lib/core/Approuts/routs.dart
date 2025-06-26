@@ -9,10 +9,7 @@ import 'package:truetone/feature/auth/signin/presintation/controler/signin_cubit
 import 'package:truetone/feature/auth/signin/presintation/screens/signin_screen.dart';
 import 'package:truetone/feature/auth/verify_email/presintaion/screens/verify_emal_screen.dart';
 import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
-import 'package:truetone/feature/history_feature/presintation/screens/history_screen.dart';
-import 'package:truetone/feature/history_feature/presintation/screens/voice_playe_screen.dart';
 import 'package:truetone/feature/home/domain/%20entitys/homeentity_uploadfile.dart';
-import 'package:truetone/feature/home/presintation/screens/widget/AiSoundpage.dart';
 import 'package:truetone/feature/setting/data/rebo/homereboimp.dart';
 import 'package:truetone/feature/setting/presintation/manger/fetch/fetchprofile_cubit.dart';
 import 'package:truetone/feature/setting/presintation/screens/eddit_profile.dart';
@@ -52,20 +49,20 @@ class AppRouts {
   static String history = "/history";
   static String LanguagePage1 = "/LanguagePage";
   static GoRouter routs = GoRouter(
-    initialLocation:splashscreen,
-    redirect: (context, state) {
-      if (state.fullPath == onbording) {
-        bool visit = sl<Cashhelper>().gituservisit() ?? false;
+    initialLocation: splashscreen,
+    // redirect: (context, state) {
+    //   if (state.fullPath == onbording) {
+    //     bool visit = sl<Cashhelper>().gituservisit() ?? false;
 
-        if (visit) {
-          bool login = sl<Cashhelper>().getuserlogin() ?? false;
-          return login ? signin : signin;
-        } else {
-          sl<Cashhelper>().setvisit();
-        }
-      }
-      return null;
-    },
+    //     if (visit) {
+    //       bool login = sl<Cashhelper>().getuserlogin() ?? false;
+    //       return login ? app_home : signin;
+    //     } else {
+    //       sl<Cashhelper>().setvisit();
+    //     }
+    //   }
+    //   return null;
+    // },
     routes: [
       GoRoute(
         path: splashscreen,

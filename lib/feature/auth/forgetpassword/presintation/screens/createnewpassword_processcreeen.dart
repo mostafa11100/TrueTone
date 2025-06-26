@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:truetone/core/Approuts/routs.dart';
 import 'package:truetone/core/component/dialog.dart';
+import 'package:truetone/core/utiles/app_colors.dart';
 import 'package:truetone/feature/auth/forgetpassword/presintation/controler/create_new_password_procces_bloc.dart';
 import 'package:truetone/feature/auth/forgetpassword/presintation/screens/createnew_password_screen.dart';
 import 'package:truetone/feature/auth/forgetpassword/presintation/screens/sendtoemail_screen.dart';
@@ -37,13 +38,12 @@ class _CreatenewpasswordProcesscreeenState
     });
     super.initState();
   }
-List<String>listoftitles=
-[
-  Apptrings.forgetpassword,
-  Apptrings.vrifyemail,
-  Apptrings.createnwpassword,
 
-];
+  List<String> listoftitles = [
+    Apptrings.forgetpassword,
+    Apptrings.vrifyemail,
+    Apptrings.createnwpassword,
+  ];
   @override
   void dispose() {
     _controller.dispose();
@@ -53,22 +53,25 @@ List<String>listoftitles=
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, listoftitles[index],ontap: ()
-      {
-        if (index >0) {
-          _controller.animateToPage(
-            index - 1,
-            duration: Duration(milliseconds: 50),
-            curve: Curves.ease,
-          );
-        } else {
-          GoRouter.of(context).pop();
-        }
-      }),
+      appBar: customAppBar(
+        context,
+        listoftitles[index],
+        ontap: () {
+          if (index > 0) {
+            _controller.animateToPage(
+              index - 1,
+              duration: Duration(milliseconds: 50),
+              curve: Curves.ease,
+            );
+          } else {
+            GoRouter.of(context).pop();
+          }
+        },
+      ),
       body: Column(
         children: [
-      SizedBox(height: 20.h,),
-           customindicator2(index),
+          SizedBox(height: 20.h),
+          customindicator2(index),
 
           Expanded(
             child: BlocListener<
@@ -76,18 +79,28 @@ List<String>listoftitles=
               CreateNewPasswordProccesState
             >(
               listener: (context, state) {
+                if (state is CreateNewPasswordSuccessnewpassword) {
+                  GoRouter.of(context).pop();
+                  customsnackbar(
+                    textcolor: Colors.white,
+                    context: context,
+                    color: Colors.green,
+                    text: "password updated successfuly",
+                    then: () {
+                      GoRouter.of(context).pushReplacement(AppRouts.signin);
+                    },
+                  );
+                }
                 if (state is CreateNewPasswordLoading) {
                   loadingdialog(context);
                 } else if (state is CreateNewPasswordSuccess) {
                   GoRouter.of(context).pop();
-                  if (index <= 2) {
+                  if (index < 2) {
                     _controller.animateToPage(
                       index + 1,
                       duration: Duration(milliseconds: 50),
                       curve: Curves.ease,
                     );
-                  } else {
-                    GoRouter.of(context).pushReplacement(AppRouts.signin);
                   }
                 } else if (state is CreateNewPasswordFail) {
                   GoRouter.of(context).pop();
@@ -110,8 +123,6 @@ List<String>listoftitles=
               ),
             ),
           ),
-
-
         ],
       ),
     );

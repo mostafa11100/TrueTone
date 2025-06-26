@@ -21,10 +21,15 @@ class HomeCheckFileTypeRepo extends HomeInterface {
       Response result = await _remoteUploadFile.uploadfile(
         homemodel: homeentity!.tohomemodel(),
       );
-      print("responseeeeeeeeeeeeee ${result.data}");
-      return Right(HomeModel.fromjson(json: result.data[0]));
+      return Right(HomeModel.fromjson(json: result.data));
     } on DioException catch (e) {
+      print({Failure.handleHttpError(e).error});
       return Left(Failure.handleHttpError(e));
+
+    }
+    catch(e)
+    {
+      return Left(Failure.gineralerror(e.toString()));
     }
   }
 }

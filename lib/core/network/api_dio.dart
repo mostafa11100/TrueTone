@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:truetone/core/error/exeptions.dart';
 
 import '../di/si.dart';
 import '../helper/shared_pref.dart';
@@ -37,26 +35,34 @@ class DioNetwork {
           return handle.next(options);
         },
         onError: (e, h) async {
-          if (e.response!.statusCode == 401) {
-            try {
-              String? token = sl<Cashhelper>().getusertoken();
-              String? rfrshtoken = sl<Cashhelper>().getrefreshtoken();
-              String newtoken = await refreshtoken(rfrshtoken);
-              sl<Cashhelper>().setusertoken(newtoken);
-              e.requestOptions.headers['Authorization'] = 'Bearer $newtoken';
-              return h.resolve(
-                Response(
-                  requestOptions: e.requestOptions,
+          try {
+            if (e.response!.statusCode == 401) {
+              try {
+                String? rfrshtoken = sl<Cashhelper>().getrefreshtoken();
+                Map<String, dynamic> newtoken = await refreshtoken(rfrshtoken);
+
+                sl<Cashhelper>().setrefreshtoken(newtoken['refresh']);
+                sl<Cashhelper>().setusertoken(newtoken['token']);
+                e.requestOptions.headers['Authorization'] =
+                    'Bearer ${newtoken['token']}';
+
+                Response res = await get(
+                  url: e.requestOptions.uri.toString(),
                   data: e.requestOptions.data,
-                ),
-              );
-            } on DioException catch (e2) {
-              return h.next(e2);
-            } catch (ee) {
-              return h.next(e);
+                );
+                //https: //truetoneapi.runasp.net/api/AudioAnalysis/history
+                return h.resolve(res);
+              } on DioException catch (e2) {
+                return h.reject(e2);
+              } catch (ee) {
+                return h.reject(e);
+              }
+            } else {
+              return h.reject(e);
             }
+          } catch (er) {
+            return h.reject(e);
           }
-          return h.next(e);
         },
       ),
     );
@@ -74,12 +80,13 @@ class DioNetwork {
     }
   }
 
-  Future<Response?> post({url, data}) async {
+  Future<Response> post({url, data}) async {
     try {
-      Response? response;
+      Response response;
       response = await _dio.post(url, data: data);
 
       return response;
+      //return Response(requestOptions: RequestOptions());
     } catch (e) {
       throw e;
     }
@@ -90,9 +97,23 @@ class DioNetwork {
     required Map<String, dynamic> json,
   }) async {
     try {
+      String? token = await sl<Cashhelper>().getusertoken();
+      Map<String, dynamic> header = {
+        'accept': '*/*',
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer $token',
+      };
       final formData = FormData.fromMap(json);
-      final Response response = await _dio.get(url, data: formData);
+
+      final Response response = await _dio.post(
+        url,
+        data: formData,
+        options: Options(headers: header),
+      );
       return response;
+    } on DioException catch (e) {
+      print("in exeption ${e.response!.statusCode}");
+      throw e;
     } catch (e) {
       throw e;
     }
@@ -118,17 +139,15 @@ class DioNetwork {
     }
   }
 
-  Future<String> refreshtoken(token) async {
+  Future<Map<String, dynamic>> refreshtoken(token) async {
     Response? response;
     try {
-      response = await _dio.get(
-        baseurl.refreshtoken,
-        options: Options(
-          headers: {'refreshToken': token, 'Content-Type': 'application/json'},
-        ),
-      );
-      String newtoken = response.data['refreshtoken'];
-      return newtoken;
+      response = await _dio.post(baseurl.refreshtoken, data: {"token": token});
+
+      String newtoken = response.data['token'];
+      String rfrsh = response.data['refreshToken'];
+
+      return {"token": newtoken, "refresh": rfrsh};
     } catch (e) {
       throw e;
     }

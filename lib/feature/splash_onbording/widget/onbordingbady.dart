@@ -37,10 +37,13 @@ class _OnbordingbadyState extends State<Onbordingbady> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding:  EdgeInsets.all(20.0.w),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(height: 90.h),
             Expanded(
+              //  height: MediaQuery.of(context).size.height / 1.8,
               child: PageView(
                 controller: _pageController,
                 onPageChanged: (value) {
@@ -56,10 +59,10 @@ class _OnbordingbadyState extends State<Onbordingbady> {
                       children: [
                         Image.asset(
                           onp1asset,
-                          height: MediaQuery.of(context).size.height * .33,
-                          width: MediaQuery.of(context).size.width * .6,
+                          // height: MediaQuery.of(context).size.height * .33,
+                          // width: MediaQuery.of(context).size.width * .6,
                         ),
-                        Container(height: 10.h),
+                        SizedBox(height: 20.h),
 
                         Center(
                           child: Text(
@@ -93,8 +96,9 @@ class _OnbordingbadyState extends State<Onbordingbady> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset(onp2asset, height: 200.h),
-                        Image.asset(onp3asset, height: 70.h),
+                        Image.asset(onp2asset),
+                        Container(height: 20.h),
+                        Image.asset(onp22asset),
                         Container(height: 30.h),
 
                         Center(
@@ -123,76 +127,59 @@ class _OnbordingbadyState extends State<Onbordingbady> {
                     ),
                   ),
 
-                  Container(
-                    padding: EdgeInsets.all(10.w),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          onp1asset,
-                          height: MediaQuery.of(context).size.height * .33,
-                          width: MediaQuery.of(context).size.width * .6,
-                        ),
-                        Container(height: 10.w),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(onp3asset),
 
-                        Center(
-                          child: Text(
-                            Apptrings.quicidnfcation,
-                            style: TextstyleConst.texts28.copyWith(
-                              fontSize: 27,
-                              fontWeight: FontWeight.w700,
-                              fontStyle: FontStyle.italic,
-                            ),
-                            textAlign: TextAlign.center,
+                      Container(height: 64.h),
+
+                      Center(
+                        child: Text(
+                          Apptrings.quicidnfcation,
+                          style: TextstyleConst.texts28.copyWith(
+                            fontSize: 26,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.italic,
                           ),
+                          textAlign: TextAlign.center,
                         ),
-                        Center(
-                          child: Text(
-                            Apptrings.soundsourceai,
-                            style: TextstyleConst.texts28.copyWith(
-                             
-                              fontWeight: FontWeight.w700,
-                              fontStyle: FontStyle.italic,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
+                      ),
+                      Text(
+                        Apptrings.soundsourceai,
+                        style: TextstyleConst.texts28.copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.italic,
                         ),
-                      ],
-                    ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
 
             customindicator2(index),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     customindicator(actaive: index==0),
-            //     SizedBox(width: 5.w,),
-            //      customindicator(actaive: index==1),
-            //           SizedBox(width: 5.w,),
-            //       customindicator(actaive: index==2),
-            //
-            // ],),
             SizedBox(height: 20.h),
-
             Padding(
-              padding: EdgeInsets.only(bottom: 5.h, top: 15.h),
+              padding: EdgeInsets.only(bottom: 5.h, top: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                width:MediaQuery.of(context).size.width*.8,
-                    child: customButton(context, onpress: () {
-                      if (index == 2) {
-                        GoRouter.of(context).pushReplacement(AppRouts.signup);
-                      }
-                      _pageController.jumpToPage(index + 1);
-                    }, text:  index == 2 ? Apptrings.gettstart : Apptrings.next,),
+                    width: MediaQuery.of(context).size.width * .8,
+                    child: customButton(
+                      context,
+                      onpress: () {
+                        if (index == 2) {
+                          GoRouter.of(context).pushReplacement(AppRouts.signup);
+                        }
+                        _pageController.jumpToPage(index + 1);
+                      },
+                      text: index == 2 ? Apptrings.gettstart : Apptrings.next,
+                    ),
                   ),
-
                 ],
               ),
             ),

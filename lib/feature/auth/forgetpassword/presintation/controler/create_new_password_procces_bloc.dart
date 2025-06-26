@@ -61,7 +61,7 @@ class CreateNewPasswordProccesBloc
           emit(CreateNewPasswordFail(left.error!));
         },
         (_) {
-          emit(CreateNewPasswordSuccess());
+          emit(CreateNewPasswordSuccessnewpassword());
         },
       );
     });

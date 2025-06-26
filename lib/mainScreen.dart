@@ -2,16 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:truetone/core/utiles/app_colors.dart';
-import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
 import 'package:truetone/feature/history_feature/presintation/controlers/history_bloc/history_bloc.dart';
 import 'package:truetone/feature/history_feature/presintation/controlers/voice_screen_bloc.dart';
 import 'package:truetone/feature/history_feature/presintation/screens/history_screen.dart';
-import 'package:truetone/feature/history_feature/presintation/screens/voice_playe_screen.dart';
 import 'package:truetone/feature/home/presintation/screens/home_views.dart';
 import 'package:truetone/feature/setting/presintation/screens/settinghome.dart';
 
 import 'core/di/si.dart';
-import 'feature/setting/presintation/screens/eddit_profile.dart';
 
 class Mainscreen extends StatefulWidget {
   Mainscreen({super.key});
@@ -31,12 +28,8 @@ class _MainscreenState extends State<Mainscreen> {
       HomeViews(),
       MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) => sl<HistoryBloc>(),
-          ),
-          BlocProvider(
-            create: (context) => sl<VoiceScreenBloc>(),
-          ),
+          BlocProvider(create: (context) => sl<HistoryBloc>()),
+          BlocProvider(create: (context) => sl<VoiceScreenBloc>()),
         ],
         child: HistoryScreen(
           navigatefunction: () {
@@ -45,7 +38,6 @@ class _MainscreenState extends State<Mainscreen> {
         ),
       ),
       SettingsScreen(),
-
     ];
     _pageController = PageController();
     _selectedNotifier = ValueNotifier(0);
@@ -110,17 +102,17 @@ class _MainscreenState extends State<Mainscreen> {
                                 Icons.history,
                                 size: 30.r,
                                 color:
-                                selectedIndex == 1
-                                    ? AppColors.primarycolor
-                                    : AppColors.onSurface,
+                                    selectedIndex == 1
+                                        ? AppColors.primarycolor
+                                        : AppColors.onSurface,
                               ),
                               Text(
                                 "History",
                                 style: TextStyle(
                                   color:
-                                  selectedIndex == 1
-                                      ? AppColors.primarycolor
-                                      : Colors.black,
+                                      selectedIndex == 1
+                                          ? AppColors.primarycolor
+                                          : Colors.black,
                                   fontSize: 12.sp,
                                 ),
                               ),
@@ -135,15 +127,15 @@ class _MainscreenState extends State<Mainscreen> {
                             height: 60.h,
                             decoration: BoxDecoration(
                               color:
-                              selectedIndex == 0
-                                  ? AppColors.primarycolor
-                                  : AppColors.onprimary,
+                                  selectedIndex == 0
+                                      ? AppColors.primarycolor
+                                      : AppColors.onprimary,
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color:
-                                selectedIndex == 0
-                                    ? Colors.transparent
-                                    : AppColors.primarycolor,
+                                    selectedIndex == 0
+                                        ? Colors.transparent
+                                        : AppColors.primarycolor,
                                 width: 2,
                               ),
                             ),
@@ -151,9 +143,9 @@ class _MainscreenState extends State<Mainscreen> {
                               Icons.graphic_eq,
                               size: 30.r,
                               color:
-                              selectedIndex == 0
-                                  ? AppColors.onprimary
-                                  : AppColors.primarycolor,
+                                  selectedIndex == 0
+                                      ? AppColors.onprimary
+                                      : AppColors.primarycolor,
                             ),
                           ),
                         ),
@@ -167,17 +159,17 @@ class _MainscreenState extends State<Mainscreen> {
                                 Icons.settings_outlined,
                                 size: 30.r,
                                 color:
-                                selectedIndex == 2
-                                    ? AppColors.primarycolor
-                                    : AppColors.onSurface,
+                                    selectedIndex == 2
+                                        ? AppColors.primarycolor
+                                        : AppColors.onSurface,
                               ),
                               Text(
                                 "Settings",
                                 style: TextStyle(
                                   color:
-                                  selectedIndex == 2
-                                      ? AppColors.primarycolor
-                                      : AppColors.black,
+                                      selectedIndex == 2
+                                          ? AppColors.primarycolor
+                                          : AppColors.black,
                                   fontSize: 12.sp,
                                 ),
                               ),

@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:truetone/feature/setting/data/rebo/homerebo.dart';
-import 'package:truetone/feature/setting/data/model.dart';
 import 'package:truetone/feature/setting/presintation/manger/update/updataprofile_state.dart';
-
 
 class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   final HomeRepo homeRepo;
@@ -29,7 +27,8 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
     );
 
     result.fold(
-      (failure) => emit(UpdateProfileFailure(failure.error ?? "Unexpected Error")),
+      (failure) =>
+          emit(UpdateProfileFailure(failure.error ?? "Unexpected Error")),
       (profile) => emit(UpdateProfileSuccess(profile)),
     );
   }

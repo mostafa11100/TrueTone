@@ -7,12 +7,10 @@ import 'package:truetone/core/utiles/app_textstyle.dart';
 
 import '../controler/create_new_password_procces_bloc.dart';
 import '../widgets/custom_emailfeild.dart';
-import '../widgets/customappBar.dart';
 import '../widgets/reachtextwidget.dart';
 
 class SendCodeToEmailScreen extends StatefulWidget {
   const SendCodeToEmailScreen({super.key});
-
 
   @override
   State<SendCodeToEmailScreen> createState() => _SendCodeToEmailScreenState();
@@ -21,10 +19,9 @@ class SendCodeToEmailScreen extends StatefulWidget {
 class _SendCodeToEmailScreenState extends State<SendCodeToEmailScreen> {
   late final TextEditingController _controller;
   late final GlobalKey<FormState> formkey;
-checkvalidatio()
-{
-  return formkey.currentState!.validate();
-}
+  checkvalidatio() {
+    return formkey.currentState!.validate();
+  }
 
   @override
   void initState() {
@@ -50,9 +47,12 @@ checkvalidatio()
 
             children: [
               SizedBox(height: 40.h),
-              Text(
-                Apptrings.enteryouemailtosendcode,
-                style: TextstyleConst.texts20,
+              Opacity(
+                opacity: .7,
+                child: Text(
+                  Apptrings.enteryouemailtosendcode,
+                  style: TextstyleConst.texts20,
+                ),
               ),
               SizedBox(height: 25.h),
               Form(key: formkey, child: customEmailFeild(_controller)),
@@ -62,11 +62,10 @@ checkvalidatio()
                 child: customButton(
                   context,
                   onpress: () {
-                    if(checkvalidatio()) {
-                      BlocProvider.of<CreateNewPasswordProccesBloc>
-                      (
-                      context,
-                    ).add(SendOTP(_controller.text));
+                    if (checkvalidatio()) {
+                      BlocProvider.of<CreateNewPasswordProccesBloc>(
+                        context,
+                      ).add(SendOTP(_controller.text));
                     }
                   },
                   text: Apptrings.sendCode,

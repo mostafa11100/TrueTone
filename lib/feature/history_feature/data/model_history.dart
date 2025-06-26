@@ -1,11 +1,9 @@
-import 'package:equatable/equatable.dart';
 import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
 
 class HsirotyResponseModel {
   List<HistoryModel> listofhistory = [];
 
   HsirotyResponseModel() {}
-
 
   HsirotyResponseModel.fromjson({required List lst}) {
     lst.forEach((v) {
@@ -26,5 +24,4 @@ class HistoryModel extends VoiceEntity {
     type = js['result'] ?? "";
     url = js['audioFilePath'] ?? "";
   }
-
 }

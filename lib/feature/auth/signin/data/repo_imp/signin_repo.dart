@@ -31,6 +31,6 @@ class SigninRepo extends BaseSignin<Unit, SignInEntity> {
     }
     catch(e)
     {
-      return Left(Failure.firbaseeror(e.toString()));}
+      return Left(Failure.gineralerror(e.toString()));}
   }
 }

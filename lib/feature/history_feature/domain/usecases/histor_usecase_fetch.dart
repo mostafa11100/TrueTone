@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:truetone/core/error/Failure.dart';
-import 'package:truetone/feature/history_feature/data/remote/history_remoteprocces.dart';
 import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
 import 'package:truetone/feature/history_feature/domain/history_interface.dart';
 
@@ -19,7 +18,7 @@ class UseCaseHistoryfitch {
           await _baseHistoryRepo.fetch();
       return result;
     } catch (e) {
-      return Left(Failure.firbaseeror(e.toString()));
+      return Left(Failure.gineralerror(e.toString()));
     }
   }
 }

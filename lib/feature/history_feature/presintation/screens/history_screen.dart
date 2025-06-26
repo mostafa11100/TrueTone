@@ -1,19 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:truetone/core/utiles/app_colors.dart';
 import 'package:truetone/core/utiles/app_strings.dart';
 import 'package:truetone/feature/history_feature/presintation/controlers/history_bloc/history_bloc.dart';
 import 'package:truetone/feature/history_feature/presintation/widgets/empty_history_widget.dart';
 
 import '../../../../core/component/custom_sniper.dart';
-import '../../../../core/component/dialog.dart';
-import '../../../../core/di/si.dart';
 import '../../domain/entitys/voice_entity.dart';
-import '../controlers/voice_screen_bloc.dart';
-import '../widgets/custom_listtil.dart';
 import '../widgets/error_widget_hstotry.dart';
 import '../widgets/listofitems_history.dart';
 
@@ -27,7 +21,6 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-
   List<VoiceEntity> listofvoices = [];
 
   @override
@@ -50,11 +43,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 setState(() {
                   listofvoices = state.listofhistory;
                 });
-
               }
               if (state is HistoryDeleteSuccess) {
                 //GoRouter.of(context).pop();
-                customsnackbar(context: context,
+                customsnackbar(
+                  context: context,
                   textcolor: AppColors.onprimary,
                   text: Apptrings.hasbeendleted,
                   color: AppColors.green,
@@ -72,12 +65,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
               }
             },
             builder: (BuildContext context, HistoryState state) {
-              if(state is HistoryLoading)
-                {
-                  return Center(child: Opacity(opacity: .7,
-                  child: SizedBox(width: 20.w,height: 20.h,
-                      child: CircularProgressIndicator(color: AppColors.onprimary,))),);
-                }
+              if (state is HistoryLoading) {
+                return Center(
+                  child: Opacity(
+                    opacity: .7,
+                    child: SizedBox(
+                      width: 20.w,
+                      height: 20.w,
+                      child: CircularProgressIndicator(
+                        color: AppColors.onprimary,
+                      ),
+                    ),
+                  ),
+                );
+              }
               if (state is HistorySuccessFetch) {
                 return listofvoices.isEmpty
                     ? eMptyHistory()
