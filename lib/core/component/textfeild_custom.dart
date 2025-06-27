@@ -58,9 +58,7 @@ class CutomTextFeild extends StatelessWidget {
               validator: validator,
               controller: controler,
               hasShowHidePassword: sufficas ?? false,
-              style: TextstyleConst.texts16.copyWith(
-                color: color.onSurface.withAlpha((.6 * 255).toInt()),
-              ),
+              style: TextstyleConst.texts16.copyWith(),
               showPasswordIcon:
                   sufficas == false ? null : customvisibleiocon(context, true),
               hidePasswordIcon:

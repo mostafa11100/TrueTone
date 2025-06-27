@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:truetone/feature/setting/data/model.dart';
+
+import 'package:truetone/feature/setting/date/model.dart';
 
 abstract class UpdateProfileState extends Equatable {
   const UpdateProfileState();

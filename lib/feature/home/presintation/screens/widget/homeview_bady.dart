@@ -34,6 +34,8 @@ class _HomeviewBadyState extends State<HomeviewBady> {
 
   void _onImageTap(context) async {
     // Handle any additional functionality if needed
+
+    print("pefforrrrrrrrrrrrrrrrrrr to pooton");
     setState(() {
       _scale = 0.8;
     });

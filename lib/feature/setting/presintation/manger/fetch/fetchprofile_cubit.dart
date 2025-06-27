@@ -2,8 +2,9 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:truetone/feature/setting/data/model.dart';
-import 'package:truetone/feature/setting/data/rebo/homerebo.dart';
+
+import 'package:truetone/feature/setting/date/model.dart';
+import 'package:truetone/feature/setting/date/rebo/homerebo.dart';
 
 part 'fetchprofile_state.dart';
 

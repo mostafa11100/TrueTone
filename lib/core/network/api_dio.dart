@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:truetone/core/utiles/app_consts.dart';
 
 import '../di/si.dart';
 import '../helper/shared_pref.dart';
-import '../utiles/app_consts.dart';
 
 class DioNetwork {
   static final DioNetwork _dioNetwork = DioNetwork._nstance();
@@ -27,7 +27,6 @@ class DioNetwork {
           //add options in any request
 
           String? token = await sl<Cashhelper>().getusertoken();
-
           options.headers = {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
@@ -115,17 +114,17 @@ class DioNetwork {
       print("in exeption ${e.response!.statusCode}");
       throw e;
     } catch (e) {
-      throw e;
+      throw Exception(e);
     }
   }
 
   Future<Response> get({url, Map<String, dynamic>? data}) async {
     Response? response;
     try {
-      response = await _dio.get(url);
+      response = await _dio.get(url, data: data);
       return response;
     } catch (e) {
-      throw e;
+      throw Exception(e);
     }
   }
 

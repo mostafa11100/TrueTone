@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,9 +45,6 @@ class _aUdioPlayerCutomState extends State<aUdioPlayerCutom> {
           );
         }
         if (state is VoiceButtonstate) {
-          print(
-            "entttttttttttttttttttttttttttttttttttttttttttttttttter ${state.play}",
-          );
           return button_custom(
             context: context,
             loading: false,
@@ -81,25 +80,21 @@ Widget button_custom({context, loading = false, play = false, index = 0}) {
         ),
       ),
 
-      SizedBox(
-        width: 75.w,
-        height: 75.h,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            shape: CircleBorder(),
-            backgroundColor: Theme.of(
-              context,
-            ).colorScheme.onPrimary.withOpacity(.4),
-          ),
-          onPressed:
-              loading
-                  ? null
-                  : () async {
-                    if (!play)
-                      BlocProvider.of<VoiceScreenBloc>(context).add(Pause());
-                    else
-                      BlocProvider.of<VoiceScreenBloc>(context).add(Stop());
-                  },
+      InkWell(
+        onTap:
+            loading
+                ? null
+                : () async {
+                  if (!play)
+                    BlocProvider.of<VoiceScreenBloc>(context).add(Pause());
+                  else
+                    BlocProvider.of<VoiceScreenBloc>(context).add(Stop());
+                },
+        hoverColor: Colors.transparent,
+        child: CircleAvatar(
+          backgroundColor: Theme.of(
+            context,
+          ).colorScheme.onPrimary.withOpacity(.4),
           child: Center(
             child: AnimatedSwitcher(
               duration: Duration(milliseconds: 300),
@@ -127,9 +122,58 @@ Widget button_custom({context, loading = false, play = false, index = 0}) {
                       ),
             ),
           ),
+          radius: 30,
         ),
       ),
 
+      // SizedBox(
+      //   width: 75.w,
+      //   height: 75.w,
+      //   child: ElevatedButton(
+      //     style: ElevatedButton.styleFrom(
+      //       shape: CircleBorder(),
+      //       backgroundColor: Theme.of(
+      //         context,
+      //       ).colorScheme.onPrimary.withOpacity(.4),
+      //     ),
+      //     onPressed:
+      //         loading
+      //             ? null
+      //             : () async {
+      //               if (!play)
+      //                 BlocProvider.of<VoiceScreenBloc>(context).add(Pause());
+      //               else
+      //                 BlocProvider.of<VoiceScreenBloc>(context).add(Stop());
+      //             },
+      //     child: Center(
+      //       child: AnimatedSwitcher(
+      //         duration: Duration(milliseconds: 300),
+      //         child:
+      //             loading
+      //                 ? Center(
+      //                   child: SizedBox(
+      //                     height: 25.r,
+      //                     width: 25.r,
+      //                     child: CircularProgressIndicator(
+      //                       color: AppColors.onprimary,
+      //                     ),
+      //                   ),
+      //                 )
+      //                 : play
+      //                 ? Icon(
+      //                   Icons.pause,
+      //                   size: 35.r,
+      //                   color: Theme.of(context).colorScheme.onPrimary,
+      //                 )
+      //                 : Icon(
+      //                   Icons.play_arrow_rounded,
+      //                   size: 35.r,
+      //                   color: Theme.of(context).colorScheme.onPrimary,
+      //                 ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
       InkWell(
         onTap: () {
           BlocProvider.of<VoiceScreenBloc>(context).add(PlayNext());

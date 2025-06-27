@@ -18,3 +18,5 @@ class baseurl {
   static String refreshtoken =
       'https://truetoneapi.runasp.net/api/Auth/refresh-token';
 }
+
+//https://truetoneapi.runasp.net/api/Auth/profile
