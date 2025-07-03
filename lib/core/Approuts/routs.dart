@@ -1,22 +1,14 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:truetone/core/component/loading.dart';
-import 'package:truetone/core/network/api_server.dart';
-import 'package:truetone/core/helper/shared_pref.dart';
 import 'package:truetone/feature/auth/forgetpassword/presintation/controler/create_new_password_procces_bloc.dart';
 import 'package:truetone/feature/auth/signin/presintation/controler/signin_cubit.dart';
 import 'package:truetone/feature/auth/signin/presintation/screens/signin_screen.dart';
 import 'package:truetone/feature/auth/verify_email/presintaion/screens/verify_emal_screen.dart';
 import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
 import 'package:truetone/feature/home/domain/%20entitys/homeentity_uploadfile.dart';
-import 'package:truetone/feature/setting/data/rebo/homereboimp.dart';
-import 'package:truetone/feature/setting/presintation/manger/fetch/fetchprofile_cubit.dart';
-import 'package:truetone/feature/home/presintation/screens/widget/AiSoundpage.dart';
 import 'package:truetone/feature/setting/date/model.dart';
 import 'package:truetone/feature/setting/presintation/screens/eddit_profile.dart';
-import 'package:truetone/feature/setting/presintation/screens/language.dart';
-import 'package:truetone/feature/setting/presintation/screens/settinghome.dart';
 
 import 'package:truetone/feature/splash_onbording/onbording.dart';
 import 'package:truetone/feature/splash_onbording/splash.dart';

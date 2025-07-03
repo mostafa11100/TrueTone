@@ -81,6 +81,11 @@ Widget button_custom({context, loading = false, play = false, index = 0}) {
       ),
 
       InkWell(
+        highlightColor: Colors.transparent,
+
+        overlayColor: WidgetStateColor.resolveWith((r) {
+          return Colors.transparent;
+        }),
         onTap:
             loading
                 ? null

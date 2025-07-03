@@ -7,7 +7,6 @@ import 'package:truetone/feature/history_feature/presintation/controlers/voice_s
 import 'package:truetone/feature/history_feature/presintation/screens/history_screen.dart';
 import 'package:truetone/feature/home/presintation/screens/home_views.dart';
 import 'package:truetone/feature/setting/presintation/screens/settinghome.dart';
-import 'package:truetone/feature/setting/presintation/screens/settinghome.dart';
 
 import 'core/di/si.dart';
 

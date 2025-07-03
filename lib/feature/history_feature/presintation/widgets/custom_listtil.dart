@@ -16,7 +16,7 @@ Widget cUstomListTile(
 ) {
   return CustomListTile(
     onTap: ontap,
-    height: 72.h,
+    height: 80.h,
     leading: Container(
       alignment: Alignment.bottomCenter,
       padding: EdgeInsets.all(0.r),
@@ -98,11 +98,11 @@ Widget cUstomListTile(
 
 // Custom list tile definition
 class CustomListTile extends StatelessWidget {
-  final Widget? leading; 
-  final Widget? title; 
-  final Widget? subTitle; 
+  final Widget? leading;
+  final Widget? title;
+  final Widget? subTitle;
   final Function()? onTap; // Optional tap event handler
-  final Function? onLongPress; 
+  final Function? onLongPress;
   final Function? onDoubleTap; // Optional double tap event handler
   final Widget? trailing; // Optional trailing widget
   final Color? tileColor; // Optional tile background color

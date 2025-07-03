@@ -159,9 +159,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         "Returned from EditProfileScreen: $result",
                                       );
 
-                                      if (result != null &&
-                                          result is UserProfile &&
-                                          mounted) {
+                                      if (result != null && mounted) {
                                         cubit
                                             ?.fetchProfile(); // أو استخدم result لتحديث مباشر
                                         setState(() {});

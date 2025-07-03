@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:truetone/core/Approuts/routs.dart';
 import 'package:truetone/core/component/dialog.dart';
-import 'package:truetone/core/utiles/app_colors.dart';
 import 'package:truetone/feature/auth/forgetpassword/presintation/controler/create_new_password_procces_bloc.dart';
 import 'package:truetone/feature/auth/forgetpassword/presintation/screens/createnew_password_screen.dart';
 import 'package:truetone/feature/auth/forgetpassword/presintation/screens/sendtoemail_screen.dart';
