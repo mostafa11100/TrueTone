@@ -1,21 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:path/path.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
 
 import '../controlers/voice_screen_bloc.dart';
 
 Widget Customprogress(context, Duration? lngthe, Duration? position) {
-  Duration lngth = lngthe ?? Duration.zero;
   Duration pos = position ?? Duration.zero;
 
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
-
-      print('progressssssssssssssssssssssssssssssssssssssssssss${pos.inSeconds}');
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
 
@@ -42,8 +36,7 @@ Widget Customprogress(context, Duration? lngthe, Duration? position) {
                 max: lngthe.inSeconds.toDouble(),
                 onChanged: (v) {
                   setState(() {
-                    pos=Duration(seconds: v.toInt());
-
+                    pos = Duration(seconds: v.toInt());
                   });
                   BlocProvider.of<VoiceScreenBloc>(
                     context,
@@ -77,20 +70,20 @@ String calcposition(Duration d) {
 }
 
 Widget custombrogressBarWidget(context, {state}) {
-  if(state is Voicesucce)
-    {print( "function in buid===${state.duration!.inSeconds}");}
+  if (state is Voicesucce) {
+    print("function in buid===${state.duration!.inSeconds}");
+  }
   return BlocBuilder<VoiceScreenBloc, VoiceScreenState>(
     buildWhen: (p, c) {
-      if (c is Voicedurationupdate|| c is Voicesucce) return true;
+      if (c is Voicedurationupdate || c is Voicesucce) return true;
       return false;
     },
     builder: (context, state) {
       if (state is Voicedurationupdate)
         return Customprogress(context, state.lngth, state.position);
-      if(state is Voicesucce)
-       {
-         return Customprogress(context, state.duration, Duration.zero);}
-      else
+      if (state is Voicesucce) {
+        return Customprogress(context, state.duration, Duration.zero);
+      } else
         return Customprogress(context, Duration(seconds: 0), Duration.zero);
     },
   );

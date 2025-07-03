@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:truetone/core/component/loading.dart';
 import 'package:truetone/core/utiles/app_assets.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
-import 'package:truetone/feature/history_feature/presintation/controlers/history_bloc/history_bloc.dart';
 import 'package:truetone/feature/history_feature/presintation/controlers/voice_screen_bloc.dart';
 import 'package:truetone/feature/history_feature/presintation/widgets/customabbBarvoicescreen.dart';
 
 import '../../../../core/component/custom_sniper.dart';
-import '../../../../core/di/si.dart';
 import '../../domain/entitys/voice_entity.dart';
 import '../widgets/audio_player_widget.dart';
-import '../widgets/bottom_sheet.dart';
 import '../widgets/custom_proggres_indector.dart';
 
 class VoicePlayeScreen extends StatefulWidget {

@@ -5,14 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:truetone/core/Approuts/routs.dart';
-import 'package:truetone/core/utiles/app_assets.dart';
 import 'package:truetone/core/utiles/app_colors.dart';
 import 'package:truetone/core/utiles/app_strings.dart';
 import 'package:truetone/core/utiles/app_textstyle.dart';
 import 'package:truetone/feature/home/domain/%20entitys/homeentity_uploadfile.dart';
 import 'package:truetone/feature/home/presintation/controlers/home_cubit.dart';
 import '../../../../../core/component/custom_sniper.dart';
-import '../../../../../core/component/loading.dart';
 import '../../../../../core/di/si.dart';
 import 'home_button_animation.dart';
 
@@ -36,8 +34,8 @@ class _HomeviewBadyState extends State<HomeviewBady> {
 
   void _onImageTap(context) async {
     // Handle any additional functionality if needed
-    
-                      print("pefforrrrrrrrrrrrrrrrrrr to pooton");
+
+    print("pefforrrrrrrrrrrrrrrrrrr to pooton");
     setState(() {
       _scale = 0.8;
     });
@@ -71,13 +69,11 @@ class _HomeviewBadyState extends State<HomeviewBady> {
 
       child: Builder(
         builder: (context) {
-          return BlocListener<HomeCubit, HomeState>(
+          return BlocConsumer<HomeCubit, HomeState>(
             listener: (context, state) {
               if (state is HomeFail) {
                 loading = false;
-                if (GoRouter.of(context).canPop()) {
-                  GoRouter.of(context).pop();
-                }
+
                 customsnackbar(
                   context: context,
                   textcolor: AppColors.onSurface,
@@ -89,50 +85,54 @@ class _HomeviewBadyState extends State<HomeviewBady> {
                 GoRouter.of(
                   context,
                 ).push(AppRouts.typeaudioscreen, extra: state.entity);
-              } else {
+              } else if (state is HomeLoading) {
                 setState(() {
                   loading = true;
                 });
               }
             },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: GestureDetector(
-                    onTap: !loading?  (){
-                      print("enter to pooton");
-                      _onImageTap(context);
-                    }:null, 
-                    child: AnimatedScale(
-                      scale: _scale,
-                      duration: Duration(milliseconds: 100),
-                     
-                      curve: Curves.easeInOut,
-                     
-                      child: HomeButtonAnimation(state: loading),
+            builder: (BuildContext context, HomeState state) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: GestureDetector(
+                      onTap:
+                          !loading
+                              ? () {
+                                _onImageTap(context);
+                              }
+                              : null, // Trigger the animation and navigation
+                      child: AnimatedScale(
+                        scale: _scale,
+                        duration: Duration(milliseconds: 100),
+                        // Duration of the scale animation
+                        curve: Curves.easeInOut,
+                        // Smooth animation curve
+                        child: HomeButtonAnimation(state: loading),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 20.h),
-                GestureDetector(
-                  onTap: () async {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        Apptrings.hometitle,
-                        style: TextstyleConst.texts18.copyWith(
-                          fontStyle: FontStyle.italic,
-                          color: AppColors.onprimary,
+                  SizedBox(height: 20.h),
+                  GestureDetector(
+                    onTap: () async {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          loading ? Apptrings.homeloading : Apptrings.hometitle,
+                          style: TextstyleConst.texts18.copyWith(
+                            fontStyle: FontStyle.italic,
+                            color: AppColors.onprimary,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 20.h),
-              ],
-            ),
+                  SizedBox(height: 20.h),
+                ],
+              );
+            },
           );
         },
       ),

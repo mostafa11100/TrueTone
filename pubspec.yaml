@@ -57,6 +57,13 @@ dependencies:
   animated_text_kit: ^4.2.3
   simple_ripple_animation: ^0.1.0
   rive_animated_icon: ^2.0.5
+  firebase_messaging: ^15.2.6
+  firebase_core: ^3.13.1
+  permission_handler: ^12.0.0+1
+  supabase_flutter: ^2.9.1
+  photo_manager: ^3.7.1
+  workmanager: ^0.7.0
+  animation_list: ^3.1.0
 
 
 dev_dependencies:
@@ -84,26 +91,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
 
-    - assets/images/Google.png
-    - assets/images/Facebook F.png
-    - assets/images/Apple Logo.png
-    - assets/images/splash.png
-    - assets/images/onp1.png
-    - assets/images/onp2.png
-    - assets/images/onp22.png
-    - assets/images/onp3.png
-    - assets/images/ropot_history.png
-    - assets/images/ropot.png
-    - assets/images/human.png
-    - assets/images/human_big.png
-    - assets/images/ropot_big.png
-    - assets/images/home_button.png
-    - assets/images/loading.png
-    - assets/images/man.png
-    - assets/images/fake.png
-    - assets/images/empty_image.png
-    - assets/images/empty.png
-    - assets/images/error_image.png
+    - assets/images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

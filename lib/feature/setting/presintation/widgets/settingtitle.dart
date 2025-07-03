@@ -34,24 +34,29 @@ class SettingTileWidget extends StatelessWidget {
             Row(
               children: [
                 Icon(icon, color: AppColors.black),
-                SizedBox(width: 16.w),
-                Text(
-                  title,
-                  style: const TextStyle(fontSize: 16),
-                ),
+                SizedBox(width: 10.w),
+                Text(title, style: const TextStyle(fontSize: 14)),
               ],
             ),
             Row(
               children: [
-                if (icon1 != null) Icon(icon1, size: 20),
+                if (icon1 != null) Icon(icon1, size: 18),
                 if (isSwitch && switchValue != null)
                   Switch(
                     value: switchValue!,
                     onChanged: onChanged,
+                    trackOutlineColor: WidgetStateColor.resolveWith((s) {
+                      return Colors.transparent;
+                    }),
                     activeColor: AppColors.onprimary,
                     activeTrackColor: AppColors.primarycolor,
                     inactiveThumbColor: AppColors.onprimary,
-                    inactiveTrackColor: Colors.grey[200],
+                    inactiveTrackColor: const Color.fromARGB(
+                      255,
+                      217,
+                      215,
+                      215,
+                    ),
                   ),
               ],
             ),

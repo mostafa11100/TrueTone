@@ -71,23 +71,21 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
       body: BlocListener<SignUpCubit, SignUpState>(
-        listener: (context, state)
-        {
-          if (state is SignUpFail)
-            {
-              customsnackbar(
-                color: Theme.of(context).colorScheme.error,
-                context: context,
-                text: state.eror,
-                textcolor: Theme.of(context).colorScheme.onError,
-              );
-            }
-          if (state is SignUpSucces)
-            {
-              GoRouter.of(context).pushReplacement(AppRouts.verifyemalScreen);
-            }
-          else
-            loadingdialog(context);
+        listener: (context, state) {
+          if (state is SignUpFail) {
+            print("faaaaaaaaaaailllllll");
+            Navigator.of(context).pop();
+            customsnackbar(
+              color: Theme.of(context).colorScheme.error,
+              context: context,
+              text: state.eror,
+              textcolor: Theme.of(context).colorScheme.onError,
+            );
+          }
+          if (state is SignUpSucces) {
+            GoRouter.of(context).pushReplacement(AppRouts.verifyemalScreen);
+          }
+          if (state is SignUpLoading) loadingdialog(context);
         },
         child: SafeArea(
           child: Padding(

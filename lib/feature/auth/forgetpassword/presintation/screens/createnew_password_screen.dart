@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:truetone/core/utiles/app_strings.dart';
 import 'package:truetone/feature/auth/forgetpassword/presintation/controler/create_new_password_procces_bloc.dart';
-import 'package:truetone/feature/auth/forgetpassword/presintation/widgets/customappBar.dart';
 
 import '../../../../../core/component/custom_button.dart';
 import '../widgets/newpassword_feilds.dart';
@@ -46,14 +45,13 @@ class _CreatenewPasswordScreenState extends State<CreatenewPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Padding(
         padding: EdgeInsets.all(20.w),
         child: SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(height: 30.h),
-              newPaswwordFeild(formkey,passwordcontroler, confirmpassword),
+              newPaswwordFeild(formkey, passwordcontroler, confirmpassword),
 
               SizedBox(height: 40.h),
               SizedBox(
@@ -61,7 +59,6 @@ class _CreatenewPasswordScreenState extends State<CreatenewPasswordScreen> {
                 child: customButton(
                   context,
                   onpress: () {
-
                     if (checkvalidation()) {
                       BlocProvider.of<CreateNewPasswordProccesBloc>(
                         context,

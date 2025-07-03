@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1074069654803",
+    "project_id": "truetone-c6b4e",
+    "storage_bucket": "truetone-c6b4e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1074069654803:android:a9d5a24668303285d4dee6",
+        "android_client_info": {
+          "package_name": "com.example.truetone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVdEYbXayAyrfyivW8zvrhoSRnzzzEG24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

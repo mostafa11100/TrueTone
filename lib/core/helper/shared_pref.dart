@@ -20,7 +20,9 @@ class Cashhelper {
   setusertoken(token) {
     sharedPreferences!.setString("token", token);
   }
-
+  setdevicetoken(token) {
+    sharedPreferences!.setString("devicetoken", token);
+  }
   setvisit() {
     sharedPreferences!.setBool("visit", true);
   }

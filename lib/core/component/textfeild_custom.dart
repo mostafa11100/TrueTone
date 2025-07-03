@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fancy_password_field/fancy_password_field.dart';
@@ -15,13 +17,13 @@ class CutomTextFeild extends StatelessWidget {
     required this.hint,
     required this.label,
     required this.prefixicon,
-    this.secure
+    this.secure,
   });
 
   bool? hasvalidationrul;
   bool? hasindecator;
   bool? sufficas;
-  bool?secure;
+  bool? secure;
   String hint;
   String label;
   IconData? prefixicon;
@@ -47,27 +49,21 @@ class CutomTextFeild extends StatelessWidget {
           ),
           SizedBox(
             child: FancyPasswordField(
-
-              obscureText:secure==false?false:
-                  (sufficas == false || sufficas == null) ? false : null,
+              obscureText:
+                  secure == false
+                      ? false
+                      : (sufficas == false || sufficas == null)
+                      ? false
+                      : null,
               validator: validator,
               controller: controler,
               hasShowHidePassword: sufficas ?? false,
-              style: TextstyleConst.texts16.copyWith(
-                color: color.onSurface.withAlpha((.6 * 255).toInt()),
-              ),
+              style: TextstyleConst.texts16.copyWith(),
               showPasswordIcon:
                   sufficas == false ? null : customvisibleiocon(context, true),
               hidePasswordIcon:
                   sufficas == false ? null : customvisibleiocon(context, false),
-              decoration: decoration(
-                context,
-                color,
-                hint,
-                prefixicon,
-
-                validator,
-              ),
+              decoration: decoration(context, hint, prefixicon, validator),
               hasValidationRules: hasvalidationrul ?? false,
               hasStrengthIndicator: hasindecator ?? false,
               validationRules: {
@@ -168,13 +164,14 @@ class CutomTextFeild extends StatelessWidget {
 
 InputDecoration decoration(
   context,
-  color,
+
   String hint,
 
   IconData? prefixicon,
 
   dynamic validator,
 ) {
+  AppColors color = AppColors();
   return InputDecoration(
     contentPadding: EdgeInsets.symmetric(vertical: 17.h, horizontal: 15.w),
     prefixIcon:
@@ -185,11 +182,9 @@ InputDecoration decoration(
               color: Theme.of(context).colorScheme.onSecondary,
             )
             : null,
-    errorStyle: TextstyleConst.texts16.copyWith(
-      color: Theme.of(context).colorScheme.error,
-    ),
+    errorStyle: TextstyleConst.texts16.copyWith(color: AppColors.errorcolor),
     hintText: hint,
-    hintStyle: TextstyleConst.texts16.copyWith(color: color.onSecondary),
+    hintStyle: TextstyleConst.texts16.copyWith(color: AppColors.onsecondry),
 
     border: OutlineInputBorder(
       borderSide: BorderSide(width: 1.2),
@@ -198,19 +193,19 @@ InputDecoration decoration(
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(15.r),
 
-      borderSide: BorderSide(color: color.onSurface, width: 1),
+      borderSide: BorderSide(color: AppColors.greycolor, width: 1),
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(15.r),
-      borderSide: BorderSide(color: color.onSurface, width: 1.1),
+      borderSide: BorderSide(color: AppColors.greycolor, width: 1.1),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(15.r),
-      borderSide: BorderSide(color: color.error, width: 1.1),
+      borderSide: BorderSide(color: AppColors.errorcolor, width: 1.1),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(15.r),
-      borderSide: BorderSide(color: color.error, width: 2),
+      borderSide: BorderSide(color: AppColors.errorcolor, width: 2),
     ),
   );
 }
@@ -238,4 +233,3 @@ calccolor(val) {
   } else
     return listofcolors[2];
 }
-

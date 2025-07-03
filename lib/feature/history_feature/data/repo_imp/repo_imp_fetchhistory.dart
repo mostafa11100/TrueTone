@@ -35,7 +35,7 @@ class FetchHistoryRepo extends BaseHistoryRepo {
       return Left(Failure.handleHttpError(e));
     } catch (e) {
 
-      return Left(Failure.firbaseeror(e.toString()));
+      return Left(Failure.gineralerror(e.toString()));
     }
   }
 }

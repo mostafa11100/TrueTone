@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'package:truetone/core/network/api_servise.dart';
 import 'package:truetone/core/utiles/app_colors.dart';
@@ -76,7 +75,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 onTap: () => Navigator.pop(context),
                 child: Icon(
                   Icons.arrow_back_outlined,
-                  color: Theme.of(context).colorScheme.onSurface.withAlpha((.9 * 255).toInt()),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withAlpha((.9 * 255).toInt()),
                 ),
               ),
             ),
@@ -88,36 +89,37 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               debugPrint("🔄 Listener received state: $state");
 
               if (state is UpdateProfileSuccess) {
-              
-          
                 ScaffoldMessenger.of(context).showSnackBar(
-                  
                   SnackBar(
                     duration: Duration(milliseconds: 200),
                     backgroundColor: AppColors.primarycolor,
-                    content: Text("Profile updated successfully!",style: TextStyle(color: Colors.white),)),
+                    content: Text(
+                      "Profile updated successfully!",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 );
                 Navigator.pop(context, state.profile);
-              
               } else if (state is UpdateProfileFailure) {
-              
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.message)),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(state.message)));
               }
             },
             builder: (context, state) {
               return Padding(
-                padding: EdgeInsets.all(15.0.w),
+                padding: EdgeInsets.all(20.0.w),
                 child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       children: [
                         ProfileImage(
-                          image: pickedImage != null
-                              ? pickedImage!.path
-                              : widget.profile.profileImageUrl,
+                          image:
+                              pickedImage != null
+                                  ? pickedImage!.path
+                                  : widget.profile.profileImageUrl,
                           onchanged: (String imagePath) {
                             debugPrint("📸 Image picked: $imagePath");
                             setState(() {
@@ -125,7 +127,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             });
                           },
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 15.h),
+
                         CutomTextFeild(
                           controler: nameController,
                           hint: '',
@@ -134,7 +137,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           hasindecator: false,
                           validator: checkempty,
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 15.h),
+
                         CutomTextFeild(
                           controler: emailController,
                           hint: '',
@@ -143,7 +147,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           hasindecator: false,
                           validator: emailvalidation,
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 15.h),
+
                         CutomTextFeild(
                           controler: countryController,
                           hint: '',
@@ -151,7 +156,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           prefixicon: null,
                           validator: checkempty,
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 15.h),
+
                         CutomTextFeild(
                           controler: phoneController,
                           hint: '',
@@ -160,7 +166,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           validator: checkempty,
                           hasindecator: false,
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 15.h),
+
                         DateTimeFeildCustom(
                           intailalue: birthDate,
                           onchanged: (DateTime? value) {
@@ -170,27 +177,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             }
                           },
                         ),
-                        SizedBox(height: 15.h),
+                        SizedBox(height: 30.h),
+
                         SizedBox(
                           width: double.infinity,
                           child: customButton(
                             context,
                             text: Apptrings.savechanges,
                             onpress: () {
-                      
-
                               if (_formKey.currentState?.validate() ?? false) {
-                               
-
-                                context.read<UpdateProfileCubit>().updateProfile(
+                                context
+                                    .read<UpdateProfileCubit>()
+                                    .updateProfile(
                                       name: nameController.text,
                                       email: emailController.text,
                                       country: countryController.text,
                                       phoneNumber: phoneController.text,
                                       dateOfBirth: birthDate,
-                                      profileImage: pickedImage?.path ?? widget.profile.profileImageUrl,
+                                      profileImage:
+                                          pickedImage?.path ??
+                                          widget.profile.profileImageUrl,
                                     );
-                              } else {
                               }
                             },
                           ),
@@ -198,7 +205,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         if (state is UpdateProfileLoading) ...[
                           SizedBox(height: 15.h),
                           CircularProgressIndicator(),
-                      
                         ],
                       ],
                     ),

@@ -69,12 +69,12 @@ class AudioService {
       });
       return Right(duration ?? Duration.zero);
     } on PlayerException catch (e) {
-      return Left(Failure.firbaseeror("Error message: ${e.message}"));
+      return Left(Failure.gineralerror("Error message: ${e.message}"));
     } on PlayerInterruptedException catch (e) {
-      return Left(Failure.firbaseeror("Connection aborted: ${e.message}"));
+      return Left(Failure.gineralerror("Connection aborted: ${e.message}"));
     } catch (e) {
       // Fallback for all other errors
-      return Left(Failure.firbaseeror(e.toString()));
+      return Left(Failure.gineralerror(e.toString()));
     }
   }
 
@@ -88,12 +88,12 @@ class AudioService {
       );
       return Right(player.position);
     } on PlayerException catch (e) {
-      return Left(Failure.firbaseeror("Error message: ${e.message}"));
+      return Left(Failure.gineralerror("Error message: ${e.message}"));
     } on PlayerInterruptedException catch (e) {
-      return Left(Failure.firbaseeror("Connection aborted: ${e.message}"));
+      return Left(Failure.gineralerror("Connection aborted: ${e.message}"));
     } catch (e) {
       // Fallback for all other errors
-      return Left(Failure.firbaseeror('${e.toString()}'));
+      return Left(Failure.gineralerror('${e.toString()}'));
     }
   }
 
@@ -103,12 +103,12 @@ class AudioService {
       await player.pause();
       return Right(unit);
     } on PlayerException catch (e) {
-      return Left(Failure.firbaseeror("Error message: ${e.message}"));
+      return Left(Failure.gineralerror("Error message: ${e.message}"));
     } on PlayerInterruptedException catch (e) {
-      return Left(Failure.firbaseeror("Connection aborted: ${e.message}"));
+      return Left(Failure.gineralerror("Connection aborted: ${e.message}"));
     } catch (e) {
       // Fallback for all other errors
-      return Left(Failure.firbaseeror('${e.toString()}'));
+      return Left(Failure.gineralerror('${e.toString()}'));
     }
   }
 
@@ -117,12 +117,12 @@ class AudioService {
       await player.seekToPrevious();
       return Right(player.duration!);
     } on PlayerException catch (e) {
-      return Left(Failure.firbaseeror("Error message: ${e.message}"));
+      return Left(Failure.gineralerror("Error message: ${e.message}"));
     } on PlayerInterruptedException catch (e) {
-      return Left(Failure.firbaseeror("Connection aborted: ${e.message}"));
+      return Left(Failure.gineralerror("Connection aborted: ${e.message}"));
     } catch (e) {
       // Fallback for all other errors
-      return Left(Failure.firbaseeror('${e.toString()}'));
+      return Left(Failure.gineralerror('${e.toString()}'));
     }
   }
 
@@ -132,16 +132,16 @@ class AudioService {
 
         await player.seekToNext();
       } else {
-        return Left(Failure.firbaseeror("Player is not ready yet"));
+        return Left(Failure.gineralerror("Player is not ready yet"));
       }
       return Right(player.duration!);
     } on PlayerException catch (e) {
-      return Left(Failure.firbaseeror("Error message: ${e.message}"));
+      return Left(Failure.gineralerror("Error message: ${e.message}"));
     } on PlayerInterruptedException catch (e) {
-      return Left(Failure.firbaseeror("Connection aborted: ${e.message}"));
+      return Left(Failure.gineralerror("Connection aborted: ${e.message}"));
     } catch (e) {
       // Fallback for all other errors
-      return Left(Failure.firbaseeror('${e.toString()}'));
+      return Left(Failure.gineralerror('${e.toString()}'));
     }
   }
 
@@ -151,18 +151,18 @@ class AudioService {
         player.pause();
         await player.seek(Duration.zero, index: index);
       } else {
-        return Left(Failure.firbaseeror("Player is not ready yet"));
+        return Left(Failure.gineralerror("Player is not ready yet"));
       }
      
       return Right(player.duration!);
     } on PlayerException catch (e) {
-      return Left(Failure.firbaseeror("Error message: ${e.message}"));
+      return Left(Failure.gineralerror("Error message: ${e.message}"));
     } on PlayerInterruptedException catch (e) {
 
-      return Left(Failure.firbaseeror("Connection aborted: ${e.message}"));
+      return Left(Failure.gineralerror("Connection aborted: ${e.message}"));
     } catch (e) {
       // Fallback for all other errors
-      return Left(Failure.firbaseeror('${e.toString()}'));
+      return Left(Failure.gineralerror('${e.toString()}'));
     }
   }
 
@@ -177,12 +177,12 @@ class AudioService {
 
       return Right(unit);
     } on PlayerException catch (e) {
-      return Left(Failure.firbaseeror("Error message: ${e.message}"));
+      return Left(Failure.gineralerror("Error message: ${e.message}"));
     } on PlayerInterruptedException catch (e) {
-      return Left(Failure.firbaseeror("Connection aborted: ${e.message}"));
+      return Left(Failure.gineralerror("Connection aborted: ${e.message}"));
     } catch (e) {
       // Fallback for all other errors
-      return Left(Failure.firbaseeror('${e.toString()}'));
+      return Left(Failure.gineralerror('${e.toString()}'));
     }
   }
 }
