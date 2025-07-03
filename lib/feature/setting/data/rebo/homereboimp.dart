@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:truetone/core/error/Failure.dart';
-import 'package:truetone/core/network/api_server.dart';
+
+import 'package:truetone/core/network/api_servise.dart';
 import 'package:truetone/feature/setting/data/model.dart';
 import 'package:truetone/core/network/api_dio.dart';
 import 'package:truetone/feature/setting/data/rebo/homerebo.dart';
