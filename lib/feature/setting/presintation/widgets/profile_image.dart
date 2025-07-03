@@ -1,14 +1,10 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:truetone/core/utiles/app_colors.dart';
-
-import '../../../../core/utiles/app_assets.dart';
 
 class ProfileImage extends StatefulWidget {
   const ProfileImage({super.key, required this.image, required this.onchanged});
@@ -92,8 +88,7 @@ imageselected(context, image, bool network) {
       ? handlenetworkimage(
         height: 143.h,
         width: 143.h,
-        image:
-         image,
+        image: image,
         shape: BoxShape.circle,
         border: Border.all(
           color: Theme.of(
@@ -125,7 +120,7 @@ imageofprofile(context, image, bool network) {
 
 handlenetworkimage({image, shape, height, width, border}) {
   return CachedNetworkImage(
-    imageUrl: image ,
+    imageUrl: image,
     height: height,
     width: width,
     imageBuilder:

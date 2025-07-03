@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:truetone/core/error/exeptions.dart';
+import 'package:truetone/core/utiles/app_consts.dart';
 
 import '../di/si.dart';
 import '../helper/shared_pref.dart';
@@ -27,14 +27,41 @@ class DioNetwork {
           //add options in any request
 
           String? token = await sl<Cashhelper>().getusertoken();
-          options.headers = {'Content-Type': 'application/json','Authorization':'Bearer $token'};
+          options.headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          };
           return handle.next(options);
         },
-        onError: (e, h) {
-          if (e.response!.statusCode == 401) {
-            // refresh token her and save in  shasred pref
+        onError: (e, h) async {
+          try {
+            if (e.response!.statusCode == 401) {
+              try {
+                String? rfrshtoken = sl<Cashhelper>().getrefreshtoken();
+                Map<String, dynamic> newtoken = await refreshtoken(rfrshtoken);
+
+                sl<Cashhelper>().setrefreshtoken(newtoken['refresh']);
+                sl<Cashhelper>().setusertoken(newtoken['token']);
+                e.requestOptions.headers['Authorization'] =
+                    'Bearer ${newtoken['token']}';
+
+                Response res = await get(
+                  url: e.requestOptions.uri.toString(),
+                  data: e.requestOptions.data,
+                );
+                //https: //truetoneapi.runasp.net/api/AudioAnalysis/history
+                return h.resolve(res);
+              } on DioException catch (e2) {
+                return h.reject(e2);
+              } catch (ee) {
+                return h.reject(e);
+              }
+            } else {
+              return h.reject(e);
+            }
+          } catch (er) {
+            return h.reject(e);
           }
-          return h.next(e);
         },
       ),
     );
@@ -52,12 +79,13 @@ class DioNetwork {
     }
   }
 
-  Future<Response?> post({url, data}) async {
+  Future<Response> post({url, data}) async {
     try {
-      Response? response;
+      Response response;
       response = await _dio.post(url, data: data);
 
       return response;
+      //return Response(requestOptions: RequestOptions());
     } catch (e) {
       throw e;
     }
@@ -68,10 +96,23 @@ class DioNetwork {
     required Map<String, dynamic> json,
   }) async {
     try {
+      String? token = await sl<Cashhelper>().getusertoken();
+      Map<String, dynamic> header = {
+        'accept': '*/*',
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer $token',
+      };
       final formData = FormData.fromMap(json);
-      final Response response = await _dio.post(url, data: formData,options: Options(headers: {"Content-Type": "multipart/form-data"}));
-      print("aplouuuuuuudbbbbbbbbbbbbbbbbbbbbbbbbb========/////====${response.data}");
+
+      final Response response = await _dio.post(
+        url,
+        data: formData,
+        options: Options(headers: header),
+      );
       return response;
+    } on DioException catch (e) {
+      print("in exeption ${e.response!.statusCode}");
+      throw e;
     } catch (e) {
       throw Exception(e);
     }
@@ -93,7 +134,21 @@ class DioNetwork {
       response = await _dio.delete(url, data: data);
       return response;
     } catch (e) {
-      throw Exception(e);
+      throw e;
+    }
+  }
+
+  Future<Map<String, dynamic>> refreshtoken(token) async {
+    Response? response;
+    try {
+      response = await _dio.post(baseurl.refreshtoken, data: {"token": token});
+
+      String newtoken = response.data['token'];
+      String rfrsh = response.data['refreshToken'];
+
+      return {"token": newtoken, "refresh": rfrsh};
+    } catch (e) {
+      throw e;
     }
   }
 

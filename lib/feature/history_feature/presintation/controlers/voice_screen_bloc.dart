@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:meta/meta.dart';
 import 'package:truetone/core/error/Failure.dart';
 import 'package:truetone/feature/history_feature/domain/entitys/voice_entity.dart';
@@ -78,11 +77,11 @@ class VoiceScreenBloc extends Bloc<VoiceScreenEvent, VoiceScreenState> {
           );
         }
       } catch (e) {
-        emit(VoiceFail(Failure.firbaseeror(e.toString()).error!));
+        emit(VoiceFail(Failure.gineralerror(e.toString()).error!));
       }
     });
     on<Changeposition>((event, emit) {
-      emit(Voicedurationupdate(event.position,audioService.player.duration!));
+      emit(Voicedurationupdate(event.position, audioService.player.duration!));
     });
     on<Seektopostion>((event, emit) async {
       emit(Voiceloading());
@@ -94,16 +93,16 @@ class VoiceScreenBloc extends Bloc<VoiceScreenEvent, VoiceScreenState> {
           emit(VoiceFail(left.error!));
         },
         (right) {
-     //     emit(
-            // Voicesucce(
-            //   Duration(
-            //     seconds:
-            //         audioService.player.duration!.inSeconds - right.inSeconds,
-            //   ),
-    //          right,
-  //            audioService.player.currentIndex,
-//            ),
-        //  );
+          //     emit(
+          // Voicesucce(
+          //   Duration(
+          //     seconds:
+          //         audioService.player.duration!.inSeconds - right.inSeconds,
+          //   ),
+          //          right,
+          //            audioService.player.currentIndex,
+          //            ),
+          //  );
         },
       );
     });

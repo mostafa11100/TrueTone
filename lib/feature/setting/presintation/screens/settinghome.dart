@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -31,7 +32,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!isInit) {
-      cubit = FetchProfileCubit(HomeRepoImpl(ApiService(Dio())))..fetchProfile();
+      cubit = FetchProfileCubit(HomeRepoImpl(ApiService(Dio())))
+        ..fetchProfile();
       isInit = true;
     }
   }
@@ -49,11 +51,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: Scaffold(
         body: Stack(
           children: [
-            Column(
+            Stack(
               children: [
                 Container(
-                  height: 280,
-                  padding: const EdgeInsets.only(bottom: 140, left: 30),
+                  height: 300.h,
+                  padding: EdgeInsets.only(bottom: 140.h, left: 30.w),
                   decoration: BoxDecoration(
                     color: AppColors.primarycolor,
                     borderRadius: const BorderRadius.only(
@@ -63,7 +65,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.settings, color: AppColors.onprimary, size: 31),
+                      Icon(
+                        Icons.settings,
+                        color: AppColors.onprimary,
+                        size: 31.r,
+                      ),
                       SizedBox(width: 14.w),
                       Text(
                         "Settings",
@@ -72,73 +78,93 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.w600,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
-                Container(height: 270, color: Colors.white),
-              ],
-            ),
-            Positioned(
-              top: 105,
-              left: 22,
-              right: 22,
-              bottom: 0,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.onprimary,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.r),
-                    topRight: Radius.circular(20.r),
-                  ),
-                ),
-                child: BlocBuilder<FetchProfileCubit, FetchProfileState>(
-                  builder: (context, state) {
-                    if (state is FetchProfileLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (state is FetchProfileFailure) {
-                      return Center(child: Text("Error: ${state.message1}"));
-                    } else if (state is FetchProfileSuccess) {
-                      final profile = state.profile;
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SingleChildScrollView(
+                    primary: true,
+                    padding: EdgeInsets.only(top: 100),
+                    dragStartBehavior: DragStartBehavior.down,
+                    physics: BouncingScrollPhysics(),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      margin: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: AppColors.onprimary,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.r),
+                          topRight: Radius.circular(20.r),
+                        ),
+                      ),
+                      child: BlocBuilder<FetchProfileCubit, FetchProfileState>(
+                        builder: (context, state) {
+                          if (state is FetchProfileLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (state is FetchProfileFailure) {
+                            return Center(
+                              child: Text(
+                                "Error: ${state.message1}",
+                                textAlign: TextAlign.center,
+                              ),
+                            );
+                          } else if (state is FetchProfileSuccess) {
+                            final profile = state.profile;
 
-                      return ListView(
-                        children: [
-                          Card(
-                            color: AppColors.onprimary,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 18),
+                            return Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 18.w),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 20.0.h,
+                                      horizontal: 10.w,
+                                    ),
                                     child: UserInfoWidget(
                                       name: profile.name,
                                       email: profile.email,
                                       imageUrl: profile.profileImageUrl,
                                     ),
                                   ),
-                                  Divider(thickness: 0.4),
+                                  Opacity(
+                                    opacity: .5,
+                                    child: Divider(
+                                      thickness: 0.4,
+                                      color: AppColors.greycolor,
+                                    ),
+                                  ),
                                   const SizedBox(height: 20),
-                                  const SectionTitleWidget(title: '  Account Settings'),
+                                  const SectionTitleWidget(
+                                    title: '  Account Settings',
+                                  ),
                                   SizedBox(height: 20.h),
                                   SettingTileWidget(
                                     icon: Icons.edit,
                                     title: '  Edit profile',
                                     icon1: Icons.arrow_forward_ios_outlined,
-                                  onTap1: () async {
-  final result = await GoRouter.of(context).push<UserProfile>(
-    AppRouts.setting1,
-    extra: profile,
-  );
+                                    onTap1: () async {
+                                      final result = await GoRouter.of(
+                                        context,
+                                      ).push<UserProfile>(
+                                        AppRouts.setting1,
+                                        extra: profile,
+                                      );
 
-  debugPrint("Returned from EditProfileScreen: $result");
+                                      debugPrint(
+                                        "Returned from EditProfileScreen: $result",
+                                      );
 
-  if (result != null && result is UserProfile && mounted) {
-    cubit?.fetchProfile(); // أو استخدم result لتحديث مباشر
-    setState(() {});
-  }
-},
+                                      if (result != null && mounted) {
+                                        cubit
+                                            ?.fetchProfile(); // أو استخدم result لتحديث مباشر
+                                        setState(() {});
+                                      }
+                                    },
                                   ),
                                   SizedBox(height: 20.h),
                                   SettingTileWidget(
@@ -153,14 +179,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     title: '  Lock Sound',
                                     isSwitch: true,
                                     switchValue: lockSound,
-                                    onChanged: (val) => setState(() => lockSound = val),
+                                    onChanged:
+                                        (val) =>
+                                            setState(() => lockSound = val),
                                   ),
                                   SettingTileWidget(
                                     icon: Icons.notifications_none_outlined,
                                     title: '  Notifications',
                                     isSwitch: true,
                                     switchValue: notifications,
-                                    onChanged: (val) => setState(() => notifications = val),
+                                    onChanged:
+                                        (val) =>
+                                            setState(() => notifications = val),
                                   ),
                                   SizedBox(height: 10.h),
                                   const SettingTileWidget(
@@ -187,17 +217,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   SizedBox(height: 12.h),
                                 ],
                               ),
-                            ),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
+                            );
+                          }
+
+                          return SizedBox();
+                        },
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            )
+              ],
+            ),
           ],
         ),
       ),

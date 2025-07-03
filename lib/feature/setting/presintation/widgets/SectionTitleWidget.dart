@@ -9,7 +9,7 @@ class SectionTitleWidget extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(
-        fontSize: 15,
+        fontSize: 14,
         fontWeight: FontWeight.bold,
         color: Colors.grey,
       ),

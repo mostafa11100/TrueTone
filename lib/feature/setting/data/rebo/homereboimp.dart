@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:truetone/core/error/Failure.dart';
 import 'package:truetone/core/network/api_server.dart';
 import 'package:truetone/feature/setting/data/model.dart';
-import 'package:truetone/core/network/api_dio.dart';
 import 'package:truetone/feature/setting/data/rebo/homerebo.dart';
 
 class HomeRepoImpl implements HomeRepo {
@@ -13,7 +12,9 @@ class HomeRepoImpl implements HomeRepo {
   @override
   Future<Either<Failure, UserProfile>> fetchProfile() async {
     try {
-      final response = await apiService.get("profile");  // Assuming the endpoint for the profile is "profile"
+      final response = await apiService.get(
+        "profile",
+      ); // Assuming the endpoint for the profile is "profile"
       if (response != null) {
         return Right(UserProfile.fromJson(response));
       } else {
@@ -44,7 +45,7 @@ class HomeRepoImpl implements HomeRepo {
       };
 
       final response = await apiService.put("complete-profile", data: data);
-      
+
       if (response != null) {
         return Right(UserProfile.fromJson(response));
       } else {

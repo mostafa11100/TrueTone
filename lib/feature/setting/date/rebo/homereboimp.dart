@@ -20,7 +20,6 @@ class HomeRepoImpl implements HomeRepo {
         return Left(Failure.networkError());
       }
     } catch (e) {
-     
       return Left(Failure.networkError());
     }
   }
@@ -49,7 +48,6 @@ class HomeRepoImpl implements HomeRepo {
       final response = await apiService.put("complete-profile", data: data);
 
       if (response == null) {
-   
         return Left(Failure.networkError());
       }
 
@@ -59,13 +57,10 @@ class HomeRepoImpl implements HomeRepo {
       final profileData = response['data'];
 
       if (message != "Succeeded") {
-    
         return Left(Failure.networkError());
       }
 
       if (profileData == null) {
-     
-
         final updatedProfile = UserProfile(
           name: name ?? '',
           phoneNumber: phoneNumber ?? '',
@@ -83,12 +78,9 @@ class HomeRepoImpl implements HomeRepo {
         debugPrint("✅ Parsed UserProfile successfully: $updatedProfile");
         return Right(updatedProfile);
       } catch (e) {
-   
         return Left(Failure.networkError());
       }
-
-    } catch (e, stackTrace) {
-    
+    } catch (e) {
       return Left(Failure.networkError());
     }
   }

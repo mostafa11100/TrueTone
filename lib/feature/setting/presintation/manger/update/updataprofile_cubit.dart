@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:truetone/feature/setting/date/rebo/homerebo.dart';
 import 'package:truetone/feature/setting/presintation/manger/update/updataprofile_state.dart';
-
 
 class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   final HomeRepo homeRepo;
@@ -38,7 +36,6 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
     result.fold(
       (failure) {
-        
         emit(UpdateProfileFailure(failure.error ?? "Unexpected Error"));
       },
       (profile) {

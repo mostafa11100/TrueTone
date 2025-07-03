@@ -9,7 +9,6 @@ import 'package:truetone/feature/auth/signin/presintation/controler/signin_cubit
 import 'package:truetone/feature/auth/signup/data/remote_datasource/signup_remote.dart';
 import 'package:truetone/feature/auth/signup/data/repo_imp/signup_repo_imp.dart';
 import 'package:truetone/feature/auth/signup/domain/usecases/signup_usecase.dart';
-import 'package:truetone/feature/history_feature/domain/history_interface.dart';
 
 import '../../feature/auth/forgetpassword/data/remote_passwordprocess.dart';
 import '../../feature/auth/forgetpassword/data/repo_imp/password_procees_repo_imp.dart';
@@ -28,8 +27,7 @@ final sl = GetIt.instance;
 setupLocator() {
   sl.registerSingleton<DioNetwork>(DioNetwork.init());
 
-  sl.registerSingletonAsync<Cashhelper>(()async
-  {
+  sl.registerSingletonAsync<Cashhelper>(() async {
     return await Cashhelper.chachhelperinit();
   });
 

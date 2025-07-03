@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:truetone/feature/home/presintation/screens/widget/homeview_bady.dart';
 
 class HomeViews extends StatelessWidget {
@@ -8,8 +7,8 @@ class HomeViews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Theme.of(context).colorScheme.primary ,
-  
+      backgroundColor: Theme.of(context).colorScheme.primary,
+
       body: SafeArea(child: HomeviewBady()),
     );
   }

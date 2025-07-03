@@ -6,18 +6,17 @@ import 'package:truetone/feature/auth/forgetpassword/domain/interfacess/password
 import '../../../../../core/di/si.dart';
 import '../../data/models/pasword_procces_model.dart';
 
-class VerifyEmailUseCase {
-  BasePasswordProccess<Unit> _basePasswordProccess;
+// class VerifyEmailUseCase {
+//   BasePasswordProccess<Unit> _basePasswordProccess;
 
-  VerifyEmailUseCase(this._basePasswordProccess);
+//   VerifyEmailUseCase(this._basePasswordProccess);
 
-  Future<Either<Failure, Unit>> excute(email) async {
-  return  await _basePasswordProccess.sendcode(
-      email: PasswordProccesModel(email: email),
-    );
-
-  }
-}
+//   Future<Either<Failure, Unit>> excute(email) async {
+//     return await _basePasswordProccess.sendcode(
+//       email: PasswordProccesModel(email: email),
+//     );
+//   }
+// }
 
 class CreateNewPasswordUseCase {
   BasePasswordProccess<Unit> _basePasswordProccess;
@@ -25,17 +24,20 @@ class CreateNewPasswordUseCase {
   CreateNewPasswordUseCase(this._basePasswordProccess);
 
   Future<Either<Failure, Unit>> excute(password) async {
-    String? email=  await sl<Cashhelper>().getemail();
-    String? otpfromcashing=await sl<Cashhelper>().getotp();
-    if(otpfromcashing!=null)
-    return  await _basePasswordProccess.createpasword(
-      newpaosswrdmodel: PasswordProccesModel(password: password,email: email,otp: otpfromcashing),
-    );
-    else
-      {
-        return Left(Failure.networkError());
-      }
-
+    String? email = await sl<Cashhelper>().getemail();
+    String? otpfromcashing = await sl<Cashhelper>().getotp();
+    if (otpfromcashing != null)
+      return await _basePasswordProccess.createpasword(
+        newpaosswrdmodel: PasswordProccesModel(
+          newpassword: password,
+          confirmpassword: password,
+          email: email,
+          otp: otpfromcashing,
+        ),
+      );
+    else {
+      return Left(Failure.networkError());
+    }
   }
 }
 
@@ -44,27 +46,27 @@ class CheckOtpUseCase {
 
   CheckOtpUseCase(this._basePasswordProccess);
 
-  Future<Either<Failure, Unit>> excute(otp) async
-  {
-   await sl<Cashhelper>().setotp(otp);
-   String? email=  await sl<Cashhelper>().getemail();
-   print("emaillll===$email");
-    return  await _basePasswordProccess.checkotp(
-      otp: PasswordProccesModel(otp:otp,email: email),
-    );
+  Future<Either<Failure, Unit>> excute(otp) async {
+    await sl<Cashhelper>().setotp(otp);
+    String? email = await sl<Cashhelper>().getemail();
 
+    return await _basePasswordProccess.checkotp(
+      otp: PasswordProccesModel(otp: otp, email: email),
+    );
   }
 }
-class Sendotptomail {
+
+class VerifyEmailUseCase {
   BasePasswordProccess<Unit> _basePasswordProccess;
 
-  Sendotptomail(this._basePasswordProccess);
+  VerifyEmailUseCase(this._basePasswordProccess);
 
-  Future<Either<Failure, Unit>> excute(email) async
-  {  sl<Cashhelper>().setemail(email);
-    return  await _basePasswordProccess.sendcode(
+  Future<Either<Failure, Unit>> excute(email) async {
+    print("emmmmmmaiiiiiill=${email}");
+    sl<Cashhelper>().setemail(email);
+    print("emmmmmmmmmmmmaiil${sl<Cashhelper>().getemail()}");
+    return await _basePasswordProccess.sendcode(
       email: PasswordProccesModel(email: email),
     );
-
   }
 }
